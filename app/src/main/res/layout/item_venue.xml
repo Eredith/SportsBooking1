@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@drawable/venue_image"
+    android:elevation="4dp"
+    android:layout_margin="8dp">
+
+    <ImageView
+        android:id="@+id/venueImage"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logo_sports" />
+
+    <TextView
+        android:id="@+id/venueName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ASATU ARENA CIKINI"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/venueLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jl. R, Jakarta"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/venueType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mini Soccer"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/venuePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rp 1.500.000"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
+
+</LinearLayout>

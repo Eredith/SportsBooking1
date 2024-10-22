@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="@android:color/white">
+
+    <!-- Judul utama -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Selamat Bergabung"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mohon lengkapi profil kamu untuk memudahkan proses transaksi dan pemberian informasi terkait dengan pemesanan lapangan atau jasa."
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="center"/>
+
+    <!-- Input untuk Email -->
+    <EditText
+        android:id="@+id/etEmailSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/edittext_background"
+        android:hint="Email *"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:textSize="16sp" />
+
+    <!-- Input untuk Password -->
+    <EditText
+        android:id="@+id/etPasswordSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/edittext_background"
+        android:hint="Password *"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:textSize="16sp" />
+
+    <!-- Input untuk Konfirmasi Password -->
+    <EditText
+        android:id="@+id/etConfirmPasswordSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/edittext_background"
+        android:hint="Konfirmasi Password *"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:textSize="16sp" />
+
+    <!-- Input untuk Username -->
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/edittext_background"
+        android:hint="Username *"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:textSize="16sp" />
+
+    <!-- Input untuk Nama Lengkap -->
+    <EditText
+        android:id="@+id/etFullName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/edittext_background"
+        android:hint="Nama Lengkap *"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:textSize="16sp" />
+
+    <!-- Input untuk Nomor Telepon -->
+    <EditText
+        android:id="@+id/etPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/edittext_background"
+        android:hint="Nomor Telepon *"
+        android:inputType="phone"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:textSize="16sp" />
+
+    <!-- Button Daftar -->
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Daftar"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/holo_orange_light"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"/>
+
+    <!-- Teks untuk login -->
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Sudah punya akun? Login di sini"
+        android:textSize="14sp"
+        android:textColor="@android:color/holo_blue_dark"/>
+</LinearLayout>
