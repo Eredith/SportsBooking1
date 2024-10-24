@@ -8,16 +8,20 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+        // Inisialisasi FirebaseAuth dan Firestore
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
         val etEmail = findViewById<EditText>(R.id.etEmailSignUp)
         val etPassword = findViewById<EditText>(R.id.etPasswordSignUp)
@@ -30,6 +34,7 @@ class SignUpActivity : AppCompatActivity() {
             val password = etPassword.text.toString().trim()
             val confirmPassword = etConfirmPassword.text.toString().trim()
 
+            // Validasi input
             if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -45,21 +50,43 @@ class SignUpActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // Mendaftarkan user menggunakan Firebase Authentication
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        // Pendaftaran berhasil, pindah ke MainActivity atau halaman utama
-                        Toast.makeText(this, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        // Jika pendaftaran berhasil, dapatkan uid user
+                        val user = auth.currentUser
+                        user?.let {
+                            val uid = it.uid
+
+                            // Buat data user untuk disimpan ke Firestore
+                            val userData = hashMapOf(
+                                "email" to email,
+                                "isAdmin" to false // Menandai user sebagai user biasa (bukan admin)
+                            )
+
+                            // Simpan data ke Firestore
+                            firestore.collection("users").document(uid)
+                                .set(userData)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show()
+                                    // Pindah ke MainActivity atau halaman utama
+                                    val intent = Intent(this, MainActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(this, "Gagal menyimpan data: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+                        }
                     } else {
-                        // Jika pendaftaran gagal, tampilkan pesan kepada pengguna
-                        Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        // Jika pendaftaran gagal, tampilkan pesan error
+                        Toast.makeText(this, "Pendaftaran gagal: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
 
+        // Mengarahkan user ke halaman login jika sudah memiliki akun
         tvLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
