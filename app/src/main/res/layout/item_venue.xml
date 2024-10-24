@@ -1,53 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:background="@drawable/venue_image"
-    android:elevation="4dp"
-    android:layout_margin="8dp">
+    android:padding="16dp">
 
     <ImageView
-        android:id="@+id/venueImage"
+        android:id="@+id/venue_image"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/logo_sports" />
+        android:contentDescription="@string/venue_image_desc"
+        android:src="@drawable/venue_image" />
 
     <TextView
-        android:id="@+id/venueName"
+        android:id="@+id/venue_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ASATU ARENA CIKINI"
-        android:textSize="16sp"
+        android:text="Venue Name"
+        android:textSize="18sp"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_marginTop="8dp" />
 
     <TextView
-        android:id="@+id/venueLocation"
+        android:id="@+id/venue_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Jl. R, Jakarta"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="14sp"
+        android:text="Rp. 1.200.000"
+        android:textSize="16sp"
+        android:textColor="@color/black"
         android:layout_marginTop="4dp" />
 
     <TextView
-        android:id="@+id/venueType"
+        android:id="@+id/venue_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mini Soccer"
-        android:textColor="@android:color/black"
+        android:text="Jakarta"
         android:textSize="14sp"
-        android:layout_marginTop="4dp" />
+        android:textColor="@color/gray"
+        android:layout_marginTop="2dp" />
 
     <TextView
-        android:id="@+id/venuePrice"
+        android:id="@+id/venue_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rp 1.500.000"
-        android:textColor="@android:color/holo_orange_dark"
+        android:text="Sepak Bola"
         android:textSize="14sp"
-        android:layout_marginTop="4dp" />
+        android:textColor="@color/gray"
+        android:layout_marginTop="2dp" />
 
+    <TextView
+        android:id="@+id/venue_capacity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Capacity: 120"
+        android:textSize="14sp"
+        android:textColor="@color/gray"
+        android:layout_marginTop="2dp" />
+
+    <TextView
+        android:id="@+id/venue_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="08:00 - 22:00"
+        android:textSize="14sp"
+        android:textColor="@color/gray"
+        android:layout_marginTop="2dp" />
 </LinearLayout>

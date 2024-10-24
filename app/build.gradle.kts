@@ -48,4 +48,5 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
 }

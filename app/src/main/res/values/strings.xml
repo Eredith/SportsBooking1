@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">SportsBooking</string>
+    <string name="find_various_venues">Temukan Beragam Venue!</string>
+    <string name="search_hint">Cari Venue</string>
+    <string name="reset_filter">Reset Filter</string>
+    <string name="reset_filter_desc">Reset all filters</string>
+    <string name="icon_header_desc">Logo Stadium</string>
+    <string name="spinner_month_desc">Select Month</string>
+    <string name="day_monday_abbr">Sen</string>
+    <string name="day_tuesday_abbr" />
+    <string name="category_icon_desc" />
+    <string name="select_start_time">Pilih Waktu Mulai</string>
+    <string name="select_end_time">Pilih Waktu Selesai</string>
+    <string name="venue_image_desc" />
+
+    <!-- Toast Messages -->
+    <string name="filter_reset_message">Filter direset</string>
+    <string name="select_time_prompt">Silakan pilih waktu mulai dan selesai</string>
+    <string name="invalid_time_range">Waktu mulai harus sebelum waktu selesai</string>
+    <string name="no_venue_available">Tidak ada venue tersedia untuk waktu yang dipilih</string>
+    <string name="selected_month">Bulan yang dipilih: %1$s</string>
+    <string name="selected_time_range">Venue tersedia dari %1$s hingga %2$s</string>
 </resources>

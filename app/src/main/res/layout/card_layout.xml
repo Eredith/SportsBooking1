@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <!-- Gambar com.example.sportsbooking.Venue -->
+        <!-- Gambar com.example.sportsbooking.VenueMain -->
         <ImageView
             android:id="@+id/venue_image"
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                 android:textColor="@android:color/darker_gray" />
         </LinearLayout>
 
-        <!-- Nama com.example.sportsbooking.Venue -->
+        <!-- Nama com.example.sportsbooking.VenueMain -->
         <TextView
             android:id="@+id/venue_name"
             android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
             android:textColor="@android:color/black"
             android:layout_marginTop="8dp" />
 
-        <!-- Harga com.example.sportsbooking.Venue -->
+        <!-- Harga com.example.sportsbooking.VenueMain -->
         <TextView
             android:id="@+id/venue_price"
             android:layout_width="wrap_content"

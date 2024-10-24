@@ -99,7 +99,7 @@
         android:textColor="#666666"
         android:textSize="16sp" />
 
-    <!-- com.example.sportsbooking.Venue Cards -->
+    <!-- com.example.sportsbooking.VenueMain Cards -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recommendation_recycler_view"
         android:layout_width="match_parent"

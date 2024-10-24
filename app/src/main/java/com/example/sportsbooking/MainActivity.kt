@@ -35,14 +35,14 @@ class MainActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.recommendation_recycler_view)
 
         // Buat data venue
-        val venueList = listOf(
-            Venue("ASIOP Stadium", "Rp. 1.200.000", "Jakarta", "Sepak Bola", 120, R.drawable.venue_image),
-            Venue("Stadion Gelora", "Rp. 900.000", "Surabaya", "Sepak Bola", 80, R.drawable.venue_image)
+        val venueMainLists = listOf(
+            VenueMain("ASIOP Stadium", "Rp. 1.200.000", "Jakarta", "Sepak Bola", 120, R.drawable.venue_image),
+            VenueMain("Stadion Gelora", "Rp. 900.000", "Surabaya", "Sepak Bola", 80, R.drawable.venue_image)
         )
 
         // Hubungkan RecyclerView dengan Adapter
         recyclerView.layoutManager = GridLayoutManager(this, 2)  // Menampilkan 2 kolom
-        recyclerView.adapter = VenueAdapter(venueList)
+        recyclerView.adapter = VenueAdapterMain(venueMainLists)
 
         // Tombol Logout
         val btnLogout = findViewById<Button>(R.id.btnLogout)
