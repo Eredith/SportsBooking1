@@ -12,6 +12,7 @@
     <string name="select_start_time">Pilih Waktu Mulai</string>
     <string name="select_end_time">Pilih Waktu Selesai</string>
     <string name="venue_image_desc" />
+    <string name="booking">Booking</string>
 
     <!-- Toast Messages -->
     <string name="filter_reset_message">Filter direset</string>

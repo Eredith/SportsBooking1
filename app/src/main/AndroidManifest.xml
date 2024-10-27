@@ -23,9 +23,13 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".VenueListActivity" />
-        <activity android:name=".AdminActivity"
+        <activity android:name=".AdminActivity"/>
+        <activity android:name=".PageLapanganActivity"/>
+        <activity android:name=".DetailPembayaranActivity"/>
+        <activity android:name=".BookingActivity"
 
-            android:exported="true">
+
+        android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

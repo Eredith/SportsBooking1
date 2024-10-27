@@ -1,6 +1,7 @@
-// VenueAdapter.kt
 package com.example.sportsbooking
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class VenueAdapter(private var venues: List<Venue>) : RecyclerView.Adapter<VenueAdapter.VenueViewHolder>() {
+class VenueAdapter(private var venues: List<Venue>, private val context: Context) : RecyclerView.Adapter<VenueAdapter.VenueViewHolder>() {
 
     inner class VenueViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val venueImage: ImageView = itemView.findViewById(R.id.venue_image)
@@ -41,6 +42,19 @@ class VenueAdapter(private var venues: List<Venue>) : RecyclerView.Adapter<Venue
         val startTimeStr = timeFormatter.format(venue.availableStartTime.time)
         val endTimeStr = timeFormatter.format(venue.availableEndTime.time)
         holder.venueTime.text = "$startTimeStr - $endTimeStr"
+
+        // Set onClickListener pada item view untuk berpindah ke VenueDetailActivity
+        holder.itemView.setOnClickListener {
+            // Intent untuk berpindah ke VenueDetailActivity
+            val intent = Intent(context, PageLapanganActivity::class.java).apply {
+                putExtra("venue_name", venue.name)
+                putExtra("venue_price", venue.price)
+                putExtra("venue_location", venue.location)
+                putExtra("venue_capacity", venue.capacity)
+                putExtra("venue_category", venue.category)
+            }
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = venues.size

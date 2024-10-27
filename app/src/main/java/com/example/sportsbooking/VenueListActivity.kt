@@ -66,8 +66,11 @@ class VenueListActivity : AppCompatActivity() {
         recyclerVenue.layoutManager = LinearLayoutManager(this)
         venueList = getVenueData()
         filteredVenueList = venueList
-        venueAdapter = VenueAdapter(filteredVenueList)
+        // VenueListActivity.kt
+// Pada bagian inisialisasi adapter
+        venueAdapter = VenueAdapter(filteredVenueList, this)
         recyclerVenue.adapter = venueAdapter
+
 
         // Inisialisasi Time Selection TextViews
         textStartTime = findViewById(R.id.text_start_time)
