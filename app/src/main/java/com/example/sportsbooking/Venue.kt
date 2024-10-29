@@ -9,6 +9,6 @@ data class Venue(
     val category: String,
     val capacity: Int,
     val imageResId: Int,
-    val availableStartTime: Calendar, // Waktu mulai ketersediaan
-    val availableEndTime: Calendar    // Waktu selesai ketersediaan
+    var availableStartTime: Calendar?, // Waktu mulai ketersediaan
+    var availableEndTime: Calendar?    // Waktu selesai ketersediaan
 )

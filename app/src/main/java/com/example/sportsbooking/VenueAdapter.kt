@@ -37,15 +37,18 @@ class VenueAdapter(private var venues: List<Venue>, private val context: Context
         holder.venueCategory.text = venue.category
         holder.venueCapacity.text = "Capacity: ${venue.capacity}"
 
-        // Format waktu mulai dan selesai
+        // Format time for start and end
         val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
-        val startTimeStr = timeFormatter.format(venue.availableStartTime.time)
-        val endTimeStr = timeFormatter.format(venue.availableEndTime.time)
+
+        // Use safe calls to avoid null pointer exceptions
+        val startTimeStr = venue.availableStartTime?.let { timeFormatter.format(it.time) } ?: "N/A"
+        val endTimeStr = venue.availableEndTime?.let { timeFormatter.format(it.time) } ?: "N/A"
+
         holder.venueTime.text = "$startTimeStr - $endTimeStr"
 
-        // Set onClickListener pada item view untuk berpindah ke VenueDetailActivity
+        // Set onClickListener on item view to navigate to VenueDetailActivity
         holder.itemView.setOnClickListener {
-            // Intent untuk berpindah ke VenueDetailActivity
+            // Intent to navigate to PageLapanganActivity
             val intent = Intent(context, PageLapanganActivity::class.java).apply {
                 putExtra("venue_name", venue.name)
                 putExtra("venue_price", venue.price)
