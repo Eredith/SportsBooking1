@@ -26,6 +26,9 @@ class SignUpActivity : AppCompatActivity() {
         val etEmail = findViewById<EditText>(R.id.etEmailSignUp)
         val etPassword = findViewById<EditText>(R.id.etPasswordSignUp)
         val etConfirmPassword = findViewById<EditText>(R.id.etConfirmPasswordSignUp)
+        val etUsername = findViewById<EditText>(R.id.etUsername)
+        val etFullName = findViewById<EditText>(R.id.etFullName)
+        val etPhoneNumber = findViewById<EditText>(R.id.etPhoneNumber)
         val btnSignUp = findViewById<Button>(R.id.btnSignUp)
         val tvLogin = findViewById<TextView>(R.id.tvLogin)
 
@@ -33,9 +36,13 @@ class SignUpActivity : AppCompatActivity() {
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
             val confirmPassword = etConfirmPassword.text.toString().trim()
+            val username = etUsername.text.toString().trim()
+            val fullName = etFullName.text.toString().trim()
+            val phoneNumber = etPhoneNumber.text.toString().trim()
 
             // Validasi input
-            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ||
+                username.isEmpty() || fullName.isEmpty() || phoneNumber.isEmpty()) {
                 Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -62,6 +69,9 @@ class SignUpActivity : AppCompatActivity() {
                             // Buat data user untuk disimpan ke Firestore
                             val userData = hashMapOf(
                                 "email" to email,
+                                "username" to username,
+                                "fullName" to fullName,
+                                "phoneNumber" to phoneNumber,
                                 "isAdmin" to false // Menandai user sebagai user biasa (bukan admin)
                             )
 

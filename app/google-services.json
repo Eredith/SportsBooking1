@@ -1,32 +1,13 @@
 {
   "project_info": {
-    "project_number": "1071267093455",
-    "project_id": "map-lab-f6bc0",
-    "storage_bucket": "map-lab-f6bc0.appspot.com"
+    "project_number": "230229844936",
+    "project_id": "booking-lapangan-e0597",
+    "storage_bucket": "booking-lapangan-e0597.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1071267093455:android:12daecc03582375a05d0ba",
-        "android_client_info": {
-          "package_name": "com.example.lab_week_05"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCZiVGb_PU6ohu40UbtcdDSwGvaCEwVRW0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1071267093455:android:d9b0e3d149d2f5d405d0ba",
+        "mobilesdk_app_id": "1:230229844936:android:1444b62bf76907d49816fd",
         "android_client_info": {
           "package_name": "com.example.sportsbooking"
         }
@@ -34,26 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCZiVGb_PU6ohu40UbtcdDSwGvaCEwVRW0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1071267093455:android:4d9bf1edb1dd968405d0ba",
-        "android_client_info": {
-          "package_name": "com.example.umn_story_67630"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCZiVGb_PU6ohu40UbtcdDSwGvaCEwVRW0"
+          "current_key": "AIzaSyB7NprOQkH9J-tNefGuncKnwVKfOulIFOg"
         }
       ],
       "services": {
