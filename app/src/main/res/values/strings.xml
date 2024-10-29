@@ -21,4 +21,9 @@
     <string name="no_venue_available">Tidak ada venue tersedia untuk waktu yang dipilih</string>
     <string name="selected_month">Bulan yang dipilih: %1$s</string>
     <string name="selected_time_range">Venue tersedia dari %1$s hingga %2$s</string>
+    <string name="badminton">Badminton</string>
+    <string name="driving_range">Driving Range</string>
+    <string name="date_text">Select Date</string>
+
+
 </resources>
