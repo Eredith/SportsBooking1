@@ -57,13 +57,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-    // Selalu sign out user ketika aplikasi dimulai
-    override fun onStart() {
-        super.onStart()
-        auth.signOut() // User akan selalu logout ketika aplikasi dimulai
-    }
-
+    
     // Fungsi untuk mengecek apakah user adalah admin
     private fun checkUserRole(uid: String) {
         val docRef = firestore.collection("users").document(uid)

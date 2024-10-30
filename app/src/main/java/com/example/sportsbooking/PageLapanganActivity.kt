@@ -1,4 +1,3 @@
-// VenueDetailActivity.kt
 package com.example.sportsbooking
 
 import android.content.Intent

@@ -1,100 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:padding="16dp">
 
-    <!-- Input untuk Nama Lapangan -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nama Lapangan"
-        android:textSize="16sp"
-        android:paddingBottom="8dp" />
-
-    <EditText
-        android:id="@+id/etNama"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Masukkan Nama Lapangan"
-        android:inputType="text"
-        android:minHeight="48dp" />
+        android:orientation="vertical">
 
-    <!-- Input untuk Jenis Lapangan -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Jenis Lapangan"
-        android:textSize="16sp"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp" />
+        <!-- Nama Lapangan -->
+        <EditText
+            android:id="@+id/etNama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nama Lapangan"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/etJenisLapangan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Masukkan Jenis Lapangan"
-        android:inputType="text"
-        android:minHeight="48dp" />
+        <!-- Jenis Lapangan -->
+        <EditText
+            android:id="@+id/etJenisLapangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jenis Lapangan"
+            android:inputType="text" />
 
-    <!-- Input untuk Alamat -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Alamat"
-        android:textSize="16sp"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp" />
+        <!-- Harga Lapangan -->
+        <EditText
+            android:id="@+id/etHargaLapangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Harga Lapangan"
+            android:inputType="numberDecimal"
+            android:layout_marginTop="8dp" />
 
-    <EditText
-        android:id="@+id/etAlamat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Masukkan Alamat"
-        android:inputType="textPostalAddress"
-        android:minHeight="48dp" />
+        <!-- Kapasitas Lapangan -->
+        <EditText
+            android:id="@+id/etKapasitasLapangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kapasitas Lapangan"
+            android:inputType="number"
+            android:layout_marginTop="8dp" />
 
-    <!-- Spinner untuk Status Lapangan -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Status Lapangan"
-        android:textSize="16sp"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp" />
+        <!-- Alamat Lapangan -->
+        <EditText
+            android:id="@+id/etAlamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Alamat Lapangan"
+            android:inputType="textPostalAddress"
+            android:layout_marginTop="8dp" />
 
-    <Spinner
-        android:id="@+id/spinnerStatusLapangan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp" />
-    <!-- Tombol Pilih Gambar -->
-    <Button
-        android:id="@+id/btnPilihGambar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pilih Gambar"
-        android:layout_marginTop="16dp" />
+        <!-- Status Lapangan -->
+        <Spinner
+            android:id="@+id/spinnerStatusLapangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
 
-    <!-- ImageView untuk menampilkan gambar yang dipilih -->
-    <ImageView
-        android:id="@+id/imgLapangan"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/darker_gray" />
-    <!-- Tombol Simpan -->
-    <Button
-        android:id="@+id/btnSimpanPesanan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Simpan Pesanan"
-        android:backgroundTint="@android:color/holo_blue_light"
-        android:textColor="@android:color/white"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:layout_marginTop="24dp" />
+        <!-- Waktu Mulai -->
+        <TextView
+            android:id="@+id/tvWaktuMulai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Waktu Mulai"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textStartTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mulai: Belum Dipilih"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:background="@drawable/bg_textview"
+            android:gravity="center_vertical"
+            android:drawableEnd="@drawable/ic_time"
+            android:drawablePadding="8dp"
+            android:layout_marginTop="8dp" />
+
+        <!-- Waktu Selesai -->
+        <TextView
+            android:id="@+id/tvWaktuSelesai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Waktu Selesai"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/textEndTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selesai: Belum Dipilih"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:background="@drawable/bg_textview"
+            android:gravity="center_vertical"
+            android:drawableEnd="@drawable/ic_time"
+            android:drawablePadding="8dp"
+            android:layout_marginTop="8dp" />
+
+        <!-- Gambar Lapangan -->
+        <ImageView
+            android:id="@+id/imgLapangan"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/venue_image_desc"
+            android:src="@drawable/venue_image" />
+
+        <Button
+            android:id="@+id/btnPilihGambar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih Gambar"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp" />
+
+        <!-- Tombol Simpan Pesanan -->
+        <Button
+            android:id="@+id/btnSimpanPesanan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Simpan Pesanan"
+            android:layout_marginTop="24dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -2,6 +2,7 @@ package com.example.sportsbooking
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -18,14 +19,14 @@ class VenueListActivity : AppCompatActivity() {
 
     private lateinit var recyclerDays: RecyclerView
     private lateinit var daysAdapter: DaysAdapter
-    private lateinit var daysList: List<Day>
+    private var daysList: List<Day> = listOf()
 
     private lateinit var recyclerCategory: RecyclerView
     private lateinit var categoryAdapter: CategoryAdapter
-    private lateinit var categoryList: List<Category>
+    private var categoryList: List<Category> = listOf()
 
     private lateinit var spinnerMonth: Spinner
-    private lateinit var monthsList: List<String>
+    private var monthsList: List<String> = listOf()
 
     private lateinit var textStartTime: TextView
     private lateinit var textEndTime: TextView
@@ -64,7 +65,7 @@ class VenueListActivity : AppCompatActivity() {
         // Initialize RecyclerView for Venue
         recyclerVenue = findViewById(R.id.recycler_venue)
         recyclerVenue.layoutManager = LinearLayoutManager(this)
-        venueAdapter = VenueAdapter(filteredVenueList, this)
+        venueAdapter = VenueAdapter(filteredVenueList)
         recyclerVenue.adapter = venueAdapter
 
         // Initialize Time Selection TextViews
@@ -109,7 +110,8 @@ class VenueListActivity : AppCompatActivity() {
     }
 
     private fun getMonthList(): List<String> {
-        return DateFormatSymbols().months.filter { it.isNotEmpty() }
+        // Menggunakan Locale Indonesia untuk mendapatkan nama bulan dalam Bahasa Indonesia
+        return DateFormatSymbols(Locale("id", "ID")).months.filter { it.isNotEmpty() }
     }
 
     private fun getDaysData(): List<Day> {
@@ -129,23 +131,26 @@ class VenueListActivity : AppCompatActivity() {
             Category("Football", R.drawable.ic_football, "Januari"),
             Category("Basketball", R.drawable.ic_basketball, "Februari"),
             Category("Tennis", R.drawable.ic_tennis, "Maret"),
-            Category("Swimming", R.drawable.ic_swimming, "April")
+            Category("Swimming", R.drawable.ic_swimming, "April"),
+            Category("Bulu Tangkis", R.drawable.shuttlecock, "Oktober"),
+            Category("Driving Range", R.drawable.golf, "Oktober")
+
         )
     }
 
     private fun fetchVenuesFromFirestore() {
         val db: FirebaseFirestore = Firebase.firestore
 
-        db.collection("venues") // Make sure this matches your Firestore collection name
+        db.collection("venues") // Pastikan nama koleksi sesuai dengan Firestore Anda
             .get()
             .addOnSuccessListener { result ->
                 venueList.clear()
                 for (document in result) {
                     val venue = document.toObject(Venue::class.java)
 
-
-                    venue.availableStartTime = mapTimestampToCalendar(document.get("availableStartTime"))
-                    venue.availableEndTime = mapTimestampToCalendar(document.get("availableEndTime"))
+                    // Mengambil Date? langsung dari dokumen menggunakan getDate
+                    venue.availableStartTime = document.getDate("availableStartTime")
+                    venue.availableEndTime = document.getDate("availableEndTime")
 
                     venueList.add(venue)
                 }
@@ -158,20 +163,13 @@ class VenueListActivity : AppCompatActivity() {
             }
     }
 
-    private fun mapTimestampToCalendar(timestamp: Any?): Calendar? {
-        return if (timestamp is com.google.firebase.Timestamp) {
-            Calendar.getInstance().apply { time = timestamp.toDate() }
-        } else {
-            null
-        }
-    }
-
     private fun filterDataByMonth(month: String) {
         // Filter days and categories based on selected month
         val filteredDays = daysList.filter { it.month.equals(month, ignoreCase = true) }
         daysAdapter.updateData(filteredDays)
 
         val filteredCategories = categoryList.filter { it.month.equals(month, ignoreCase = true) }
+        Log.d("VenueListActivity", "Filtered Categories for $month: $filteredCategories")
         categoryAdapter.updateData(filteredCategories)
 
         // After filtering by month, filter venues by time if selected
@@ -193,8 +191,14 @@ class VenueListActivity : AppCompatActivity() {
             return
         }
 
+        val selectedStartDate: Date? = selectedStartTime?.time
+        val selectedEndDate: Date? = selectedEndTime?.time
+
         filteredVenueList = venueList.filter { venue ->
-            venue.availableStartTime!! <= selectedStartTime && venue.availableEndTime!! >= selectedEndTime
+            // Pastikan bahwa availableStartTime dan availableEndTime tidak null
+            venue.availableStartTime != null && venue.availableEndTime != null &&
+                    venue.availableStartTime!! <= selectedStartDate!! &&
+                    venue.availableEndTime!! >= selectedEndDate!!
         }.toMutableList() // Ensure it's mutable
 
         if (filteredVenueList.isNotEmpty()) {
@@ -202,6 +206,7 @@ class VenueListActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Tidak ada venue tersedia untuk waktu yang dipilih", Toast.LENGTH_SHORT).show()
             // Optionally reset adapter to show all venues or show an empty view
+            venueAdapter.updateData(filteredVenueList)
         }
     }
 
@@ -228,7 +233,10 @@ class VenueListActivity : AppCompatActivity() {
                     textEndTime.text = "Selesai: ${timeFormatter.format(selectedTime.time)}"
                 }
 
-                filterVenueByTime()
+                // Apply filter after setting the time
+                if (selectedStartTime != null && selectedEndTime != null) {
+                    filterVenueByTime()
+                }
             },
             currentHour,
             currentMinute,

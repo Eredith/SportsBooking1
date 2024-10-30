@@ -15,9 +15,9 @@ data class Category(
 
 class CategoryAdapter(private var categories: List<Category>) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
-    inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val icon: ImageView = itemView.findViewById(R.id.category_icon)
-        val name: TextView = itemView.findViewById(R.id.category_name)
+    class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val categoryIcon: ImageView = itemView.findViewById(R.id.category_icon)
+        val categoryName: TextView = itemView.findViewById(R.id.category_name)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -27,15 +27,12 @@ class CategoryAdapter(private var categories: List<Category>) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = categories[position]
-        holder.icon.setImageResource(category.icon)
-        holder.name.text = category.name
+        holder.categoryName.text = category.name
+        holder.categoryIcon.setImageResource(category.icon)
     }
 
     override fun getItemCount(): Int = categories.size
 
-    /**
-     * Memperbarui data kategori dan memberi tahu adapter bahwa data telah berubah.
-     */
     fun updateData(newCategories: List<Category>) {
         categories = newCategories
         notifyDataSetChanged()

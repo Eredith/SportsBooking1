@@ -13,7 +13,6 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         // Inisialisasi FirebaseAuth
         auth = FirebaseAuth.getInstance()
-        auth.signOut()
 
         // Cek apakah user sudah login
         val currentUser = auth.currentUser
