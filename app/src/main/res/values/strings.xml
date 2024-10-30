@@ -24,6 +24,9 @@
     <string name="badminton">Badminton</string>
     <string name="driving_range">Driving Range</string>
     <string name="date_text">Select Date</string>
+    <string name="venue_location_desc" />
+    <string name="logo_desc" />
+    <string name="back_button_desc" />
 
 
 </resources>

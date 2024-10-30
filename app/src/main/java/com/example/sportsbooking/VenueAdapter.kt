@@ -1,6 +1,9 @@
+// VenueAdapter.kt
 package com.example.sportsbooking
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +14,15 @@ import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.*
 
-class VenueAdapter(private var venues: List<Venue>) : RecyclerView.Adapter<VenueAdapter.VenueViewHolder>() {
+class VenueAdapter(private var venues: List<Venue>, private val context: Context) : RecyclerView.Adapter<VenueAdapter.VenueViewHolder>() {
 
-    class VenueViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class VenueViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView: TextView = itemView.findViewById(R.id.venue_name)
         val priceTextView: TextView = itemView.findViewById(R.id.venue_price)
         val locationTextView: TextView = itemView.findViewById(R.id.venue_location)
         val categoryTextView: TextView = itemView.findViewById(R.id.venue_category)
         val capacityTextView: TextView = itemView.findViewById(R.id.venue_capacity)
+        val statusTextView: TextView = itemView.findViewById(R.id.venue_status)
         val timeTextView: TextView = itemView.findViewById(R.id.venue_time)
         val imageView: ImageView = itemView.findViewById(R.id.venue_image)
     }
@@ -31,15 +35,39 @@ class VenueAdapter(private var venues: List<Venue>) : RecyclerView.Adapter<Venue
     override fun onBindViewHolder(holder: VenueViewHolder, position: Int) {
         val venue = venues[position]
         holder.nameTextView.text = venue.name
-        holder.priceTextView.text = venue.price
-        holder.locationTextView.text = venue.location
-        holder.categoryTextView.text = venue.category
-        holder.capacityTextView.text = "Capacity: ${venue.capacity}"
-        holder.timeTextView.text = "${formatTime(venue.availableStartTime)} - ${formatTime(venue.availableEndTime)}"
-        // Gunakan Glide untuk memuat gambar dari URL
-        Glide.with(holder.itemView.context)
-            .load(venue.imageResource)  // imageResource berisi URL gambar
+        holder.priceTextView.text = "Harga: ${venue.price}"
+        holder.locationTextView.text = "Lokasi: ${venue.location}"
+        holder.categoryTextView.text = "Kategori: ${venue.category}"
+        holder.capacityTextView.text = "Kapasitas: ${venue.capacity}"
+        holder.statusTextView.text = "Status: ${venue.status}"
+        holder.timeTextView.text = "Waktu: ${formatTime(venue.availableStartTime)} - ${formatTime(venue.availableEndTime)}"
+
+        // Menggunakan Glide untuk memuat gambar dari URL
+        Glide.with(holder.imageView.context)
+            .load(venue.imageResource)
+            .placeholder(R.drawable.venue_image)
+            .error(R.drawable.venue_image)
             .into(holder.imageView)
+
+        // Menambahkan Listener untuk Klik pada Item
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, PageLapanganActivity::class.java).apply {
+                putExtra("venue_name", venue.name)
+                putExtra("venue_price", venue.price)
+                putExtra("venue_location", venue.location)
+                putExtra("venue_category", venue.category)
+                putExtra("venue_capacity", venue.capacity)
+                putExtra("venue_status", venue.status)
+                putExtra("venue_imageUrl", venue.imageResource)
+                // Format waktu menjadi string jika diperlukan
+                val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                val startTime = venue.availableStartTime?.let { sdf.format(it) } ?: "N/A"
+                val endTime = venue.availableEndTime?.let { sdf.format(it) } ?: "N/A"
+                putExtra("venue_availableStartTime", startTime)
+                putExtra("venue_availableEndTime", endTime)
+            }
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = venues.size

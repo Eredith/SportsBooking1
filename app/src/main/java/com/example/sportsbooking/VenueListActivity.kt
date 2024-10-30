@@ -65,7 +65,7 @@ class VenueListActivity : AppCompatActivity() {
         // Initialize RecyclerView for Venue
         recyclerVenue = findViewById(R.id.recycler_venue)
         recyclerVenue.layoutManager = LinearLayoutManager(this)
-        venueAdapter = VenueAdapter(filteredVenueList)
+        venueAdapter = VenueAdapter(filteredVenueList, this)
         recyclerVenue.adapter = venueAdapter
 
         // Initialize Time Selection TextViews

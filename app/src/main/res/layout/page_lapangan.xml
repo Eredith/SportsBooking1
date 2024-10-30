@@ -4,46 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp">
+    android:paddingTop="20dp"
+    tools:context=".PageLapanganActivity">
 
-
-
-    <ImageView
-        android:id="@+id/venue_image"
-        android:layout_width="match_parent"
-        android:layout_height="300sp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/venue_image"
-        android:layout_margin="20dp"
-        tools:ignore="MissingConstraints" />
+    <!-- Back Button -->
+    <!-- Venue Image -->
+    <!-- Venue Card -->
 
     <ImageButton
         android:id="@+id/backbutton_page_lapangan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:backgroundTint="@android:color/white"
+        android:contentDescription="@string/back_button_desc"
         android:padding="10dp"
         android:src="@drawable/baseline_arrow_back_ios_24"
-        tools:ignore="MissingConstraints,TouchTargetSizeCheck,SpeakableTextPresentCheck"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintBottom_toTopOf="@+id/venue_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/venue_image"
+        android:layout_width="372dp"
+        android:layout_height="287dp"
+        android:layout_margin="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/venue_image"
+        android:background="@drawable/rounded_corners"
+        android:clipToOutline="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.077" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/venue_card"
-        android:layout_width="2in"
-        android:layout_height="0.8in"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="-20dp"
+        android:layout_marginHorizontal="20dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/venue_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/venue_image">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="16dp">
 
             <!-- Horizontal layout for logo and title -->
             <LinearLayout
@@ -58,10 +73,12 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/logo_sports"
-                    android:layout_marginEnd="8dp" />
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/logo_desc" />
 
                 <!-- TextView for title next to the logo -->
                 <TextView
+                    android:id="@+id/venue_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="B23 Arena Simprug\nBadminton"
@@ -70,21 +87,56 @@
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
             </LinearLayout>
-
             <!-- TextView for description below the logo and title -->
             <TextView
-                android:layout_width="0.7in"
+                android:id="@+id/venue_category"
+                android:layout_width="253dp"
                 android:layout_height="wrap_content"
-                android:text="Bulu Tangkis \n\nJl. Simprug garden - Jakarta Selatan"
+                android:layout_marginTop="8dp"
+                android:text="Bulu Tangkis"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="11sp"
-                android:layout_marginTop="8dp" />
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/venue_alamat"
+                android:layout_width="253dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Jl. Simprug Garden - Jakarta Selatan"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/venue_capacity"
+                android:layout_width="253dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Kapasitas: 10 Orang"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/venue_status"
+                android:layout_width="253dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Tersedia"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/venue_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Harga: Rp. 1.200.000"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"/>
         </LinearLayout>
 
         <!-- Small CardView for opening hours -->
         <androidx.cardview.widget.CardView
-            android:layout_width="0.7in"
-            android:layout_height="0.3in"
+            android:id="@+id/opening_hours_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="8dp"
             android:backgroundTint="@android:color/holo_green_light"
@@ -97,32 +149,25 @@
                 android:orientation="vertical"
                 android:padding="8dp">
 
-                <!-- Horizontal layout for clock icon and "Jam Buka" text -->
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- TextView for "Jam Buka" title -->
+                <TextView
+                    android:id="@+id/opening_hours_title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <!-- TextView for "Jam Buka" title -->
-                    <TextView
-                        android:id="@+id/opening_hours_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Jam Buka"
-                        android:textColor="@android:color/black"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                    android:text="Jam Buka"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
 
                 <!-- TextView for opening hours -->
                 <TextView
                     android:id="@+id/opening_hours_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:text="08:00 - 22:00"
                     android:textColor="@android:color/black"
-                    android:textSize="10sp"
+                    android:textSize="14sp"
                     android:layout_marginTop="4dp"
                     android:layout_gravity="center"/>
             </LinearLayout>
@@ -130,57 +175,66 @@
 
     </androidx.cardview.widget.CardView>
 
+    <!-- Detail Alamat Section -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1.3in"
+        android:id="@+id/detail_alamat_section"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/venue_card">
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/venue_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
+            android:id="@+id/detail_alamat_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Detail Alamat"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="30dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
 
+        <!-- Venue Location Image -->
         <ImageView
-            android:layout_width="2.1in"
-            android:layout_height="0.7in"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_venue"
-            android:layout_marginBottom="20dp">
-        </ImageView>
+            android:id="@+id/venue_location_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/rounded_corners"
+            android:clipToOutline="true"
+            android:src="@drawable/venue_image"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/venue_location_desc"/>
 
+        <!-- Venue Location Text -->
         <TextView
+            android:id="@+id/venue_location_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Jakarta Pusat"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="-10dp"
-            android:textSize="11sp"
-            android:textStyle="bold">
-        </TextView>
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
 
+        <!-- Venue Description Text -->
         <TextView
+            android:id="@+id/venue_description_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="deskripsi dari alamat B23 Arena Simprug Badminton deskripsi dari alamat B23 Arena Simprug Badminton"
-            android:textSize="10sp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginRight="30dp">
-        </TextView>
+            android:text="Deskripsi dari alamat B23 Arena Simprug Badminton. Deskripsi dari alamat B23 Arena Simprug Badminton."
+            android:textSize="14sp"/>
     </LinearLayout>
 
+    <!-- Book Now Button -->
     <Button
         android:id="@+id/lapangan_page_button"
-        android:layout_width="2in"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:text="Book Now"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="10dp"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_alamat_section" />
 </androidx.constraintlayout.widget.ConstraintLayout>
