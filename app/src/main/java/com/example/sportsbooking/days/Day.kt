@@ -1,4 +1,4 @@
-package com.example.sportsbooking
+package com.example.sportsbooking.days
 
 data class Day(
     val dayAbbreviation: String,

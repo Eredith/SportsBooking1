@@ -1,4 +1,4 @@
-package com.example.sportsbooking
+package com.example.sportsbooking.pesanan
 
 data class Pesanan(
     val nama: String = "",

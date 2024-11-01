@@ -1,10 +1,11 @@
 // BookingActivity.kt
-package com.example.sportsbooking
+package com.example.sportsbooking.booking
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sportsbooking.R
 
 class BookingActivity : AppCompatActivity() {
 

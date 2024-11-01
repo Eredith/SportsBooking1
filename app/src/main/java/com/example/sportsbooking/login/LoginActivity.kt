@@ -1,4 +1,4 @@
-package com.example.sportsbooking
+package com.example.sportsbooking.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,9 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sportsbooking.AdminActivity
+import com.example.sportsbooking.MainActivity
+import com.example.sportsbooking.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 

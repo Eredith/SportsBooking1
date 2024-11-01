@@ -1,4 +1,4 @@
-package com.example.sportsbooking
+package com.example.sportsbooking.venue
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.sportsbooking.pagelapangan.PageLapanganActivity
+import com.example.sportsbooking.R
 
 class VenueAdapterMain(private var venueMains: List<VenueMain>) : RecyclerView.Adapter<VenueAdapterMain.VenueViewHolder>() {
 

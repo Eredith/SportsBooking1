@@ -13,6 +13,9 @@
     <string name="select_end_time">Pilih Waktu Selesai</string>
     <string name="venue_image_desc" />
     <string name="booking">Booking</string>
+    <string name="alamat_format">Alamat: %1$s</string>
+    <string name="harga_format">Harga: %1$s</string>
+    <string name="jam_buka">Jam Buka</string>
 
     <!-- Toast Messages -->
     <string name="filter_reset_message">Filter direset</string>
@@ -26,7 +29,9 @@
     <string name="date_text">Select Date</string>
     <string name="venue_location_desc" />
     <string name="logo_desc" />
-    <string name="back_button_desc" />
+    <string name="back_button_desc">Back</string>
+    <string name="error_booking">Error: Unable to proceed with booking.</string>
+    <string name="venue_image" />
 
 
 </resources>

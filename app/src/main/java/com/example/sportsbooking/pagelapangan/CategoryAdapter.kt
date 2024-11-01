@@ -1,4 +1,4 @@
-package com.example.sportsbooking
+package com.example.sportsbooking.pagelapangan
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sportsbooking.R
 
 data class Category(
     val name: String,

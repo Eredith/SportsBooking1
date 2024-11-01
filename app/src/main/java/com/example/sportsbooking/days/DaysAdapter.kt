@@ -1,11 +1,12 @@
 // DaysAdapter.kt
-package com.example.sportsbooking
+package com.example.sportsbooking.days
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sportsbooking.R
 
 class DaysAdapter(private var days: List<Day>) : RecyclerView.Adapter<DaysAdapter.DayViewHolder>() {
 

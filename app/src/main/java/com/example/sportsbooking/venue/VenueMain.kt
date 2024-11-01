@@ -1,8 +1,8 @@
-package com.example.sportsbooking
+package com.example.sportsbooking.venue
 
 import java.util.Date
 
-data class Venue(
+data class VenueMain(
     val name: String = "",
     val price: String = "",
     val location: String = "",

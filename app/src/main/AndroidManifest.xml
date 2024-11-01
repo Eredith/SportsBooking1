@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,14 +20,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".login.LoginActivity"/>
         <activity android:name=".MainActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".VenueListActivity" />
+        <activity android:name=".login.SignUpActivity" />
+        <activity android:name=".venue.VenueListActivity" />
         <activity android:name=".AdminActivity"/>
-        <activity android:name=".PageLapanganActivity"/>
-        <activity android:name=".DetailPembayaranActivity"/>
-        <activity android:name=".BookingActivity"
+        <activity android:name=".pagelapangan.PageLapanganActivity"/>
+        <activity android:name=".detaillapangan.DetailLapanganActivity"/>
+        <activity android:name=".detailpembayaran.DetailPembayaranActivity" />
+        <activity android:name=".booking.BookingActivity"
 
 
         android:exported="true">

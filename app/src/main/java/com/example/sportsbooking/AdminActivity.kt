@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayout
 import androidx.fragment.app.Fragment
+import com.example.sportsbooking.pesanan.BuatPesananFragment
+import com.example.sportsbooking.pesanan.LihatPesananFragment
 
 class AdminActivity : AppCompatActivity() {
 

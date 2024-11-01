@@ -1,4 +1,4 @@
-package com.example.sportsbooking
+package com.example.sportsbooking.venue
 
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -8,6 +8,11 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sportsbooking.pagelapangan.Category
+import com.example.sportsbooking.pagelapangan.CategoryAdapter
+import com.example.sportsbooking.days.Day
+import com.example.sportsbooking.days.DaysAdapter
+import com.example.sportsbooking.R
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
