@@ -1,46 +1,61 @@
-// BookingActivity.kt
 package com.example.sportsbooking.booking
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportsbooking.R
+import com.google.firebase.firestore.FirebaseFirestore
 
 class BookingActivity : AppCompatActivity() {
 
     private lateinit var bookingRecyclerView: RecyclerView
     private lateinit var bookingAdapter: BookingAdapter
-    private lateinit var bookingList: List<Booking>
+    private lateinit var bookingSlotList: List<BookingSlot>
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.booking_page)
 
-        // Contoh data pesanan (booking)
-        bookingList = listOf(
-            Booking(
-                venueImageResId = R.drawable.ic_venue_placeholder,  // Ganti dengan gambar venue yang sesuai
-                venueName = "ASATU ARENA CIKINI",
-                venueAddress = "Asatu Area, JL. R....",
-                venueSport = "Mini Soccer",
-                bookingStatus = "Status Pesanan: Berhasil"
-            ),
-            Booking(
-                venueImageResId = R.drawable.ic_venue_placeholder,
-                venueName = "LAPANGAN ABCD",
-                venueAddress = "Jl. Contoh No. 123",
-                venueSport = "Basketball",
-                bookingStatus = "Status Pesanan: Pending"
-            )
-        )
+        // Initialize Firestore
+        db = FirebaseFirestore.getInstance()
 
-        // Inisialisasi RecyclerView
+        // Initialize RecyclerView
         bookingRecyclerView = findViewById(R.id.recycler_view_booking)
         bookingRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Inisialisasi Adapter dan hubungkan dengan RecyclerView
-        bookingAdapter = BookingAdapter(bookingList)
+        // Initialize Adapter with a click listener
+        bookingAdapter = BookingAdapter { slot ->
+            // Handle booking slot click
+            // For example, navigate to a details page or show a Toast
+            Toast.makeText(this, "Selected Slot: ${slot.time}", Toast.LENGTH_SHORT).show()
+        }
+
         bookingRecyclerView.adapter = bookingAdapter
+
+        // Load booking slots from Firestore
+        loadBookingSlots()
+    }
+
+    private fun loadBookingSlots() {
+        // Fetch booking slots from Firestore
+        db.collection("booking_slots")
+            .get()
+            .addOnSuccessListener { documents ->
+                bookingSlotList = documents.map { doc ->
+                    BookingSlot(
+                        time = doc.getString("time") ?: "Unavailable",
+                        price = doc.getString("price") ?: "0",
+                        isBooked = doc.getBoolean("isBooked") ?: false
+                    )
+                }
+                // Submit the list to the adapter
+                bookingAdapter.submitList(bookingSlotList)
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Failed to load booking slots: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 }

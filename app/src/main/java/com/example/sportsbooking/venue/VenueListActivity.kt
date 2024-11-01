@@ -1,3 +1,4 @@
+// VenueListActivity.kt
 package com.example.sportsbooking.venue
 
 import android.app.TimePickerDialog
@@ -57,7 +58,9 @@ class VenueListActivity : AppCompatActivity() {
         recyclerDays = findViewById(R.id.recycler_days)
         recyclerDays.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         daysList = getDaysData()
-        daysAdapter = DaysAdapter(daysList)
+        daysAdapter = DaysAdapter(daysList) { day ->
+            onDateSelected(day)
+        }
         recyclerDays.adapter = daysAdapter
 
         // Initialize RecyclerView for Categories
@@ -271,5 +274,13 @@ class VenueListActivity : AppCompatActivity() {
 
         // Reset to show all venues
         venueAdapter.updateData(venueList)
+    }
+
+    private fun onDateSelected(day: Day) {
+        Toast.makeText(
+            this,
+            "Selected date: ${day.name}, ${day.date} ${day.month}",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

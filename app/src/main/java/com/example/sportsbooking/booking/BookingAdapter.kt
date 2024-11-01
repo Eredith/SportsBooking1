@@ -4,59 +4,48 @@ package com.example.sportsbooking.booking
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportsbooking.R
+import com.example.sportsbooking.booking.BookingSlot // Ensure correct import
 
-class BookingAdapter(private val bookingList: List<Booking>) :
-    RecyclerView.Adapter<BookingAdapter.BookingViewHolder>() {
+class BookingAdapter(private val onSlotClick: (BookingSlot) -> Unit) : RecyclerView.Adapter<BookingAdapter.BookingSlotViewHolder>() {
 
-    // ViewHolder untuk setiap item
-    inner class BookingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageViewVenue: ImageView = itemView.findViewById(R.id.imageViewVenue)
-        val textViewVenueName: TextView = itemView.findViewById(R.id.textViewVenueName)
-        val textViewVenueAddress: TextView = itemView.findViewById(R.id.textViewVenueAddress)
-        val textViewVenueSport: TextView = itemView.findViewById(R.id.textViewVenueSport)
-        val textViewBookingStatus: TextView = itemView.findViewById(R.id.textViewBookingStatus)
-    }
+    private val bookingSlotList = mutableListOf<BookingSlot>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingViewHolder {
-        // Inflate layout untuk item
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.booking_item, parent, false)
-        return BookingViewHolder(view)
-    }
+    inner class BookingSlotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val slotTime: TextView = itemView.findViewById(R.id.slot_time)
+        val slotPrice: TextView = itemView.findViewById(R.id.slot_price)
 
-    override fun onBindViewHolder(holder: BookingViewHolder, position: Int) {
-        // Mengambil data booking pada posisi tertentu
-        val booking = bookingList[position]
-
-        // Mengatur data ke ViewHolder
-        holder.imageViewVenue.setImageResource(booking.venueImageResId)
-        holder.textViewVenueName.text = booking.venueName
-        holder.textViewVenueAddress.text = booking.venueAddress
-        holder.textViewVenueSport.text = booking.venueSport
-        holder.textViewBookingStatus.text = booking.bookingStatus
-
-        // Mengatur warna status berdasarkan status pemesanan
-        when (booking.bookingStatus) {
-            "Status Pesanan: Berhasil" -> {
-                holder.textViewBookingStatus.setTextColor(holder.itemView.context.getColor(android.R.color.holo_green_dark))
-            }
-            "Status Pesanan: Pending" -> {
-                holder.textViewBookingStatus.setTextColor(holder.itemView.context.getColor(android.R.color.holo_orange_dark))
-            }
-            "Status Pesanan: Dibatalkan" -> {
-                holder.textViewBookingStatus.setTextColor(holder.itemView.context.getColor(android.R.color.holo_red_dark))
-            }
-            else -> {
-                holder.textViewBookingStatus.setTextColor(holder.itemView.context.getColor(android.R.color.black))
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val bookingSlot = bookingSlotList[position]
+                    onSlotClick(bookingSlot)
+                }
             }
         }
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingSlotViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_booking_slot, parent, false)
+        return BookingSlotViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: BookingSlotViewHolder, position: Int) {
+        val slot = bookingSlotList[position]
+        holder.slotTime.text = slot.time
+        holder.slotPrice.text = slot.price
+    }
+
     override fun getItemCount(): Int {
-        return bookingList.size
+        return bookingSlotList.size
+    }
+
+    fun submitList(slots: List<BookingSlot>) {
+        bookingSlotList.clear()
+        bookingSlotList.addAll(slots)
+        notifyDataSetChanged()
     }
 }

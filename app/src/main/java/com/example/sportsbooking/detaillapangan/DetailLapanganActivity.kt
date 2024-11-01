@@ -1,4 +1,3 @@
-// DetailLapanganActivity.kt
 package com.example.sportsbooking.detaillapangan
 
 import android.content.Intent
@@ -12,7 +11,6 @@ import com.example.sportsbooking.R
 import com.example.sportsbooking.databinding.DetailLapanganBinding
 import com.example.sportsbooking.days.Day
 import com.example.sportsbooking.days.DaysAdapter
-import com.example.sportsbooking.detailpembayaran.DetailPembayaranActivity
 
 class DetailLapanganActivity : AppCompatActivity() {
 
@@ -20,6 +18,7 @@ class DetailLapanganActivity : AppCompatActivity() {
     private lateinit var recyclerDays: RecyclerView
     private lateinit var daysAdapter: DaysAdapter
     private var daysList: List<Day> = listOf()
+    private var selectedDay: Day? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +88,9 @@ class DetailLapanganActivity : AppCompatActivity() {
 
         // Initialize sample data
         daysList = getDaysData()
-        daysAdapter = DaysAdapter(daysList)
+        daysAdapter = DaysAdapter(daysList) { day ->
+            onDateSelected(day)
+        }
         recyclerDays.adapter = daysAdapter
     }
 
@@ -105,9 +106,11 @@ class DetailLapanganActivity : AppCompatActivity() {
         )
     }
 
-    /**
-     * Menangani aksi saat tombol Book Now diklik
-     */
+    private fun onDateSelected(day: Day) {
+        selectedDay = day
+        Toast.makeText(this, "Selected date: ${day.name}, ${day.date} ${day.month}", Toast.LENGTH_SHORT).show()
+    }
+
     private fun handleBookNow(
         venueName: String,
         venuePrice: String,
@@ -120,8 +123,13 @@ class DetailLapanganActivity : AppCompatActivity() {
         venueEndTime: String
     ) {
         if (binding.termsCheckbox.isChecked) {
+            if (selectedDay == null) {
+                Toast.makeText(this, "Please select a date", Toast.LENGTH_SHORT).show()
+                return
+            }
+
             try {
-                val intent = Intent(this, DetailPembayaranActivity::class.java).apply {
+                val intent = Intent(this, DetailLapanganJam::class.java).apply {
                     putExtra("venue_name", venueName)
                     putExtra("venue_price", venuePrice)
                     putExtra("venue_location", venueLocation)
@@ -131,6 +139,7 @@ class DetailLapanganActivity : AppCompatActivity() {
                     putExtra("venue_imageUrl", venueImageUrl)
                     putExtra("venue_availableStartTime", venueStartTime)
                     putExtra("venue_availableEndTime", venueEndTime)
+                    putExtra("selected_date", "${selectedDay?.name}, ${selectedDay?.date} ${selectedDay?.month}")
                 }
                 startActivity(intent)
             } catch (e: Exception) {
@@ -142,9 +151,6 @@ class DetailLapanganActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Fungsi untuk membuka halaman web.
-     */
     private fun openWebPage(url: String) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = android.net.Uri.parse(url)

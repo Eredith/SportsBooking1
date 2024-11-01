@@ -2,31 +2,52 @@
 package com.example.sportsbooking.days
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sportsbooking.databinding.ItemDayBinding
+import com.example.sportsbooking.R
 
-class DaysAdapter(private var daysList: List<Day>) : RecyclerView.Adapter<DaysAdapter.DayViewHolder>() {
+class DaysAdapter(private var daysList: List<Day>, private val onDateClick: (Day) -> Unit) : RecyclerView.Adapter<DaysAdapter.DayViewHolder>() {
 
-    inner class DayViewHolder(private val binding: ItemDayBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(day: Day) {
-            binding.dayName.text = day.name
-            binding.dayDate.text = day.date.toString()
+    private var selectedPosition = RecyclerView.NO_POSITION
+
+    inner class DayViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val dayName: TextView = itemView.findViewById(R.id.day_name)
+        val dayNumber: TextView = itemView.findViewById(R.id.day_number)
+        val monthName: TextView = itemView.findViewById(R.id.month_name)
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    notifyItemChanged(selectedPosition)
+                    selectedPosition = position
+                    notifyItemChanged(selectedPosition)
+                    onDateClick(daysList[position])
+                }
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
-        val binding = ItemDayBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return DayViewHolder(binding)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_day, parent, false)
+        return DayViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-        holder.bind(daysList[position])
+        val day = daysList[position]
+        holder.dayName.text = day.name
+        holder.dayNumber.text = day.date.toString()
+        holder.monthName.text = day.month
+
+        holder.itemView.isSelected = (selectedPosition == position)
     }
 
-    override fun getItemCount(): Int = daysList.size
+    override fun getItemCount(): Int {
+        return daysList.size
+    }
 
-    // Method to update the days list
     fun updateData(newDaysList: List<Day>) {
         daysList = newDaysList
         notifyDataSetChanged()

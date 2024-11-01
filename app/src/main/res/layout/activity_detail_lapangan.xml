@@ -26,6 +26,15 @@
         android:layout_below="@id/courtTypeTextView"
         android:layout_centerHorizontal="true"
         android:text="Floor Type" />
+    
+    <TextView
+        android:id="@+id/selectedDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected Date: "
+        android:textSize="16sp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
