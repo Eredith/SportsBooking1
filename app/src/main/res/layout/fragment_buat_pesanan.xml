@@ -10,6 +10,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Kategori Olahraga -->
+        <Spinner
+            android:id="@+id/spinnerKategoriOlahraga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Pilih Olahraga" />
+
         <!-- Nama Lapangan -->
         <EditText
             android:id="@+id/etNama"

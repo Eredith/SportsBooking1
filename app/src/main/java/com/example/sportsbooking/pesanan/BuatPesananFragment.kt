@@ -7,15 +7,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.sportsbooking.R
-import com.example.sportsbooking.venue.Venue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class BuatPesananFragment : Fragment() {
 
@@ -33,6 +39,7 @@ class BuatPesananFragment : Fragment() {
     private var imageUrl: String = ""
     private lateinit var storageReference: StorageReference
 
+    private lateinit var spinnerKategoriOlahraga: Spinner
     private lateinit var textStartTime: TextView
     private lateinit var textEndTime: TextView
     private var selectedStartTime: Calendar? = null
@@ -45,24 +52,18 @@ class BuatPesananFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate layout untuk Buat Pesanan
         val view = inflater.inflate(R.layout.fragment_buat_pesanan, container, false)
 
-        // Inisialisasi Firestore
         firestore = FirebaseFirestore.getInstance()
-        // Inisialisasi Firebase Storage
         storageReference = FirebaseStorage.getInstance().reference
 
-        // Inisialisasi elemen UI
         imgLapangan = view.findViewById(R.id.imgLapangan)
         btnPilihGambar = view.findViewById(R.id.btnPilihGambar)
 
-        // Listener untuk memilih gambar
         btnPilihGambar.setOnClickListener {
             pilihGambarDariGaleri()
         }
 
-        // Inisialisasi elemen UI lainnya
         etNama = view.findViewById(R.id.etNama)
         etJenisLapangan = view.findViewById(R.id.etJenisLapangan)
         etHargaLapangan = view.findViewById(R.id.etHargaLapangan)
@@ -74,27 +75,34 @@ class BuatPesananFragment : Fragment() {
         textStartTime = view.findViewById(R.id.textStartTime)
         textEndTime = view.findViewById(R.id.textEndTime)
 
-        // Data untuk Spinner (status ketersediaan lapangan)
+        // Spinner untuk kategori olahraga
+        spinnerKategoriOlahraga = view.findViewById(R.id.spinnerKategoriOlahraga)
+        val kategoriOptions = arrayOf("badminton", "golf")
+        val kategoriAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            kategoriOptions
+        )
+        kategoriAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerKategoriOlahraga.adapter = kategoriAdapter
+
         val statusOptions = arrayOf("Tersedia", "Tidak Tersedia")
-        val adapter = ArrayAdapter(
+        val statusAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
             statusOptions
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerStatusLapangan.adapter = adapter
+        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerStatusLapangan.adapter = statusAdapter
 
-        // Listener untuk memilih waktu mulai
         textStartTime.setOnClickListener {
             showTimePicker(isStartTime = true)
         }
 
-        // Listener untuk memilih waktu selesai
         textEndTime.setOnClickListener {
             showTimePicker(isStartTime = false)
         }
 
-        // Listener untuk tombol simpan pesanan
         btnSimpanPesanan.setOnClickListener {
             simpanPesananKeFirebase()
         }
@@ -106,7 +114,7 @@ class BuatPesananFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == android.app.Activity.RESULT_OK && data != null && data.data != null) {
             imageUri = data.data
-            imgLapangan.setImageURI(imageUri)  // Tampilkan gambar yang dipilih di ImageView
+            imgLapangan.setImageURI(imageUri)
         }
     }
 
@@ -117,7 +125,6 @@ class BuatPesananFragment : Fragment() {
 
             fileReference.putFile(it)
                 .addOnSuccessListener { taskSnapshot ->
-                    // Mendapatkan URL gambar yang diupload
                     taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
                         onSuccess(uri.toString())
                     }.addOnFailureListener { e ->
@@ -138,7 +145,6 @@ class BuatPesananFragment : Fragment() {
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
-    // Fungsi untuk memilih waktu menggunakan TimePickerDialog
     private fun showTimePicker(isStartTime: Boolean) {
         val calendar = Calendar.getInstance()
         val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -164,13 +170,12 @@ class BuatPesananFragment : Fragment() {
             },
             currentHour,
             currentMinute,
-            true // 24-hour format
+            true
         )
 
         picker.show()
     }
 
-    // Fungsi untuk menyimpan pesanan ke Firebase Firestore
     private fun simpanPesananKeFirebase() {
         val namaLapangan = etNama.text.toString().trim()
         val jenisLapangan = etJenisLapangan.text.toString().trim()
@@ -178,8 +183,8 @@ class BuatPesananFragment : Fragment() {
         val kapasitasLapangan = etKapasitasLapangan.text.toString().trim()
         val alamatLapangan = etAlamat.text.toString().trim()
         val statusLapangan = spinnerStatusLapangan.selectedItem.toString()
+        val kategoriOlahraga = spinnerKategoriOlahraga.selectedItem.toString()
 
-        // Validasi input
         if (namaLapangan.isEmpty() || jenisLapangan.isEmpty() || hargaLapangan.isEmpty() ||
             kapasitasLapangan.isEmpty() || alamatLapangan.isEmpty()
         ) {
@@ -187,7 +192,6 @@ class BuatPesananFragment : Fragment() {
             return
         }
 
-        // Validasi waktu
         if (selectedStartTime == null || selectedEndTime == null) {
             Toast.makeText(requireContext(), "Silakan pilih waktu mulai dan selesai", Toast.LENGTH_SHORT).show()
             return
@@ -198,33 +202,32 @@ class BuatPesananFragment : Fragment() {
             return
         }
 
-        // Upload gambar terlebih dahulu jika ada gambar yang dipilih
         uploadGambarKeFirebaseStorage(onSuccess = { uploadedImageUrl ->
-            // Jika upload gambar berhasil, simpan pesanan ke Firestore
-            val venue = Venue(
-                name = namaLapangan,
-                price = hargaLapangan,
-                location = alamatLapangan,
-                category = jenisLapangan,
-                capacity = kapasitasLapangan.toInt(),
-                imageResource = uploadedImageUrl,
-                status = statusLapangan,
-                availableStartTime = selectedStartTime?.time,
-                availableEndTime = selectedEndTime?.time
+            val venue = mapOf(
+                "name" to namaLapangan,
+                "price" to hargaLapangan,
+                "location" to alamatLapangan,
+                "category" to jenisLapangan,
+                "capacity" to kapasitasLapangan.toInt(),
+                "imageResource" to uploadedImageUrl,
+                "status" to statusLapangan,
+                "availableStartTime" to selectedStartTime?.time,
+                "availableEndTime" to selectedEndTime?.time
             )
 
-            firestore.collection("venues")
-                .add(venue)
+            firestore.collection("sports_center").document(kategoriOlahraga)
+                .collection("courts")
+                .document(namaLapangan) // Menggunakan namaLapangan sebagai documentId
+                .set(venue)
                 .addOnSuccessListener {
                     Toast.makeText(requireContext(), "Venue berhasil disimpan", Toast.LENGTH_SHORT).show()
-                    // Reset input setelah berhasil disimpan
                     etNama.text.clear()
                     etJenisLapangan.text.clear()
                     etHargaLapangan.text.clear()
                     etKapasitasLapangan.text.clear()
                     etAlamat.text.clear()
                     spinnerStatusLapangan.setSelection(0)
-                    imgLapangan.setImageURI(null)  // Reset gambar yang ditampilkan
+                    imgLapangan.setImageURI(null)
                     textStartTime.text = "Mulai: Belum Dipilih"
                     textEndTime.text = "Selesai: Belum Dipilih"
                 }
