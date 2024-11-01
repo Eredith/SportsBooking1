@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/courtNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:text="Court Name" />
+
+    <TextView
+        android:id="@+id/courtTypeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/courtNameTextView"
+        android:layout_centerHorizontal="true"
+        android:text="Court Type" />
+
+    <TextView
+        android:id="@+id/floorTypeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/courtTypeTextView"
+        android:layout_centerHorizontal="true"
+        android:text="Floor Type" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/floorTypeTextView"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_above="@id/bookButton" />
+
+    <Button
+        android:id="@+id/bookButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:text="Book Lapangan ini" />
+</RelativeLayout>
