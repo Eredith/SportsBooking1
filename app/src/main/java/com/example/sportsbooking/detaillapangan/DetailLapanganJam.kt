@@ -1,5 +1,6 @@
 package com.example.sportsbooking.detaillapangan
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sportsbooking.R
 import com.example.sportsbooking.booking.BookingAdapter
 import com.example.sportsbooking.booking.BookingSlot
+import com.example.sportsbooking.detailpembayaran.DetailPembayaranActivity
 import com.google.firebase.firestore.FirebaseFirestore
 
 class DetailLapanganJam : AppCompatActivity() {
@@ -34,8 +36,16 @@ class DetailLapanganJam : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         val bookButton: Button = findViewById(R.id.bookButton)
 
-        // Get selected date from Intent
+        // Get data from Intent
+        val courtName = intent.getStringExtra("venue_name") ?: "Unknown Court"
+        val courtType = intent.getStringExtra("venue_category") ?: "Unknown Type"
+        val floorType = intent.getStringExtra("venue_status") ?: "Unknown Floor Type"
         val selectedDate = intent.getStringExtra("selected_date")
+
+        // Set data to TextViews
+        courtNameTextView.text = courtName
+        courtTypeTextView.text = courtType
+        floorTypeTextView.text = floorType
         selectedDateTextView.text = "Selected Date: $selectedDate"
 
         // Set up RecyclerView with GridLayoutManager
@@ -45,8 +55,7 @@ class DetailLapanganJam : AppCompatActivity() {
         }
         recyclerView.adapter = adapter
 
-        // Load court details and booking slots
-        loadCourtDetails(courtNameTextView, courtTypeTextView, floorTypeTextView)
+        // Load booking slots
         loadBookingSlots()
 
         // Book button click listener
@@ -55,31 +64,35 @@ class DetailLapanganJam : AppCompatActivity() {
         }
     }
 
-    private fun loadCourtDetails(
-        courtNameTextView: TextView,
-        courtTypeTextView: TextView,
-        floorTypeTextView: TextView
-    ) {
-        // Fetch court details from Firestore
-        db.collection("courts")
-            .document(courtId)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    val courtName = document.getString("name") ?: "Unknown Court"
-                    val courtType = document.getString("type") ?: "Unknown Type"
-                    val floorType = document.getString("floorType") ?: "Unknown Floor Type"
+    private fun uploadBookingSlots() {
+        val startHour = 10
+        val endHour = 22
 
-                    courtNameTextView.text = courtName
-                    courtTypeTextView.text = courtType
-                    floorTypeTextView.text = floorType
-                } else {
-                    Toast.makeText(this, "Court details not found", Toast.LENGTH_SHORT).show()
+        for (hour in startHour until endHour) {
+            val timeSlot = if (hour < 12) {
+                "$hour:00 AM"
+            } else {
+                val adjustedHour = if (hour == 12) 12 else hour - 12
+                "$adjustedHour:00 PM"
+            }
+
+            val newBookingSlot = hashMapOf(
+                "courtId" to courtId,
+                "time" to timeSlot,
+                "price" to "100",
+                "isBooked" to false
+            )
+
+            // Add the new booking slot to Firestore
+            db.collection("booking_slots")
+                .add(newBookingSlot)
+                .addOnSuccessListener { documentReference ->
+                    Toast.makeText(this, "Booking slot added with ID: ${documentReference.id}", Toast.LENGTH_SHORT).show()
                 }
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to load court details: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error adding booking slot: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     private fun loadBookingSlots() {
@@ -120,8 +133,35 @@ class DetailLapanganJam : AppCompatActivity() {
                 "time" to selectedSlot,
                 "userId" to "current_user_id" // Replace with actual user ID
             ))
-            .addOnSuccessListener {
-                Toast.makeText(this, "Booking confirmed", Toast.LENGTH_SHORT).show()
+            .addOnSuccessListener { documentReference ->
+                // Update the booking slot to mark it as booked
+                db.collection("booking_slots")
+                    .whereEqualTo("courtId", courtId)
+                    .whereEqualTo("time", selectedSlot)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            db.collection("booking_slots").document(document.id)
+                                .update("isBooked", true)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this, "Booking confirmed and slot updated", Toast.LENGTH_SHORT).show()
+
+                                    // Navigate to DetailPembayaranActivity with booking details
+                                    val intent = Intent(this, DetailPembayaranActivity::class.java).apply {
+                                        putExtra("courtId", courtId)
+                                        putExtra("time", selectedSlot)
+                                        putExtra("bookingId", documentReference.id)
+                                    }
+                                    startActivity(intent)
+                                }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(this, "Failed to update slot: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Failed to find slot: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Booking failed: ${e.message}", Toast.LENGTH_SHORT).show()

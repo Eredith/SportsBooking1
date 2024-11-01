@@ -1,4 +1,3 @@
-// DetailPembayaranActivity.kt
 package com.example.sportsbooking.detailpembayaran
 
 import android.content.Intent
