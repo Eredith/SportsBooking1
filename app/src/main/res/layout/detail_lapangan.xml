@@ -5,21 +5,23 @@
     android:layout_height="wrap_content"
     android:padding="16dp">
     <!-- Toolbar for the title and back button -->
+    <!-- Image for the venue -->
+
+    <!-- Title -->
+
+    <!-- Subtitle -->
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:titleTextColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="Detail Lapangan" />
-    <!-- Image for the venue -->
-
-    <!-- Title -->
-
-    <!-- Subtitle -->
 
     <ImageView
         android:id="@+id/venueImage"
@@ -314,7 +316,6 @@
         android:id="@+id/detail_transaksi_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="488dp"
         android:text="Hari"
         android:textColor="@android:color/black"
@@ -357,16 +358,14 @@
         android:layout_marginTop="26dp"
 
         android:orientation="vertical"
-        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/detail_transaksi_title">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_days"
-            android:layout_width="362dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:scrollbars="horizontal" />
     </LinearLayout>

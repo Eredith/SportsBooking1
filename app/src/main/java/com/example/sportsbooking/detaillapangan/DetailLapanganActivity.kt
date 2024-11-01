@@ -5,14 +5,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sportsbooking.R
 import com.example.sportsbooking.databinding.DetailLapanganBinding
+import com.example.sportsbooking.days.Day
+import com.example.sportsbooking.days.DaysAdapter
 import com.example.sportsbooking.detailpembayaran.DetailPembayaranActivity
 
 class DetailLapanganActivity : AppCompatActivity() {
 
     private lateinit var binding: DetailLapanganBinding
+    private lateinit var recyclerDays: RecyclerView
+    private lateinit var daysAdapter: DaysAdapter
+    private var daysList: List<Day> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +50,9 @@ class DetailLapanganActivity : AppCompatActivity() {
             .centerCrop()
             .into(binding.venueImage)
 
+        // Setup RecyclerView untuk Days
+        setupDaysRecyclerView()
+
         // Listener untuk tombol back pada toolbar
         binding.toolbar.setNavigationOnClickListener {
             finish()
@@ -71,6 +81,28 @@ class DetailLapanganActivity : AppCompatActivity() {
         binding.insuranceLink.setOnClickListener {
             openWebPage("https://www.example.com/insurance-terms")
         }
+    }
+
+    private fun setupDaysRecyclerView() {
+        recyclerDays = binding.recyclerDays
+        recyclerDays.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        // Initialize sample data
+        daysList = getDaysData()
+        daysAdapter = DaysAdapter(daysList)
+        recyclerDays.adapter = daysAdapter
+    }
+
+    private fun getDaysData(): List<Day> {
+        return listOf(
+            Day("Mon", 25, "Januari"),
+            Day("Tue", 26, "Januari"),
+            Day("Wed", 27, "Januari"),
+            Day("Thu", 28, "Februari"),
+            Day("Fri", 29, "Februari"),
+            Day("Sat", 30, "Maret"),
+            Day("Sun", 31, "Maret")
+        )
     }
 
     /**

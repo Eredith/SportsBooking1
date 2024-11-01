@@ -10,4 +10,6 @@
     <color name="holo_orange_dark">#FF5722</color>
     <color name="search_background">#FFFFFF</color>
     <color name="light_yellow">#FFFFED</color>
+    <color name="available">#4CAF50</color> <!-- Green -->
+    <color name="not_available">#F44336</color> <!-- Red -->
 </resources>

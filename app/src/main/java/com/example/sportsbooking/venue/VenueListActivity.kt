@@ -41,7 +41,7 @@ class VenueListActivity : AppCompatActivity() {
     private lateinit var recyclerVenue: RecyclerView
     private lateinit var venueAdapter: VenueAdapter
     private var venueList: MutableList<Venue> = mutableListOf()
-    private var filteredVenueList: MutableList<Venue> = mutableListOf() // Changed to var
+    private var filteredVenueList: MutableList<Venue> = mutableListOf()
 
     private val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
 
@@ -115,32 +115,35 @@ class VenueListActivity : AppCompatActivity() {
     }
 
     private fun getMonthList(): List<String> {
-        // Menggunakan Locale Indonesia untuk mendapatkan nama bulan dalam Bahasa Indonesia
         return DateFormatSymbols(Locale("id", "ID")).months.filter { it.isNotEmpty() }
     }
 
     private fun getDaysData(): List<Day> {
         return listOf(
             Day("Mon", 25, "Januari"),
-            Day("Tue", 26, "Februari"),
-            Day("Wed", 27, "Maret"),
-            Day("Thu", 28, "April"),
-            Day("Fri", 29, "Mei"),
-            Day("Sat", 30, "Juni"),
-            Day("Sun", 31, "Juli")
+            Day("Tue", 26, "Januari"),
+            Day("Wed", 27, "Januari"),
+            Day("Thu", 28, "Februari"),
+            Day("Fri", 29, "Februari"),
+            Day("Sat", 30, "Maret"),
+            Day("Sun", 31, "Maret")
         )
     }
 
-    private fun getCategoryData(): List<Category> {
-        return listOf(
-            Category("Football", R.drawable.ic_football, "Januari"),
-            Category("Basketball", R.drawable.ic_basketball, "Februari"),
-            Category("Tennis", R.drawable.ic_tennis, "Maret"),
-            Category("Swimming", R.drawable.ic_swimming, "April"),
-            Category("Bulu Tangkis", R.drawable.shuttlecock, "Oktober"),
-            Category("Driving Range", R.drawable.golf, "Oktober")
+    private fun filterDataByMonth(month: String) {
+        // Filter days based on selected month
+        val filteredDays = daysList.filter { it.month.equals(month, ignoreCase = true) }
+        daysAdapter.updateData(filteredDays)
 
-        )
+        val filteredCategories = categoryList.filter { it.month.equals(month, ignoreCase = true) }
+        Log.d("VenueListActivity", "Filtered Categories for $month: $filteredCategories")
+        categoryAdapter.updateData(filteredCategories)
+
+        if (selectedStartTime != null && selectedEndTime != null) {
+            filterVenueByTime()
+        } else {
+            venueAdapter.updateData(venueList)
+        }
     }
 
     private fun fetchVenuesFromFirestore() {
@@ -168,22 +171,29 @@ class VenueListActivity : AppCompatActivity() {
             }
     }
 
-    private fun filterDataByMonth(month: String) {
-        // Filter days and categories based on selected month
-        val filteredDays = daysList.filter { it.month.equals(month, ignoreCase = true) }
-        daysAdapter.updateData(filteredDays)
+    private fun getCategoryData(): List<Category> {
+        val months = DateFormatSymbols(Locale("id", "ID")).months.filter { it.isNotEmpty() }
+        val categoryData = mutableListOf<Category>()
 
-        val filteredCategories = categoryList.filter { it.month.equals(month, ignoreCase = true) }
-        Log.d("VenueListActivity", "Filtered Categories for $month: $filteredCategories")
-        categoryAdapter.updateData(filteredCategories)
+        // Tambahkan kategori unik untuk setiap bulan
+        months.forEach { month ->
+            when (month) {
+                "Januari" -> categoryData.add(Category("Football", R.drawable.ic_football, month))
+                "Februari" -> categoryData.add(Category("Basketball", R.drawable.ic_basketball, month))
+                "Maret" -> categoryData.add(Category("Tennis", R.drawable.ic_tennis, month))
+                "April" -> categoryData.add(Category("Swimming", R.drawable.ic_swimming, month))
+                // Tambahkan kategori default jika bulan tidak memiliki kategori spesifik
+                else -> categoryData.add(Category("General Sports", R.drawable.ic_football, month))
+            }
 
-        // After filtering by month, filter venues by time if selected
-        if (selectedStartTime != null && selectedEndTime != null) {
-            filterVenueByTime()
-        } else {
-            venueAdapter.updateData(venueList)
+            // Tambahkan "Bulu Tangkis" dan "Driving Range" di setiap bulan
+            categoryData.add(Category("Bulu Tangkis", R.drawable.shuttlecock, month))
+            categoryData.add(Category("Driving Range", R.drawable.golf, month))
         }
+
+        return categoryData
     }
+
 
     private fun filterVenueByTime() {
         if (selectedStartTime == null || selectedEndTime == null) {

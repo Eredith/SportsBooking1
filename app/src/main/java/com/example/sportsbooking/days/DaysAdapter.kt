@@ -2,37 +2,33 @@
 package com.example.sportsbooking.days
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sportsbooking.R
+import com.example.sportsbooking.databinding.ItemDayBinding
 
-class DaysAdapter(private var days: List<Day>) : RecyclerView.Adapter<DaysAdapter.DayViewHolder>() {
+class DaysAdapter(private var daysList: List<Day>) : RecyclerView.Adapter<DaysAdapter.DayViewHolder>() {
 
-    inner class DayViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val dayName: TextView = itemView.findViewById(R.id.day_name)
-        val dayDate: TextView = itemView.findViewById(R.id.day_date)
+    inner class DayViewHolder(private val binding: ItemDayBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(day: Day) {
+            binding.dayName.text = day.name
+            binding.dayDate.text = day.date.toString()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_day, parent, false)
-        return DayViewHolder(view)
+        val binding = ItemDayBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return DayViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-        val day = days[position]
-        holder.dayName.text = day.dayAbbreviation
-        holder.dayDate.text = day.date.toString()
+        holder.bind(daysList[position])
     }
 
-    override fun getItemCount(): Int = days.size
+    override fun getItemCount(): Int = daysList.size
 
-    /**
-     * Memperbarui data hari dan memberi tahu adapter bahwa data telah berubah.
-     */
-    fun updateData(newDays: List<Day>) {
-        days = newDays
+    // Method to update the days list
+    fun updateData(newDaysList: List<Day>) {
+        daysList = newDaysList
         notifyDataSetChanged()
     }
 }
