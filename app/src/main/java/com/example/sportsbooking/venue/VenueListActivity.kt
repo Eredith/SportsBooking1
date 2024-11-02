@@ -146,7 +146,9 @@ class VenueListActivity : AppCompatActivity() {
     private fun fetchVenuesFromFirestore() {
         val db: FirebaseFirestore = Firebase.firestore
 
-        db.collection("venues") // Ensure the collection name matches your Firestore
+        db.collection("sports_center")
+            .document("badminton")
+            .collection("courts")
             .get()
             .addOnSuccessListener { result ->
                 venueList.clear()

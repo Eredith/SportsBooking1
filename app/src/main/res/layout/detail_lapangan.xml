@@ -232,17 +232,6 @@
                     android:text="Tempat Bersih"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
-
-                <!-- Price Text -->
-                <TextView
-                    android:id="@+id/venuePriceDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="Rp100.000"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

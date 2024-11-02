@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.sportsbooking.R
+import com.example.sportsbooking.venue.Venue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -203,16 +204,18 @@ class BuatPesananFragment : Fragment() {
         }
 
         uploadGambarKeFirebaseStorage(onSuccess = { uploadedImageUrl ->
-            val venue = mapOf(
-                "name" to namaLapangan,
-                "price" to hargaLapangan,
-                "location" to alamatLapangan,
-                "category" to jenisLapangan,
-                "capacity" to kapasitasLapangan.toInt(),
-                "imageResource" to uploadedImageUrl,
-                "status" to statusLapangan,
-                "availableStartTime" to selectedStartTime?.time,
-                "availableEndTime" to selectedEndTime?.time
+            val venue = Venue(
+                id = "", // Generate or assign an ID if needed
+                nama = namaLapangan,
+                jenisLapangan = jenisLapangan,
+                alamat = alamatLapangan,
+                status = statusLapangan,
+                imageUrl = uploadedImageUrl,
+                pricePerHour = hargaLapangan.toDouble(),
+                availableStartTime = selectedStartTime?.time,
+                availableEndTime = selectedEndTime?.time,
+                category = kategoriOlahraga,
+                capacity = kapasitasLapangan.toInt()
             )
 
             firestore.collection("sports_center").document(kategoriOlahraga)

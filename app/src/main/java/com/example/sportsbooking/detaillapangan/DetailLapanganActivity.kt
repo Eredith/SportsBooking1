@@ -27,7 +27,7 @@ class DetailLapanganActivity : AppCompatActivity() {
 
         // Mengambil data dari Intent
         val venueName = intent.getStringExtra("venue_name") ?: "N/A"
-        val venuePrice = intent.getStringExtra("venue_price") ?: "N/A"
+        val venuePrice = intent.getDoubleExtra("venue_price", 0.0)
         val venueLocation = intent.getStringExtra("venue_location") ?: "N/A"
         val venueCategory = intent.getStringExtra("venue_category") ?: "N/A"
         val venueCapacity = intent.getIntExtra("venue_capacity", 0)
@@ -39,7 +39,7 @@ class DetailLapanganActivity : AppCompatActivity() {
         // Populate UI dengan data
         binding.venueTitle.text = "$venueName\n$venueCategory"
         binding.venueAlamat.text = "Alamat: $venueLocation"
-        binding.venuePriceDetail.text = "Harga: $venuePrice"
+        binding.totalPriceValue.text = "Rp${venuePrice}"
 
         // Load gambar venue menggunakan Glide
         Glide.with(this)
@@ -113,7 +113,7 @@ class DetailLapanganActivity : AppCompatActivity() {
 
     private fun handleBookNow(
         venueName: String,
-        venuePrice: String,
+        venuePrice: Double,
         venueLocation: String,
         venueCategory: String,
         venueCapacity: Int,

@@ -21,7 +21,7 @@ class PageLapanganActivity : AppCompatActivity() {
 
         // Retrieve data from Intent
         val venueName = intent.getStringExtra("venue_name") ?: "N/A"
-        val venuePrice = intent.getStringExtra("venue_price") ?: "N/A"
+        val venuePrice = intent.getDoubleExtra("venue_price", 0.0)
         val venueLocation = intent.getStringExtra("venue_location") ?: "N/A"
         val venueCategory = intent.getStringExtra("venue_category") ?: "N/A"
         val venueCapacity = intent.getIntExtra("venue_capacity", 0)
@@ -34,7 +34,7 @@ class PageLapanganActivity : AppCompatActivity() {
         binding.venueTitle.text = "$venueName\n$venueCategory"
         binding.venueCategory.text = venueCategory
         binding.venueAlamat.text = "Alamat: $venueLocation"
-        binding.venuePrice.text = "Harga: $venuePrice"
+        binding.venuePrice.text = "Harga: Rp${venuePrice}"
         binding.openingHoursTitle.text = getString(R.string.jam_buka)
         binding.openingHoursText.text = "$venueStartTime - $venueEndTime"
         binding.venueLocationText.text = venueLocation
