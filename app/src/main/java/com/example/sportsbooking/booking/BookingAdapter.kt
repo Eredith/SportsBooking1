@@ -1,17 +1,18 @@
 // BookingAdapter.kt
 package com.example.sportsbooking.booking
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportsbooking.R
-import com.example.sportsbooking.booking.BookingSlot // Ensure correct import
 
 class BookingAdapter(private val onSlotClick: (BookingSlot) -> Unit) : RecyclerView.Adapter<BookingAdapter.BookingSlotViewHolder>() {
 
     private val bookingSlotList = mutableListOf<BookingSlot>()
+    private var selectedPosition = RecyclerView.NO_POSITION
 
     inner class BookingSlotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val slotTime: TextView = itemView.findViewById(R.id.slot_time)
@@ -21,6 +22,9 @@ class BookingAdapter(private val onSlotClick: (BookingSlot) -> Unit) : RecyclerV
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
+                    notifyItemChanged(selectedPosition)
+                    selectedPosition = position
+                    notifyItemChanged(selectedPosition)
                     val bookingSlot = bookingSlotList[position]
                     onSlotClick(bookingSlot)
                 }
@@ -37,6 +41,16 @@ class BookingAdapter(private val onSlotClick: (BookingSlot) -> Unit) : RecyclerV
         val slot = bookingSlotList[position]
         holder.slotTime.text = slot.time
         holder.slotPrice.text = slot.price
+
+        if (position == selectedPosition) {
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFA500")) // Orange background
+            holder.slotTime.setTextColor(Color.WHITE) // White text
+            holder.slotPrice.setTextColor(Color.WHITE) // White text
+        } else {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT) // Default background
+            holder.slotTime.setTextColor(Color.BLACK) // Default text color
+            holder.slotPrice.setTextColor(Color.BLACK) // Default text color
+        }
     }
 
     override fun getItemCount(): Int {

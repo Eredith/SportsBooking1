@@ -7,10 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.util.Calendar
 import com.example.sportsbooking.R
 import com.example.sportsbooking.databinding.DetailLapanganBinding
 import com.example.sportsbooking.days.Day
 import com.example.sportsbooking.days.DaysAdapter
+import java.util.Locale
 
 class DetailLapanganActivity : AppCompatActivity() {
 
@@ -19,6 +21,8 @@ class DetailLapanganActivity : AppCompatActivity() {
     private lateinit var daysAdapter: DaysAdapter
     private var daysList: List<Day> = listOf()
     private var selectedDay: Day? = null
+    private var selectedMonth: Int = Calendar.JANUARY
+    private var selectedYear: Int = Calendar.getInstance().get(Calendar.YEAR)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,23 +91,27 @@ class DetailLapanganActivity : AppCompatActivity() {
         recyclerDays.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         // Initialize sample data
-        daysList = getDaysData()
+        daysList = getDaysData(selectedMonth, selectedYear)
         daysAdapter = DaysAdapter(daysList) { day ->
             onDateSelected(day)
         }
         recyclerDays.adapter = daysAdapter
     }
 
-    private fun getDaysData(): List<Day> {
-        return listOf(
-            Day("Mon", 25, "Januari"),
-            Day("Tue", 26, "Januari"),
-            Day("Wed", 27, "Januari"),
-            Day("Thu", 28, "Februari"),
-            Day("Fri", 29, "Februari"),
-            Day("Sat", 30, "Maret"),
-            Day("Sun", 31, "Maret")
-        )
+    private fun getDaysData(selectedMonth: Int, selectedYear: Int): List<Day> {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.MONTH, selectedMonth)
+        calendar.set(Calendar.YEAR, selectedYear)
+        val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+        val daysList = mutableListOf<Day>()
+        for (day in 1..daysInMonth) {
+            calendar.set(Calendar.DAY_OF_MONTH, day)
+            val dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault())
+            val monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+            daysList.add(Day(dayOfWeek, day, monthName))
+        }
+        return daysList
     }
 
     private fun onDateSelected(day: Day) {

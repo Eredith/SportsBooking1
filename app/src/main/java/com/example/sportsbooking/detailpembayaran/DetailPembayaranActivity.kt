@@ -33,14 +33,17 @@ class DetailPembayaranActivity : AppCompatActivity() {
     private var venueImageUrl: String? = null
     private var venueAvailableStartTime: String? = null
     private var venueAvailableEndTime: String? = null
-    private var bookingDate: String? = null // Tambahkan variabel untuk tanggal booking
-    private var bookingTime: String? = null // Tambahkan variabel untuk waktu booking
+    private var bookingDate: String? = null
+    private var bookingTime: String? = null
+    private var courtId: String? = null
+    private var selectedSlot: String? = null
+    private var bookingId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detail_pembayaran)
 
-        // Inisialisasi elemen UI
+        // Initialize UI elements
         toolbar = findViewById(R.id.toolbar)
         venueImage = findViewById(R.id.venueImage)
         venueTitle = findViewById(R.id.venueTitle)
@@ -59,7 +62,7 @@ class DetailPembayaranActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        // Mengambil data dari Intent
+        // Get data from Intent
         intent?.let {
             venueName = it.getStringExtra("venue_name")
             venueCategory = it.getStringExtra("venue_category")
@@ -70,8 +73,11 @@ class DetailPembayaranActivity : AppCompatActivity() {
             venueImageUrl = it.getStringExtra("venue_imageUrl")
             venueAvailableStartTime = it.getStringExtra("venue_availableStartTime")
             venueAvailableEndTime = it.getStringExtra("venue_availableEndTime")
-            bookingDate = it.getStringExtra("booking_date") // Pastikan data ini dikirim dari fragment atau activity sebelumnya
-            bookingTime = it.getStringExtra("booking_time") // Pastikan data ini dikirim dari fragment atau activity sebelumnya
+            bookingDate = it.getStringExtra("selected_date")
+            bookingTime = it.getStringExtra("time")
+            courtId = it.getStringExtra("courtId")
+            selectedSlot = it.getStringExtra("time")
+            bookingId = it.getStringExtra("bookingId")
         }
 
         // Populate UI with data
@@ -80,7 +86,7 @@ class DetailPembayaranActivity : AppCompatActivity() {
         dateText.text = bookingDate ?: "Tanggal belum dipilih"
         timeText.text = bookingTime ?: "Waktu belum dipilih"
         priceText.text = venuePrice ?: "Rp0"
-        totalPriceValue.text = venuePrice ?: "Rp0" // Anda bisa menyesuaikan ini sesuai dengan logika harga total
+        totalPriceValue.text = venuePrice ?: "Rp0"
 
         // Load venue image using Glide
         Glide.with(this)
@@ -95,22 +101,22 @@ class DetailPembayaranActivity : AppCompatActivity() {
         val termsLink: TextView = findViewById(R.id.terms_link)
         val insuranceLink: TextView = findViewById(R.id.insurance_link)
 
-        // Membuat TextView dengan link yang bisa diklik
+        // Set OnClickListener for terms and conditions links
         termsText.setOnClickListener {
-            // Tindakan saat teks "Saya setuju dengan" diklik (jika diperlukan)
+            // Action when "Saya setuju dengan" text is clicked (if needed)
         }
 
         termsLink.setOnClickListener {
-            // Buka link Syarat dan Ketentuan
+            // Open Terms and Conditions link
             openWebPage("https://www.example.com/terms")
         }
 
         insuranceLink.setOnClickListener {
-            // Buka link Syarat dan Ketentuan Asuransi
+            // Open Insurance Terms and Conditions link
             openWebPage("https://www.example.com/insurance-terms")
         }
 
-        // Set OnClickListener untuk pay_button
+        // Set OnClickListener for pay_button
         payButton.setOnClickListener {
             if (termsCheckbox.isChecked) {
                 navigateToBookingActivity()
@@ -121,7 +127,7 @@ class DetailPembayaranActivity : AppCompatActivity() {
     }
 
     /**
-     * Fungsi untuk membuka halaman web.
+     * Function to open a web page.
      */
     private fun openWebPage(url: String) {
         val intent = Intent(Intent.ACTION_VIEW)
@@ -130,7 +136,7 @@ class DetailPembayaranActivity : AppCompatActivity() {
     }
 
     /**
-     * Fungsi untuk berpindah ke BookingActivity dengan membawa data yang diperlukan.
+     * Function to navigate to BookingActivity with the necessary data.
      */
     private fun navigateToBookingActivity() {
         try {
@@ -146,6 +152,9 @@ class DetailPembayaranActivity : AppCompatActivity() {
                 putExtra("venue_availableEndTime", venueAvailableEndTime)
                 putExtra("booking_date", bookingDate)
                 putExtra("booking_time", bookingTime)
+                putExtra("courtId", courtId)
+                putExtra("time", selectedSlot)
+                putExtra("bookingId", bookingId)
             }
             startActivity(intent)
         } catch (e: Exception) {
@@ -159,7 +168,7 @@ class DetailPembayaranActivity : AppCompatActivity() {
     }
 
     /**
-     * Menangani aksi back button pada device.
+     * Handle back button action on the device.
      */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
