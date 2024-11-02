@@ -2,6 +2,10 @@ package com.example.sportsbooking.detaillapangan
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +16,7 @@ import com.example.sportsbooking.R
 import com.example.sportsbooking.databinding.DetailLapanganBinding
 import com.example.sportsbooking.days.Day
 import com.example.sportsbooking.days.DaysAdapter
+import com.example.sportsbooking.booking.BookingAdapter
 import java.util.Locale
 
 class DetailLapanganActivity : AppCompatActivity() {
@@ -83,6 +88,23 @@ class DetailLapanganActivity : AppCompatActivity() {
 
         binding.insuranceLink.setOnClickListener {
             openWebPage("https://www.example.com/insurance-terms")
+        }
+        val monthSpinner: Spinner = findViewById(R.id.monthSpinner)
+        val months = resources.getStringArray(R.array.months)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, months)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        monthSpinner.adapter = adapter
+
+        // Set listener for month selection
+        monthSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedMonth = position // Update selectedMonth based on user selection
+                setupDaysRecyclerView() // Refresh days based on new month
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Do nothing
+            }
         }
     }
 

@@ -286,15 +286,13 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <!-- Subtitle Text -->
-            <TextView
-                android:id="@+id/cancellation_policy_description"
+            <!-- res/layout/activity_detail_lapangan.xml -->
+            <Spinner
+                android:id="@+id/monthSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="September"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="20sp" />
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"/>
         </LinearLayout>
     </LinearLayout>
     <!-- Title for 'Detail Transaksi' -->

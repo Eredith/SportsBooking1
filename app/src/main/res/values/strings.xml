@@ -32,6 +32,20 @@
     <string name="back_button_desc">Back</string>
     <string name="error_booking">Error: Unable to proceed with booking.</string>
     <string name="venue_image" />
-
+    <!-- res/values/strings.xml -->
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
 
 </resources>

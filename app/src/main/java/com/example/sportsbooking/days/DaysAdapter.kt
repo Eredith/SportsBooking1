@@ -1,6 +1,7 @@
 // DaysAdapter.kt
 package com.example.sportsbooking.days
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +42,17 @@ class DaysAdapter(private var daysList: List<Day>, private val onDateClick: (Day
         holder.dayNumber.text = day.date.toString()
         holder.monthName.text = day.month
 
-        holder.itemView.isSelected = (selectedPosition == position)
+        if (selectedPosition == position) {
+            holder.dayName.setTextColor(Color.WHITE)
+            holder.dayNumber.setTextColor(Color.WHITE)
+            holder.monthName.setTextColor(Color.WHITE)
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFA500")) // Orange color
+        } else {
+            holder.dayName.setTextColor(Color.BLACK)
+            holder.dayNumber.setTextColor(Color.BLACK)
+            holder.monthName.setTextColor(Color.BLACK)
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT)
+        }
     }
 
     override fun getItemCount(): Int {
