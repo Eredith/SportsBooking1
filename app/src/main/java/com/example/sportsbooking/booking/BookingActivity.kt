@@ -75,7 +75,7 @@ class BookingActivity : AppCompatActivity() {
                         )
                     )
                 }
-                // Submit the list to the adapter
+
                 bookingAdapter.submitList(bookingSlotList)
             } else {
                 Toast.makeText(this, "No booking slots available", Toast.LENGTH_SHORT).show()
@@ -94,7 +94,7 @@ class BookingActivity : AppCompatActivity() {
             .document(selectedDate)
 
         val bookingData = mapOf(
-            "booked_by" to userId, // Menggunakan userId dari FirebaseAuth
+            "booked_by" to userId,
             "status" to "booked"
         )
 
