@@ -1,4 +1,3 @@
-// VenueListActivity.kt
 package com.example.sportsbooking.venue
 
 import android.app.TimePickerDialog
