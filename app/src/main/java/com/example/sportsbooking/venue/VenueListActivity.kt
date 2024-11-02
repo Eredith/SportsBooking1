@@ -3,7 +3,6 @@ package com.example.sportsbooking.venue
 
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -58,9 +57,7 @@ class VenueListActivity : AppCompatActivity() {
         recyclerDays = findViewById(R.id.recycler_days)
         recyclerDays.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         daysList = getDaysData()
-        daysAdapter = DaysAdapter(daysList) { day ->
-            onDateSelected(day)
-        }
+        daysAdapter = DaysAdapter(daysList) { day -> onDateSelected(day) }
         recyclerDays.adapter = daysAdapter
 
         // Initialize RecyclerView for Categories
@@ -109,7 +106,6 @@ class VenueListActivity : AppCompatActivity() {
         spinnerMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 val selectedMonth = monthsList[position]
-                Toast.makeText(this@VenueListActivity, "Bulan yang dipilih: $selectedMonth", Toast.LENGTH_SHORT).show()
                 filterDataByMonth(selectedMonth)
             }
 
@@ -123,23 +119,21 @@ class VenueListActivity : AppCompatActivity() {
 
     private fun getDaysData(): List<Day> {
         return listOf(
-            Day("Mon", 25, "Januari"),
-            Day("Tue", 26, "Januari"),
-            Day("Wed", 27, "Januari"),
-            Day("Thu", 28, "Februari"),
-            Day("Fri", 29, "Februari"),
-            Day("Sat", 30, "Maret"),
-            Day("Sun", 31, "Maret")
+            Day("Mon", 25, "January"),
+            Day("Tue", 26, "January"),
+            Day("Wed", 27, "January"),
+            Day("Thu", 28, "February"),
+            Day("Fri", 29, "February"),
+            Day("Sat", 30, "March"),
+            Day("Sun", 31, "March")
         )
     }
 
     private fun filterDataByMonth(month: String) {
-        // Filter days based on selected month
         val filteredDays = daysList.filter { it.month.equals(month, ignoreCase = true) }
         daysAdapter.updateData(filteredDays)
 
         val filteredCategories = categoryList.filter { it.month.equals(month, ignoreCase = true) }
-        Log.d("VenueListActivity", "Filtered Categories for $month: $filteredCategories")
         categoryAdapter.updateData(filteredCategories)
 
         if (selectedStartTime != null && selectedEndTime != null) {
@@ -152,14 +146,14 @@ class VenueListActivity : AppCompatActivity() {
     private fun fetchVenuesFromFirestore() {
         val db: FirebaseFirestore = Firebase.firestore
 
-        db.collection("venues") // Pastikan nama koleksi sesuai dengan Firestore Anda
+        db.collection("venues") // Ensure the collection name matches your Firestore
             .get()
             .addOnSuccessListener { result ->
                 venueList.clear()
                 for (document in result) {
                     val venue = document.toObject(Venue::class.java)
 
-                    // Mengambil Date? langsung dari dokumen menggunakan getDate
+                    // Retrieving date fields directly from document
                     venue.availableStartTime = document.getDate("availableStartTime")
                     venue.availableEndTime = document.getDate("availableEndTime")
 
@@ -178,18 +172,14 @@ class VenueListActivity : AppCompatActivity() {
         val months = DateFormatSymbols(Locale("id", "ID")).months.filter { it.isNotEmpty() }
         val categoryData = mutableListOf<Category>()
 
-        // Tambahkan kategori unik untuk setiap bulan
         months.forEach { month ->
             when (month) {
                 "Januari" -> categoryData.add(Category("Football", R.drawable.ic_football, month))
                 "Februari" -> categoryData.add(Category("Basketball", R.drawable.ic_basketball, month))
                 "Maret" -> categoryData.add(Category("Tennis", R.drawable.ic_tennis, month))
                 "April" -> categoryData.add(Category("Swimming", R.drawable.ic_swimming, month))
-                // Tambahkan kategori default jika bulan tidak memiliki kategori spesifik
                 else -> categoryData.add(Category("General Sports", R.drawable.ic_football, month))
             }
-
-            // Tambahkan "Bulu Tangkis" dan "Driving Range" di setiap bulan
             categoryData.add(Category("Bulu Tangkis", R.drawable.shuttlecock, month))
             categoryData.add(Category("Driving Range", R.drawable.golf, month))
         }
@@ -197,15 +187,14 @@ class VenueListActivity : AppCompatActivity() {
         return categoryData
     }
 
-
     private fun filterVenueByTime() {
         if (selectedStartTime == null || selectedEndTime == null) {
-            Toast.makeText(this, "Silakan pilih waktu mulai dan selesai", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please select start and end times", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (selectedStartTime!!.after(selectedEndTime)) {
-            Toast.makeText(this, "Waktu mulai harus sebelum waktu selesai", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Start time must be before end time", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -213,19 +202,12 @@ class VenueListActivity : AppCompatActivity() {
         val selectedEndDate: Date? = selectedEndTime?.time
 
         filteredVenueList = venueList.filter { venue ->
-            // Pastikan bahwa availableStartTime dan availableEndTime tidak null
             venue.availableStartTime != null && venue.availableEndTime != null &&
                     venue.availableStartTime!! <= selectedStartDate!! &&
                     venue.availableEndTime!! >= selectedEndDate!!
-        }.toMutableList() // Ensure it's mutable
+        }.toMutableList()
 
-        if (filteredVenueList.isNotEmpty()) {
-            venueAdapter.updateData(filteredVenueList)
-        } else {
-            Toast.makeText(this, "Tidak ada venue tersedia untuk waktu yang dipilih", Toast.LENGTH_SHORT).show()
-            // Optionally reset adapter to show all venues or show an empty view
-            venueAdapter.updateData(filteredVenueList)
-        }
+        venueAdapter.updateData(filteredVenueList)
     }
 
     private fun showTimePicker(isStartTime: Boolean) {
@@ -245,42 +227,35 @@ class VenueListActivity : AppCompatActivity() {
 
                 if (isStartTime) {
                     selectedStartTime = selectedTime
-                    textStartTime.text = "Mulai: ${timeFormatter.format(selectedTime.time)}"
+                    textStartTime.text = "Start: ${timeFormatter.format(selectedTime.time)}"
                 } else {
                     selectedEndTime = selectedTime
-                    textEndTime.text = "Selesai: ${timeFormatter.format(selectedTime.time)}"
+                    textEndTime.text = "End: ${timeFormatter.format(selectedTime.time)}"
                 }
 
-                // Apply filter after setting the time
                 if (selectedStartTime != null && selectedEndTime != null) {
                     filterVenueByTime()
                 }
             },
             currentHour,
             currentMinute,
-            true // 24-hour format
+            true
         )
-
         picker.show()
     }
 
     private fun resetFilters() {
-        spinnerMonth.setSelection(Calendar.getInstance().get(Calendar.MONTH))
-
         selectedStartTime = null
         selectedEndTime = null
-        textStartTime.text = "Mulai"
-        textEndTime.text = "Selesai"
+        textStartTime.text = "Start Time"
+        textEndTime.text = "End Time"
 
-        // Reset to show all venues
-        venueAdapter.updateData(venueList)
+        filteredVenueList.clear()
+        filteredVenueList.addAll(venueList)
+        venueAdapter.updateData(filteredVenueList)
     }
 
     private fun onDateSelected(day: Day) {
-        Toast.makeText(
-            this,
-            "Selected date: ${day.name}, ${day.date} ${day.month}",
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast.makeText(this, "Selected Date: ${day.date} ${day.month}", Toast.LENGTH_SHORT).show()
     }
 }

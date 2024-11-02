@@ -35,17 +35,17 @@ class VenueAdapter(private var venues: List<Venue>, private val context: Context
 
     override fun onBindViewHolder(holder: VenueViewHolder, position: Int) {
         val venue = venues[position]
-        holder.nameTextView.text = venue.name
-        holder.priceTextView.text = "Harga: ${venue.price}"
-        holder.locationTextView.text = "Lokasi: ${venue.location}"
+        holder.nameTextView.text = venue.nama // Pastikan menggunakan nama yang benar
+        holder.priceTextView.text = "Harga: ${venue.pricePerHour}" // Pastikan menggunakan pricePerHour
+        holder.locationTextView.text = "Lokasi: ${venue.alamat}" // Pastikan menggunakan alamat
         holder.categoryTextView.text = "Kategori: ${venue.category}"
-        holder.capacityTextView.text = "Kapasitas: ${venue.capacity}"
+        holder.capacityTextView.text = "Kapasitas: ${venue.capacity}" // Pastikan ada atribut kapasitas
         holder.statusTextView.text = "Status: ${venue.status}"
         holder.timeTextView.text = "Waktu: ${formatTime(venue.availableStartTime)} - ${formatTime(venue.availableEndTime)}"
 
         // Menggunakan Glide untuk memuat gambar dari URL
         Glide.with(holder.imageView.context)
-            .load(venue.imageResource)
+            .load(venue.imageUrl) // Menggunakan imageUrl dari model Venue
             .placeholder(R.drawable.venue_image)
             .error(R.drawable.venue_image)
             .into(holder.imageView)
@@ -53,13 +53,14 @@ class VenueAdapter(private var venues: List<Venue>, private val context: Context
         // Menambahkan Listener untuk Klik pada Item
         holder.itemView.setOnClickListener {
             val intent = Intent(context, PageLapanganActivity::class.java).apply {
-                putExtra("venue_name", venue.name)
-                putExtra("venue_price", venue.price)
-                putExtra("venue_location", venue.location)
+                putExtra("venue_name", venue.nama) // Menggunakan nama yang benar
+                putExtra("venue_price", venue.pricePerHour) // Menggunakan pricePerHour
+                putExtra("venue_location", venue.alamat) // Menggunakan alamat
                 putExtra("venue_category", venue.category)
-                putExtra("venue_capacity", venue.capacity)
+                putExtra("venue_capacity", venue.capacity) // Pastikan ada atribut kapasitas
                 putExtra("venue_status", venue.status)
-                putExtra("venue_imageUrl", venue.imageResource)
+                putExtra("venue_imageUrl", venue.imageUrl) // Menggunakan imageUrl dari model Venue
+
                 // Format waktu menjadi string jika diperlukan
                 val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
                 val startTime = venue.availableStartTime?.let { sdf.format(it) } ?: "N/A"

@@ -1,15 +1,18 @@
+
 package com.example.sportsbooking.venue
 
 import java.util.Date
 
 data class Venue(
-    val name: String = "",
-    val price: String = "",
-    val location: String = "",
-    val category: String = "",
-    val capacity: Int = 0,
-    val imageResource: String = "",
-    val status: String = "",
-    var availableStartTime: Date? = null, // Ubah dari Calendar? ke Date?
-    var availableEndTime: Date? = null    // Ubah dari Calendar? ke Date?
+    var id: String = "",                  // ID unik untuk venue
+    var nama: String = "",                 // Nama venue atau lapangan
+    var jenisLapangan: String = "",        // Jenis lapangan, misalnya "Basketball", "Football"
+    var alamat: String = "",               // Alamat venue
+    var status: String = "",               // Status venue, misalnya "Tersedia" atau "Tidak Tersedia"
+    var imageUrl: String = "",             // URL gambar venue
+    var pricePerHour: Double = 0.0,        // Harga sewa per jam
+    var availableStartTime: Date? = null,  // Waktu mulai ketersediaan
+    var availableEndTime: Date? = null,    // Waktu akhir ketersediaan
+    var category: String = "",             // Kategori olahraga untuk venue
+    val capacity: Int = 0
 )
