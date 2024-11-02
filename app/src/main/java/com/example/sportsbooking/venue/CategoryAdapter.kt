@@ -7,12 +7,28 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportsbooking.R
-import com.example.sportsbooking.venue.Category // Ensure this import path is correct
 
 class CategoryAdapter(
-    private val categoryList: List<Category>,
-    private val onCategorySelected: (Category) -> Unit // Callback for when a category is selected
+    private var categories: List<Category>,
+    private val onItemClick: (Category) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+
+    private var selectedPosition = RecyclerView.NO_POSITION
+
+    inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val categoryName: TextView = itemView.findViewById(R.id.category_name)
+        val categoryIcon: ImageView = itemView.findViewById(R.id.category_icon)
+
+        init {
+            itemView.setOnClickListener {
+                val previousPosition = selectedPosition
+                selectedPosition = adapterPosition
+                notifyItemChanged(previousPosition)
+                notifyItemChanged(selectedPosition)
+                onItemClick(categories[adapterPosition])
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
@@ -20,26 +36,24 @@ class CategoryAdapter(
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        val category = categoryList[position]
-        holder.bind(category)
+        val category = categories[position]
+        holder.categoryName.text = category.name
+        holder.categoryIcon.setImageResource(category.iconResId)
 
-        // Set click listener to handle category selection
-        holder.itemView.setOnClickListener {
-            onCategorySelected(category)
+        // Highlight selected item
+        if (selectedPosition == position) {
+            holder.itemView.setBackgroundColor(holder.itemView.context.getColor(R.color.orange))
+            holder.categoryName.setTextColor(holder.itemView.context.getColor(R.color.white))
+        } else {
+            holder.itemView.setBackgroundColor(holder.itemView.context.getColor(R.color.default_background))
+            holder.categoryName.setTextColor(holder.itemView.context.getColor(R.color.default_text))
         }
     }
 
-    override fun getItemCount(): Int = categoryList.size
+    override fun getItemCount(): Int = categories.size
 
-    // ViewHolder class to bind category data to the view
-    class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val categoryName: TextView = itemView.findViewById(R.id.category_name)
-        private val categoryIcon: ImageView = itemView.findViewById(R.id.category_icon)
-
-        // Bind category data to the view elements
-        fun bind(category: Category) {
-            categoryName.text = category.name
-            categoryIcon.setImageResource(category.iconResId) // Ensure this is correct
-        }
+    fun updateData(newCategories: List<Category>) {
+        categories = newCategories
+        notifyDataSetChanged()
     }
 }

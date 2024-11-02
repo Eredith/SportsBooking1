@@ -3,21 +3,25 @@ package com.example.sportsbooking.venue
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sportsbooking.pagelapangan.Category
-import com.example.sportsbooking.pagelapangan.CategoryAdapter
+import com.example.sportsbooking.R
 import com.example.sportsbooking.days.Day
 import com.example.sportsbooking.days.DaysAdapter
-import com.example.sportsbooking.R
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class VenueListActivity : AppCompatActivity() {
 
@@ -28,6 +32,7 @@ class VenueListActivity : AppCompatActivity() {
     private lateinit var recyclerCategory: RecyclerView
     private lateinit var categoryAdapter: CategoryAdapter
     private var categoryList: List<Category> = listOf()
+    private var filteredCategories: List<Category> = listOf()
 
     private lateinit var spinnerMonth: Spinner
     private var monthsList: List<String> = listOf()
@@ -63,7 +68,10 @@ class VenueListActivity : AppCompatActivity() {
         recyclerCategory = findViewById(R.id.recycler_category)
         recyclerCategory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         categoryList = getCategoryData()
-        categoryAdapter = CategoryAdapter(categoryList)
+        categoryAdapter = CategoryAdapter(categoryList) { category ->
+            Toast.makeText(this, "Selected: ${category.name}", Toast.LENGTH_SHORT).show()
+            filterVenuesByCategory(category.name)
+        }
         recyclerCategory.adapter = categoryAdapter
 
         // Initialize RecyclerView for Venue
@@ -88,6 +96,17 @@ class VenueListActivity : AppCompatActivity() {
         fetchVenuesFromFirestore()
     }
 
+    private fun filterVenuesByCategory(categoryName: String) {
+        val normalizedCategoryName = when (categoryName) {
+            "Bulu Tangkis" -> "Badminton"
+            "General Sports" -> "General Sports"
+            "Driving Range" -> "Driving Range"
+            else -> categoryName
+        }
+
+        filteredVenueList = venueList.filter { it.category.equals(normalizedCategoryName, ignoreCase = true) }.toMutableList()
+        venueAdapter.updateData(filteredVenueList)
+    }
     private fun setupSpinner() {
         monthsList = getMonthList()
         val adapter = ArrayAdapter(
@@ -132,7 +151,7 @@ class VenueListActivity : AppCompatActivity() {
         val filteredDays = daysList.filter { it.month.equals(month, ignoreCase = true) }
         daysAdapter.updateData(filteredDays)
 
-        val filteredCategories = categoryList.filter { it.month.equals(month, ignoreCase = true) }
+        filteredCategories = categoryList.filter { it.month.equals(month, ignoreCase = true) }
         categoryAdapter.updateData(filteredCategories)
 
         if (selectedStartTime != null && selectedEndTime != null) {
