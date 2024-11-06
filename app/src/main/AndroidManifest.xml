@@ -29,7 +29,9 @@
         <activity android:name=".detaillapangan.DetailLapanganActivity"/>
         <activity android:name=".detailpembayaran.DetailPembayaranActivity" />
         <activity android:name=".detaillapangan.DetailLapanganJam" />
+        <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".booking.BookingActivity"
+
 
 
         android:exported="true">
