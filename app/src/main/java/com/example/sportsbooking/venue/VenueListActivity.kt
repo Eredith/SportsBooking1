@@ -1,19 +1,24 @@
 package com.example.sportsbooking.venue
 
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sportsbooking.MainActivity
 import com.example.sportsbooking.R
+import com.example.sportsbooking.booking.BookingActivity
 import com.example.sportsbooking.days.Day
 import com.example.sportsbooking.days.DaysAdapter
+import com.example.sportsbooking.profile.ProfileActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -94,6 +99,8 @@ class VenueListActivity : AppCompatActivity() {
 
         // Fetch venues from Firestore
         fetchVenuesFromFirestore()
+
+        setupBottomNavigation()
     }
 
     private fun filterVenuesByCategory(categoryName: String) {
@@ -277,5 +284,24 @@ class VenueListActivity : AppCompatActivity() {
 
     private fun onDateSelected(day: Day) {
         Toast.makeText(this, "Selected Date: ${day.date} ${day.month}", Toast.LENGTH_SHORT).show()
+    }
+    private fun setupBottomNavigation() {
+        findViewById<LinearLayout>(R.id.nav_home).setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<LinearLayout>(R.id.nav_venue).setOnClickListener {
+        }
+
+        findViewById<LinearLayout>(R.id.nav_history).setOnClickListener {
+            val intent = Intent(this, BookingActivity::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<LinearLayout>(R.id.nav_profile).setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -28,7 +28,6 @@ class ProfileFragment : Fragment() {
         profileImageView = view.findViewById(R.id.profileImageView)
         nameTextView = view.findViewById(R.id.nameTextView)
         emailTextView = view.findViewById(R.id.emailTextView)
-
         // Load user data from Firebase Authentication
         loadUserData()
 
@@ -60,4 +59,5 @@ class ProfileFragment : Fragment() {
             }
         }
     }
+
 }

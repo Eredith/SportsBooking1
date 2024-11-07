@@ -8,6 +8,8 @@ import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.example.sportsbooking.booking.BookingActivity
 import com.example.sportsbooking.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class DetailPembayaranActivity : AppCompatActivity() {
 
@@ -22,6 +24,7 @@ class DetailPembayaranActivity : AppCompatActivity() {
     private lateinit var totalPriceValue: TextView
     private lateinit var termsCheckbox: CheckBox
     private lateinit var payButton: Button
+    private lateinit var db: FirebaseFirestore
 
     // Data Variables
     private var venueName: String? = null
@@ -42,6 +45,7 @@ class DetailPembayaranActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detail_pembayaran)
+        db = FirebaseFirestore.getInstance()
 
         // Initialize UI elements
         toolbar = findViewById(R.id.toolbar)
@@ -97,79 +101,87 @@ class DetailPembayaranActivity : AppCompatActivity() {
             .into(venueImage)
 
         // Handle Terms and Conditions
-        val termsText: TextView = findViewById(R.id.terms_text)
-        val termsLink: TextView = findViewById(R.id.terms_link)
-        val insuranceLink: TextView = findViewById(R.id.insurance_link)
-
-        // Set OnClickListener for terms and conditions links
-        termsText.setOnClickListener {
-            // Action when "Saya setuju dengan" text is clicked (if needed)
-        }
-
-        termsLink.setOnClickListener {
-            // Open Terms and Conditions link
-            openWebPage("https://www.example.com/terms")
-        }
-
-        insuranceLink.setOnClickListener {
-            // Open Insurance Terms and Conditions link
-            openWebPage("https://www.example.com/insurance-terms")
-        }
-
-        // Set OnClickListener for pay_button
         payButton.setOnClickListener {
             if (termsCheckbox.isChecked) {
-                navigateToBookingActivity()
+                uploadBookingToFirestore()
             } else {
                 Toast.makeText(this, "Anda harus menyetujui syarat dan ketentuan terlebih dahulu.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    /**
-     * Function to open a web page.
-     */
-    private fun openWebPage(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = android.net.Uri.parse(url)
-        startActivity(intent)
-    }
+    private fun uploadBookingToFirestore() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val bookingData = mapOf(
+            "booked_by" to userId,
+            "status" to "booked"
+        )
 
-    /**
-     * Function to navigate to BookingActivity with the necessary data.
-     */
-    private fun navigateToBookingActivity() {
-        try {
-            val intent = Intent(this, BookingActivity::class.java).apply {
-                putExtra("venue_name", venueName)
-                putExtra("venue_price", venuePrice)
-                putExtra("venue_location", venueLocation)
-                putExtra("venue_category", venueCategory)
-                putExtra("venue_capacity", venueCapacity)
-                putExtra("venue_status", venueStatus)
-                putExtra("venue_imageUrl", venueImageUrl)
-                putExtra("venue_availableStartTime", venueAvailableStartTime)
-                putExtra("venue_availableEndTime", venueAvailableEndTime)
-                putExtra("booking_date", bookingDate)
-                putExtra("booking_time", bookingTime)
-                putExtra("courtId", courtId)
-                putExtra("time", selectedSlot)
-                putExtra("bookingId", bookingId)
+        val bookingRef = db.collection("sports_center")
+            .document(venueCategory ?: "unknown_category")
+            .collection("courts")
+            .document(courtId ?: "default_court_id")
+            .collection("bookings")
+            .document(bookingDate ?: "default_date")
+
+        // First, check if the booking document for the selected date exists
+        bookingRef.get().addOnSuccessListener { document ->
+            if (!document.exists()) {
+                // Document for the date does not exist, create it with the selected slot as booked
+                val initialSlotData = mapOf((selectedSlot ?: "default_time_slot") to bookingData)
+                bookingRef.set(initialSlotData)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Booking berhasil!", Toast.LENGTH_SHORT).show()
+                        navigateToBookingActivity()
+                    }
+                    .addOnFailureListener { exception ->
+                        Toast.makeText(this, "Gagal melakukan booking: ${exception.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                // Document exists, proceed with the transaction to ensure the slot is available
+                db.runTransaction { transaction ->
+                    val snapshot = transaction.get(bookingRef)
+                    val slotData = snapshot.get(selectedSlot ?: "default_time_slot") as? Map<*, *>
+
+                    if (slotData == null || (slotData["available"] == true)) {
+                        // If the slot is available or hasn't been booked, proceed with booking
+                        transaction.update(bookingRef, selectedSlot ?: "default_time_slot", bookingData)
+                    } else {
+                        throw Exception("Time slot is already booked.")
+                    }
+                }.addOnSuccessListener {
+                    Toast.makeText(this, "Booking berhasil!", Toast.LENGTH_SHORT).show()
+                    navigateToBookingActivity()
+                }.addOnFailureListener { exception ->
+                    Toast.makeText(this, "Gagal melakukan booking: ${exception.message}", Toast.LENGTH_SHORT).show()
+                }
             }
-            startActivity(intent)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(
-                this,
-                getString(R.string.error_booking),
-                Toast.LENGTH_SHORT
-            ).show()
+        }.addOnFailureListener { exception ->
+            Toast.makeText(this, "Gagal memeriksa ketersediaan: ${exception.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
-    /**
-     * Handle back button action on the device.
-     */
+
+    private fun navigateToBookingActivity() {
+        val intent = Intent(this, BookingActivity::class.java).apply {
+            putExtra("venue_name", venueName)
+            putExtra("venue_price", venuePrice)
+            putExtra("venue_location", venueLocation)
+            putExtra("venue_category", venueCategory)
+            putExtra("venue_capacity", venueCapacity)
+            putExtra("venue_status", venueStatus)
+            putExtra("venue_imageUrl", venueImageUrl)
+            putExtra("venue_availableStartTime", venueAvailableStartTime)
+            putExtra("venue_availableEndTime", venueAvailableEndTime)
+            putExtra("booking_date", bookingDate)
+            putExtra("booking_time", bookingTime)
+            putExtra("courtId", courtId)
+            putExtra("time", selectedSlot)
+            putExtra("bookingId", bookingId)
+        }
+        startActivity(intent)
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

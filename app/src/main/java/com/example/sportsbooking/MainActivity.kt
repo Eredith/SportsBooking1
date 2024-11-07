@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sportsbooking.booking.BookingActivity
 import com.example.sportsbooking.login.LoginActivity
 import com.example.sportsbooking.profile.ProfileActivity
 import com.example.sportsbooking.profile.ProfileFragment
@@ -106,6 +107,11 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<LinearLayout>(R.id.nav_venue).setOnClickListener {
             val intent = Intent(this, VenueListActivity::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<LinearLayout>(R.id.nav_history).setOnClickListener {
+            val intent = Intent(this, BookingActivity::class.java)
             startActivity(intent)
         }
 

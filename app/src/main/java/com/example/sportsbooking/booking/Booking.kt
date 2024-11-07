@@ -6,7 +6,8 @@ data class Booking(
     val venueName: String,
     val venueAddress: String,
     val venueSport: String,
-    val bookingStatus: String
+    val bookingStatus: String,
+    val userId: String
 )
 
 

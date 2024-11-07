@@ -16,7 +16,6 @@ import com.example.sportsbooking.R
 import com.example.sportsbooking.databinding.DetailLapanganBinding
 import com.example.sportsbooking.days.Day
 import com.example.sportsbooking.days.DaysAdapter
-import com.example.sportsbooking.booking.BookingAdapter
 import java.util.Locale
 
 class DetailLapanganActivity : AppCompatActivity() {

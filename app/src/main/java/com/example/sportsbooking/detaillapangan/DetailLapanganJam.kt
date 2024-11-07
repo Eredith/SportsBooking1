@@ -1,3 +1,4 @@
+// DetailLapanganJam.kt
 package com.example.sportsbooking.detaillapangan
 
 import android.content.Intent
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sportsbooking.R
-import com.example.sportsbooking.booking.BookingAdapter
+import com.example.sportsbooking.booking.BookingAdapterJam
 import com.example.sportsbooking.booking.BookingSlot
 import com.example.sportsbooking.detailpembayaran.DetailPembayaranActivity
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,9 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 class DetailLapanganJam : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
-    private lateinit var adapter: BookingAdapter
+    private lateinit var adapter: BookingAdapterJam
     private var selectedSlot: String? = null
-    private val courtId = "lapangan_1" // Set the court ID dynamically if needed
+    private var courtId: String? = null
 
     private var venueName: String? = null
     private var venuePrice: String? = null
@@ -75,100 +76,92 @@ class DetailLapanganJam : AppCompatActivity() {
 
         // Set up RecyclerView with GridLayoutManager
         recyclerView.layoutManager = GridLayoutManager(this, 2)
-        adapter = BookingAdapter { slot ->
+        adapter = BookingAdapterJam { slot ->
             onSlotSelected(slot)
         }
         recyclerView.adapter = adapter
 
-        // Load booking slots
-        loadBookingSlots()
+        // Load predefined booking slots
+        val predefinedSlots = loadPredefinedSlots()
+
+        // Fetch booked slots from Firestore and update predefined slots
+        fetchBookedSlots(predefinedSlots)
 
         // Book button click listener
         bookButton.setOnClickListener {
-            bookSelectedSlot()
+            if (selectedSlot == null) {
+                Toast.makeText(this, "Please select a time slot", Toast.LENGTH_SHORT).show()
+            } else {
+                val intent = Intent(this, DetailPembayaranActivity::class.java).apply {
+                    putExtra("venue_name", venueName)
+                    putExtra("venue_price", venuePrice)
+                    putExtra("venue_location", venueLocation)
+                    putExtra("venue_category", venueCategory)
+                    putExtra("venue_capacity", venueCapacity)
+                    putExtra("venue_status", venueStatus)
+                    putExtra("venue_imageUrl", venueImageUrl)
+                    putExtra("venue_availableStartTime", venueAvailableStartTime)
+                    putExtra("venue_availableEndTime", venueAvailableEndTime)
+                    putExtra("selected_date", selectedDate)
+                    putExtra("courtId", courtId)
+                    putExtra("time", selectedSlot)
+                }
+                startActivity(intent)
+            }
         }
     }
 
-    private fun loadBookingSlots() {
-        // Fetch booking slots for the specific court from Firestore
-        db.collection("booking_slots")
-            .whereEqualTo("courtId", courtId)
+    private fun loadPredefinedSlots(): List<BookingSlot> {
+        val slots = mutableListOf<BookingSlot>()
+        val startHour = 8
+        val endHour = 20
+        val price = "100000"
+
+        for (hour in startHour until endHour) {
+            val startTime = String.format("%02d:00", hour)
+            val endTime = String.format("%02d:00", hour + 1)
+            val timeSlot = "$startTime - $endTime"
+            slots.add(BookingSlot(timeSlot, price, false))
+        }
+
+        return slots
+    }
+
+    private fun fetchBookedSlots(predefinedSlots: List<BookingSlot>) {
+        db.collection("sports_center")
+            .document(venueCategory ?: "unknown_category")
+            .collection("courts")
+            .document(courtId ?: "default_court_id")
+            .collection("bookings")
+            .document(selectedDate ?: "default_date")
             .get()
-            .addOnSuccessListener { documents ->
-                val slots = documents.map { doc ->
-                    BookingSlot(
-                        time = doc.getString("time") ?: "",
-                        price = doc.getString("price") ?: "",
-                        isBooked = doc.getBoolean("isBooked") ?: false
-                    )
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val bookedSlots = document.data ?: emptyMap<String, Any>()
+                    val updatedSlots = predefinedSlots.map { slot ->
+                        if (bookedSlots.containsKey(slot.time)) {
+                            slot.copy(isBooked = true)
+                        } else {
+                            slot
+                        }
+                    }
+                    adapter.submitList(updatedSlots)
+                } else {
+                    adapter.submitList(predefinedSlots)
                 }
-                adapter.submitList(slots) // Ensure `slots` is a List<BookingSlot>
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to load booking slots: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to fetch booked slots: ${e.message}", Toast.LENGTH_SHORT).show()
+                adapter.submitList(predefinedSlots)
             }
     }
 
     private fun onSlotSelected(slot: BookingSlot) {
-        selectedSlot = slot.time
-        // Update UI to indicate selected slot if needed
-    }
-
-    private fun bookSelectedSlot() {
-        if (selectedSlot == null) {
-            Toast.makeText(this, "Please select a time slot", Toast.LENGTH_SHORT).show()
-            return
+        if (!slot.isBooked) {
+            selectedSlot = slot.time
+            // Update UI to indicate selected slot if needed
+        } else {
+            Toast.makeText(this, "This slot is already booked", Toast.LENGTH_SHORT).show()
         }
-
-        // Book the selected slot by adding to Firebase
-        db.collection("bookings")
-            .add(mapOf(
-                "courtId" to courtId,
-                "time" to selectedSlot,
-                "userId" to "current_user_id" // Replace with actual user ID
-            ))
-            .addOnSuccessListener { documentReference ->
-                // Update the booking slot to mark it as booked
-                db.collection("booking_slots")
-                    .whereEqualTo("courtId", courtId)
-                    .whereEqualTo("time", selectedSlot)
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        for (document in documents) {
-                            db.collection("booking_slots").document(document.id)
-                                .update("isBooked", true)
-                                .addOnSuccessListener {
-                                    Toast.makeText(this, "Booking confirmed and slot updated", Toast.LENGTH_SHORT).show()
-
-                                    // Navigate to DetailPembayaranActivity with booking details
-                                    val intent = Intent(this, DetailPembayaranActivity::class.java).apply {
-                                        putExtra("venue_name", venueName)
-                                        putExtra("venue_price", venuePrice)
-                                        putExtra("venue_location", venueLocation)
-                                        putExtra("venue_category", venueCategory)
-                                        putExtra("venue_capacity", venueCapacity)
-                                        putExtra("venue_status", venueStatus)
-                                        putExtra("venue_imageUrl", venueImageUrl)
-                                        putExtra("venue_availableStartTime", venueAvailableStartTime)
-                                        putExtra("venue_availableEndTime", venueAvailableEndTime)
-                                        putExtra("selected_date", selectedDate)
-                                        putExtra("courtId", courtId)
-                                        putExtra("time", selectedSlot)
-                                        putExtra("bookingId", documentReference.id)
-                                    }
-                                    startActivity(intent)
-                                }
-                                .addOnFailureListener { e ->
-                                    Toast.makeText(this, "Failed to update slot: ${e.message}", Toast.LENGTH_SHORT).show()
-                                }
-                        }
-                    }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(this, "Failed to find slot: ${e.message}", Toast.LENGTH_SHORT).show()
-                    }
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Booking failed: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
     }
 }

@@ -37,55 +37,16 @@ class BookingActivity : AppCompatActivity() {
             return
         }
 
-        // Initialize RecyclerView
+        // Initialize RecyclerView and Adapter
+        bookingAdapter = BookingAdapter()
         bookingRecyclerView = findViewById(R.id.recycler_view_booking)
         bookingRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        // Initialize Adapter with a click listener
-        bookingAdapter = BookingAdapter { slot ->
-            bookTimeSlot(slot.time)
-        }
-
         bookingRecyclerView.adapter = bookingAdapter
 
-        // Load booking slots from Firestore
-        loadBookingSlots()
+        fetchBookings()
     }
 
-    private fun loadBookingSlots() {
-        // Reference to the specific court and date in Firestore
-        val bookingsRef = db.collection("sports_center")
-            .document("badminton")
-            .collection("courts")
-            .document(courtId)
-            .collection("bookings")
-            .document(selectedDate)
-
-        bookingsRef.get().addOnSuccessListener { document ->
-            if (document.exists()) {
-                val bookingSlotList = mutableListOf<BookingSlot>()
-                document.data?.forEach { (timeSlot, value) ->
-                    val slotData = value as? Map<*, *>
-                    val isBooked = slotData?.get("status") == "booked"
-                    bookingSlotList.add(
-                        BookingSlot(
-                            time = timeSlot,
-                            price = slotData?.get("price")?.toString() ?: "0",
-                            isBooked = isBooked
-                        )
-                    )
-                }
-
-                bookingAdapter.submitList(bookingSlotList)
-            } else {
-                Toast.makeText(this, "No booking slots available", Toast.LENGTH_SHORT).show()
-            }
-        }.addOnFailureListener { e ->
-            Toast.makeText(this, "Failed to load booking slots: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun bookTimeSlot(timeSlot: String) {
+    private fun fetchBookings() {
         val bookingRef = db.collection("sports_center")
             .document("badminton")
             .collection("courts")
@@ -93,16 +54,31 @@ class BookingActivity : AppCompatActivity() {
             .collection("bookings")
             .document(selectedDate)
 
-        val bookingData = mapOf(
-            "booked_by" to userId,
-            "status" to "booked"
-        )
+        bookingRef.get().addOnSuccessListener { document ->
+            if (document != null && document.exists()) {
+                val bookings = document.data?.mapNotNull { entry ->
+                    val bookingData = entry.value as? Map<*, *>
+                    val bookingUserId = bookingData?.get("userId") as? String
+                    if (bookingUserId == userId) {
+                        Booking(
+                            venueImageResId = R.drawable.venue_image, // Placeholder image
+                            venueName = entry.key,
+                            venueAddress = bookingData?.get("venueAddress").toString(),
+                            venueSport = "Badminton",
+                            bookingStatus = bookingData?.get("bookingStatus").toString(),
+                            userId = bookingUserId.toString()
+                        )
+                    } else {
+                        null
+                    }
+                } ?: emptyList()
 
-        bookingRef.update(timeSlot, bookingData).addOnSuccessListener {
-            Toast.makeText(this, "Time slot successfully booked!", Toast.LENGTH_SHORT).show()
-            loadBookingSlots() // Refresh booking slots after booking
+                bookingAdapter.submitList(bookings)
+            } else {
+                Toast.makeText(this, "No bookings found for the selected date", Toast.LENGTH_SHORT).show()
+            }
         }.addOnFailureListener { exception ->
-            Toast.makeText(this, "Failed to book time slot: ${exception.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Failed to fetch bookings: ${exception.message}", Toast.LENGTH_SHORT).show()
         }
     }
 }
