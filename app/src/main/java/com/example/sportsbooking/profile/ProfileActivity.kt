@@ -12,12 +12,15 @@ import com.example.sportsbooking.R
 import com.example.sportsbooking.booking.BookingActivity
 import com.example.sportsbooking.venue.VenueListActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var profileImageView: ImageView
     private lateinit var nameTextView: TextView
     private lateinit var emailTextView: TextView
+    private lateinit var usernameTextView: TextView // Ensure this matches the XML id
+    private val db = FirebaseFirestore.getInstance() // Firestore instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +30,10 @@ class ProfileActivity : AppCompatActivity() {
         profileImageView = findViewById(R.id.profileImageView)
         nameTextView = findViewById(R.id.nameTextView)
         emailTextView = findViewById(R.id.emailTextView)
+        usernameTextView = findViewById(R.id.usernameTextView) // Ensure this matches the XML id
         setupBottomNavigation()
-        // Load user data from Firebase Authentication
+
+        // Load user data from Firebase Authentication and Firestore
         loadUserData()
     }
 
@@ -46,34 +51,42 @@ class ProfileActivity : AppCompatActivity() {
             // Profile Picture
             val photoUrl = user.photoUrl
             if (photoUrl != null) {
-                // Load profile picture using Glide
                 Glide.with(this)
                     .load(photoUrl)
-                    .placeholder(R.drawable.default_profile) // Replace with a local default image
+                    .placeholder(R.drawable.default_profile)
                     .into(profileImageView)
             } else {
-                // Set default profile image if no URL is available
                 profileImageView.setImageResource(R.drawable.default_profile)
             }
+
+            // Retrieve username from Firestore
+            db.collection("users").document(user.uid).get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val username = document.getString("username")
+                        usernameTextView.text = username ?: "N/A"
+                    } else {
+                        usernameTextView.text = "N/A"
+                    }
+                }
+                .addOnFailureListener {
+                    usernameTextView.text = "Error loading username"
+                }
         }
     }
+
     private fun setupBottomNavigation() {
         findViewById<LinearLayout>(R.id.nav_home).setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MainActivity::class.java))
         }
-
         findViewById<LinearLayout>(R.id.nav_venue).setOnClickListener {
-            val intent = Intent(this, VenueListActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, VenueListActivity::class.java))
         }
-
         findViewById<LinearLayout>(R.id.nav_history).setOnClickListener {
-            val intent = Intent(this, BookingActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, BookingActivity::class.java))
         }
-
         findViewById<LinearLayout>(R.id.nav_profile).setOnClickListener {
+            // Current Activity
         }
     }
 }
