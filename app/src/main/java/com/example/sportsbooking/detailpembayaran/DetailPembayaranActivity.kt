@@ -120,7 +120,7 @@ class DetailPembayaranActivity : AppCompatActivity() {
         val bookingRef = db.collection("sports_center")
             .document(venueCategory ?: "unknown_category")
             .collection("courts")
-            .document(courtId ?: "default_court_id")
+            .document(venueName ?: "default_court_id")
             .collection("bookings")
             .document(bookingDate ?: "default_date")
 
@@ -178,6 +178,7 @@ class DetailPembayaranActivity : AppCompatActivity() {
             putExtra("courtId", courtId)
             putExtra("time", selectedSlot)
             putExtra("bookingId", bookingId)
+            putExtra("booking_status", "pesanan berhasil")
         }
         startActivity(intent)
     }

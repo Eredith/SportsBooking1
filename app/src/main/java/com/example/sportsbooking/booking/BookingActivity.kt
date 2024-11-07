@@ -1,84 +1,90 @@
 package com.example.sportsbooking.booking
 
 import android.os.Bundle
-import android.widget.Toast
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sportsbooking.R
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.android.material.tabs.TabLayout
 
 class BookingActivity : AppCompatActivity() {
 
-    private lateinit var bookingRecyclerView: RecyclerView
-    private lateinit var bookingAdapter: BookingAdapter
-    private lateinit var db: FirebaseFirestore
-    private lateinit var courtId: String
-    private lateinit var selectedDate: String
-    private var userId: String? = null
+    // UI Elements
+    private lateinit var toolbar: Toolbar
+    private lateinit var tabLayout: TabLayout
+    private lateinit var searchCard: CardView
+    private lateinit var searchBooking: EditText
+    private lateinit var filterIcon: ImageView
+    private lateinit var recyclerViewBooking: RecyclerView
+
+    // Data Variables
+    private var venueName: String? = null
+    private var venueCategory: String? = null
+    private var venuePrice: String? = null
+    private var venueLocation: String? = null
+    private var venueCapacity: String? = null
+    private var venueStatus: String? = null
+    private var venueImageUrl: String? = null
+    private var venueAvailableStartTime: String? = null
+    private var venueAvailableEndTime: String? = null
+    private var bookingDate: String? = null
+    private var bookingTime: String? = null
+    private var courtId: String? = null
+    private var selectedSlot: String? = null
+    private var bookingId: String? = null
+    private var bookingStatus: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.booking_page)
 
-        // Ambil courtId dan selectedDate dari Intent
-        courtId = intent.getStringExtra("courtId") ?: "default_court_id"
-        selectedDate = intent.getStringExtra("selectedDate") ?: "default_date"
+        // Initialize UI elements
+        toolbar = findViewById(R.id.toolbar_booking)
+        tabLayout = findViewById(R.id.tab_layout)
+        searchCard = findViewById(R.id.search_card)
+        searchBooking = findViewById(R.id.search_booking)
+        filterIcon = findViewById(R.id.filter_icon)
+        recyclerViewBooking = findViewById(R.id.recycler_view_booking)
 
-        // Initialize Firestore and FirebaseAuth
-        db = FirebaseFirestore.getInstance()
-        val auth = FirebaseAuth.getInstance()
-        userId = auth.currentUser?.uid
-
-        if (userId == null) {
-            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
-            finish()
-            return
+        // Setup Toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
         }
 
-        // Initialize RecyclerView and Adapter
-        bookingAdapter = BookingAdapter()
-        bookingRecyclerView = findViewById(R.id.recycler_view_booking)
-        bookingRecyclerView.layoutManager = LinearLayoutManager(this)
-        bookingRecyclerView.adapter = bookingAdapter
+        // Get data from Intent
+        intent?.let {
+            venueName = it.getStringExtra("venue_name")
+            venueCategory = it.getStringExtra("venue_category")
+            venuePrice = it.getStringExtra("venue_price")
+            venueLocation = it.getStringExtra("venue_location")
+            venueCapacity = it.getStringExtra("venue_capacity")
+            venueStatus = it.getStringExtra("venue_status")
+            venueImageUrl = it.getStringExtra("venue_imageUrl")
+            venueAvailableStartTime = it.getStringExtra("venue_availableStartTime")
+            venueAvailableEndTime = it.getStringExtra("venue_availableEndTime")
+            bookingDate = it.getStringExtra("booking_date")
+            bookingTime = it.getStringExtra("booking_time")
+            courtId = it.getStringExtra("courtId")
+            selectedSlot = it.getStringExtra("time")
+            bookingId = it.getStringExtra("bookingId")
+            bookingStatus = it.getStringExtra("booking_status")
+        }
 
-        fetchBookings()
+        // Populate UI with data (if needed)
+        searchBooking.setText(venueName)
+
+        // Example: searchBooking.setText(venueName)
     }
 
-    private fun fetchBookings() {
-        val bookingRef = db.collection("sports_center")
-            .document("badminton")
-            .collection("courts")
-            .document(courtId)
-            .collection("bookings")
-            .document(selectedDate)
-
-        bookingRef.get().addOnSuccessListener { document ->
-            if (document != null && document.exists()) {
-                val bookings = document.data?.mapNotNull { entry ->
-                    val bookingData = entry.value as? Map<*, *>
-                    val bookingUserId = bookingData?.get("userId") as? String
-                    if (bookingUserId == userId) {
-                        Booking(
-                            venueImageResId = R.drawable.venue_image, // Placeholder image
-                            venueName = entry.key,
-                            venueAddress = bookingData?.get("venueAddress").toString(),
-                            venueSport = "Badminton",
-                            bookingStatus = bookingData?.get("bookingStatus").toString(),
-                            userId = bookingUserId.toString()
-                        )
-                    } else {
-                        null
-                    }
-                } ?: emptyList()
-
-                bookingAdapter.submitList(bookings)
-            } else {
-                Toast.makeText(this, "No bookings found for the selected date", Toast.LENGTH_SHORT).show()
-            }
-        }.addOnFailureListener { exception ->
-            Toast.makeText(this, "Failed to fetch bookings: ${exception.message}", Toast.LENGTH_SHORT).show()
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

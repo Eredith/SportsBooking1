@@ -39,17 +39,17 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/venue_address"
+                android:id="@+id/booking_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Asatu Area, JL. R...."
+                android:text="Thursday, 26 November"
                 android:textColor="@android:color/darker_gray" />
 
             <TextView
-                android:id="@+id/venue_sport"
+                android:id="@+id/booking_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mini Soccer"
+                android:text="08.00-11.00"
                 android:textColor="@android:color/darker_gray" />
 
             <TextView
