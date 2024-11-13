@@ -7,13 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.sportsbooking.R
 import com.example.sportsbooking.venue.Venue
@@ -21,8 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
+import java.util.*
 
 class BuatPesananFragment : Fragment() {
 
@@ -37,7 +30,6 @@ class BuatPesananFragment : Fragment() {
     private lateinit var imgLapangan: ImageView
     private lateinit var btnPilihGambar: Button
     private var imageUri: Uri? = null
-    private var imageUrl: String = ""
     private lateinit var storageReference: StorageReference
 
     private lateinit var spinnerKategoriOlahraga: Spinner
@@ -48,6 +40,14 @@ class BuatPesananFragment : Fragment() {
 
     private val PICK_IMAGE_REQUEST = 100
     private val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+    // Food-related fields
+    private lateinit var etNamaMakanan: EditText
+    private lateinit var etHargaMakanan: EditText
+    private lateinit var btnSimpanMakanan: Button
+    private lateinit var imgMakanan: ImageView
+    private lateinit var btnPilihGambarMakanan: Button
+    private var imageUriMakanan: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,7 +76,6 @@ class BuatPesananFragment : Fragment() {
         textStartTime = view.findViewById(R.id.textStartTime)
         textEndTime = view.findViewById(R.id.textEndTime)
 
-        // Spinner untuk kategori olahraga
         spinnerKategoriOlahraga = view.findViewById(R.id.spinnerKategoriOlahraga)
         val kategoriOptions = arrayOf("badminton", "golf")
         val kategoriAdapter = ArrayAdapter(
@@ -108,6 +107,21 @@ class BuatPesananFragment : Fragment() {
             simpanPesananKeFirebase()
         }
 
+        // Initialize food-related fields
+        etNamaMakanan = view.findViewById(R.id.etNamaMakanan)
+        etHargaMakanan = view.findViewById(R.id.etHargaMakanan)
+        btnSimpanMakanan = view.findViewById(R.id.btnSimpanMakanan)
+        imgMakanan = view.findViewById(R.id.imgMakanan)
+        btnPilihGambarMakanan = view.findViewById(R.id.btnPilihGambarMakanan)
+
+        btnPilihGambarMakanan.setOnClickListener {
+            pilihGambarMakananDariGaleri()
+        }
+
+        btnSimpanMakanan.setOnClickListener {
+            simpanMakananKeFirebase()
+        }
+
         return view
     }
 
@@ -116,6 +130,8 @@ class BuatPesananFragment : Fragment() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == android.app.Activity.RESULT_OK && data != null && data.data != null) {
             imageUri = data.data
             imgLapangan.setImageURI(imageUri)
+            imageUriMakanan = data.data
+            imgMakanan.setImageURI(imageUriMakanan)
         }
     }
 
@@ -141,6 +157,12 @@ class BuatPesananFragment : Fragment() {
     }
 
     private fun pilihGambarDariGaleri() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+
+    private fun pilihGambarMakananDariGaleri() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
@@ -205,7 +227,7 @@ class BuatPesananFragment : Fragment() {
 
         uploadGambarKeFirebaseStorage(onSuccess = { uploadedImageUrl ->
             val venue = Venue(
-                id = "", // Generate or assign an ID if needed
+                id = "",
                 nama = namaLapangan,
                 jenisLapangan = jenisLapangan,
                 alamat = alamatLapangan,
@@ -218,27 +240,44 @@ class BuatPesananFragment : Fragment() {
                 capacity = kapasitasLapangan.toInt()
             )
 
-            firestore.collection("sports_center").document(kategoriOlahraga)
-                .collection("courts")
-                .document(namaLapangan) // Menggunakan namaLapangan sebagai documentId
-                .set(venue)
+            firestore.collection("sports_center").document(kategoriOlahraga).collection("venues")
+                .add(venue)
                 .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Venue berhasil disimpan", Toast.LENGTH_SHORT).show()
-                    etNama.text.clear()
-                    etJenisLapangan.text.clear()
-                    etHargaLapangan.text.clear()
-                    etKapasitasLapangan.text.clear()
-                    etAlamat.text.clear()
-                    spinnerStatusLapangan.setSelection(0)
-                    imgLapangan.setImageURI(null)
-                    textStartTime.text = "Mulai: Belum Dipilih"
-                    textEndTime.text = "Selesai: Belum Dipilih"
+                    Toast.makeText(requireContext(), "Pesanan berhasil disimpan", Toast.LENGTH_SHORT).show()
                 }
-                .addOnFailureListener { e ->
-                    Toast.makeText(requireContext(), "Gagal menyimpan venue: ${e.message}", Toast.LENGTH_SHORT).show()
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Gagal menyimpan pesanan", Toast.LENGTH_SHORT).show()
                 }
-        }, onFailure = { exception ->
-            Toast.makeText(requireContext(), "Gagal mengupload gambar: ${exception.message}", Toast.LENGTH_SHORT).show()
+        }, onFailure = {
+            Toast.makeText(requireContext(), "Gagal mengunggah gambar: ${it.message}", Toast.LENGTH_SHORT).show()
+        })
+    }
+
+    private fun simpanMakananKeFirebase() {
+        val namaMakanan = etNamaMakanan.text.toString().trim()
+        val hargaMakanan = etHargaMakanan.text.toString().trim()
+
+        if (namaMakanan.isEmpty() || hargaMakanan.isEmpty()) {
+            Toast.makeText(requireContext(), "Semua field harus diisi", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        uploadGambarKeFirebaseStorage(onSuccess = { uploadedImageUrl ->
+            val makananData = mapOf(
+                "nama" to namaMakanan,
+                "harga" to hargaMakanan.toDouble(),
+                "imageUrl" to uploadedImageUrl
+            )
+
+            firestore.collection("makanan").add(makananData)
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Data makanan berhasil disimpan", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Gagal menyimpan data makanan", Toast.LENGTH_SHORT).show()
+                }
+        }, onFailure = {
+            Toast.makeText(requireContext(), "Gagal mengunggah gambar makanan: ${it.message}", Toast.LENGTH_SHORT).show()
         })
     }
 }

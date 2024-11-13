@@ -10,13 +10,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Existing UI elements -->
+
         <!-- Kategori Olahraga -->
         <Spinner
             android:id="@+id/spinnerKategoriOlahraga"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Pilih Olahraga" />
+            android:hint="Pilih Olahraga"
+            android:minHeight="48dp" />
 
         <!-- Nama Lapangan -->
         <EditText
@@ -24,7 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nama Lapangan"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
         <!-- Jenis Lapangan -->
         <EditText
@@ -32,41 +36,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Jenis Lapangan"
-            android:inputType="text" />
+            android:inputType="text"
+            android:minHeight="48dp" />
 
         <!-- Harga Lapangan -->
         <EditText
             android:id="@+id/etHargaLapangan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="Harga Lapangan"
             android:inputType="numberDecimal"
-            android:layout_marginTop="8dp" />
+            android:minHeight="48dp" />
 
         <!-- Kapasitas Lapangan -->
         <EditText
             android:id="@+id/etKapasitasLapangan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="Kapasitas Lapangan"
             android:inputType="number"
-            android:layout_marginTop="8dp" />
+            android:minHeight="48dp" />
 
         <!-- Alamat Lapangan -->
         <EditText
             android:id="@+id/etAlamat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="Alamat Lapangan"
             android:inputType="textPostalAddress"
-            android:layout_marginTop="8dp" />
+            android:minHeight="48dp" />
 
         <!-- Status Lapangan -->
         <Spinner
             android:id="@+id/spinnerStatusLapangan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:minHeight="48dp" />
 
         <!-- Waktu Mulai -->
         <TextView
@@ -138,5 +147,39 @@
             android:text="Simpan Pesanan"
             android:layout_marginTop="24dp" />
 
+        <EditText
+            android:id="@+id/etNamaMakanan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nama Makanan" />
+
+        <EditText
+            android:id="@+id/etHargaMakanan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Harga Makanan"
+            android:inputType="numberDecimal" />
+
+        <ImageView
+            android:id="@+id/imgMakanan"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="Food Image" />
+
+        <Button
+            android:id="@+id/btnPilihGambarMakanan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih Gambar Makanan"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/btnSimpanMakanan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Simpan Makanan" />
     </LinearLayout>
 </ScrollView>
