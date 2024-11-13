@@ -14,6 +14,7 @@ import com.example.sportsbooking.booking.BookingActivity
 import com.example.sportsbooking.login.LoginActivity
 import com.example.sportsbooking.profile.ProfileActivity
 import com.example.sportsbooking.profile.ProfileFragment
+import com.example.sportsbooking.store.MakananActivity
 import com.example.sportsbooking.venue.VenueAdapterMain
 import com.example.sportsbooking.venue.VenueListActivity
 import com.example.sportsbooking.venue.VenueMain
@@ -119,7 +120,14 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
+
+        findViewById<LinearLayout>(R.id.nav_makanan).setOnClickListener {
+            val intent = Intent(this, MakananActivity::class.java)
+            startActivity(intent)
+        }
     }
+
+
 
     override fun onStart() {
         super.onStart()
