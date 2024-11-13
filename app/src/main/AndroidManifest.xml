@@ -30,7 +30,8 @@
         <activity android:name=".detailpembayaran.DetailPembayaranActivity" />
         <activity android:name=".detaillapangan.DetailLapanganJam" />
         <activity android:name=".profile.ProfileActivity" />
-        <activity android:name=".booking.BookingActivity"
+        <activity android:name=".booking.BookingActivity"/>
+        <activity android:name=".store.MakananActivity"
 
 
 
