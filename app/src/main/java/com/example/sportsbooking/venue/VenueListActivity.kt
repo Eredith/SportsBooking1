@@ -170,29 +170,33 @@ class VenueListActivity : AppCompatActivity() {
 
     private fun fetchVenuesFromFirestore() {
         val db: FirebaseFirestore = Firebase.firestore
+        val categories = listOf("badminton", "driving range", "general sports") // Add more categories as needed
 
-        db.collection("sports_center")
-            .document("badminton")
-            .collection("courts")
-            .get()
-            .addOnSuccessListener { result ->
-                venueList.clear()
-                for (document in result) {
-                    val venue = document.toObject(Venue::class.java)
+        venueList.clear()
 
-                    // Retrieving date fields directly from document
-                    venue.availableStartTime = document.getDate("availableStartTime")
-                    venue.availableEndTime = document.getDate("availableEndTime")
+        for (category in categories) {
+            db.collection("sports_center")
+                .document(category)
+                .collection("courts")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        val venue = document.toObject(Venue::class.java)
 
-                    venueList.add(venue)
+                        // Retrieving date fields directly from document
+                        venue.availableStartTime = document.getDate("availableStartTime")
+                        venue.availableEndTime = document.getDate("availableEndTime")
+
+                        venueList.add(venue)
+                    }
+                    filteredVenueList.clear()
+                    filteredVenueList.addAll(venueList) // Set filtered list to all venues
+                    venueAdapter.updateData(venueList) // Notify adapter with initial data
                 }
-                filteredVenueList.clear()
-                filteredVenueList.addAll(venueList) // Set filtered list to all venues
-                venueAdapter.updateData(venueList) // Notify adapter with initial data
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error getting documents: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this, "Error getting documents: ${exception.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     private fun getCategoryData(): List<Category> {

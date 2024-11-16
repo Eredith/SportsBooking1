@@ -77,7 +77,7 @@ class BuatPesananFragment : Fragment() {
         textEndTime = view.findViewById(R.id.textEndTime)
 
         spinnerKategoriOlahraga = view.findViewById(R.id.spinnerKategoriOlahraga)
-        val kategoriOptions = arrayOf("badminton", "golf")
+        val kategoriOptions = arrayOf("badminton", "driving range")
         val kategoriAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
@@ -240,8 +240,9 @@ class BuatPesananFragment : Fragment() {
                 capacity = kapasitasLapangan.toInt()
             )
 
-            firestore.collection("sports_center").document(kategoriOlahraga).collection("venues")
-                .add(venue)
+            firestore.collection("sports_center").document(kategoriOlahraga).collection("courts")
+                .document(namaLapangan) // Menyimpan nama lapangan sebagai nama dokumen
+                .set(venue)
                 .addOnSuccessListener {
                     Toast.makeText(requireContext(), "Pesanan berhasil disimpan", Toast.LENGTH_SHORT).show()
                 }
