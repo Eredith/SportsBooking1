@@ -4,15 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewMakanan"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <Button
-        android:id="@+id/btnViewCart"
+    <TextView
+        android:id="@+id/tvTotalItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Cart" />
+        android:padding="16dp"
+        android:text="Total Items: 0" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>

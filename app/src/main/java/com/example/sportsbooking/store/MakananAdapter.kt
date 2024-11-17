@@ -1,17 +1,17 @@
 package com.example.sportsbooking.store
 
-// MakananAdapter.kt
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.sportsbooking.R
 
-class MakananAdapter(private val makananList: List<Makanan>) :
-    RecyclerView.Adapter<MakananAdapter.MakananViewHolder>() {
+class MakananAdapter(
+    private val makananList: List<Makanan>,
+    private val onAddToCartClick: (Makanan) -> Unit
+) : RecyclerView.Adapter<MakananAdapter.MakananViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MakananViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_makanan, parent, false)
@@ -20,22 +20,20 @@ class MakananAdapter(private val makananList: List<Makanan>) :
 
     override fun onBindViewHolder(holder: MakananViewHolder, position: Int) {
         val makanan = makananList[position]
-        holder.bind(makanan)
+        holder.bind(makanan, onAddToCartClick)
     }
 
     override fun getItemCount(): Int = makananList.size
 
-    inner class MakananViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val namaMakanan: TextView = itemView.findViewById(R.id.namaMakanan)
-        private val hargaMakanan: TextView = itemView.findViewById(R.id.hargaMakanan)
-        private val imageMakanan: ImageView = itemView.findViewById(R.id.imageMakanan)
+    class MakananViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val tvName: TextView = itemView.findViewById(R.id.tvName)
+        private val btnAddToCart: Button = itemView.findViewById(R.id.btnAddToCart)
 
-        fun bind(makanan: Makanan) {
-            namaMakanan.text = makanan.nama
-            hargaMakanan.text = "Rp ${makanan.harga}"
-            Glide.with(itemView.context)
-                .load(makanan.imageUrl)
-                .into(imageMakanan)
+        fun bind(makanan: Makanan, onAddToCartClick: (Makanan) -> Unit) {
+            tvName.text = makanan.nama
+            btnAddToCart.setOnClickListener {
+                onAddToCartClick(makanan)
+            }
         }
     }
 }
