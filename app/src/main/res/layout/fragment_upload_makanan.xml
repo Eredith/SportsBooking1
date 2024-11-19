@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Makanan"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Example input fields -->
+    <EditText
+        android:id="@+id/etNamaMakanan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama Makanan" />
+
+    <EditText
+        android:id="@+id/etHargaMakanan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Harga Makanan" />
+    <ImageView
+        android:id="@+id/imgMakanan"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Food Image" />
+
+    <Button
+        android:id="@+id/btnPilihGambarMakanan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pilih Gambar Makanan"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnSimpanMakanan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Simpan Makanan" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload" />
+</LinearLayout>

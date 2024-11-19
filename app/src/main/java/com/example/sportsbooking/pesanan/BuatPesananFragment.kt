@@ -107,21 +107,6 @@ class BuatPesananFragment : Fragment() {
             simpanPesananKeFirebase()
         }
 
-        // Initialize food-related fields
-        etNamaMakanan = view.findViewById(R.id.etNamaMakanan)
-        etHargaMakanan = view.findViewById(R.id.etHargaMakanan)
-        btnSimpanMakanan = view.findViewById(R.id.btnSimpanMakanan)
-        imgMakanan = view.findViewById(R.id.imgMakanan)
-        btnPilihGambarMakanan = view.findViewById(R.id.btnPilihGambarMakanan)
-
-        btnPilihGambarMakanan.setOnClickListener {
-            pilihGambarMakananDariGaleri()
-        }
-
-        btnSimpanMakanan.setOnClickListener {
-            simpanMakananKeFirebase()
-        }
-
         return view
     }
 

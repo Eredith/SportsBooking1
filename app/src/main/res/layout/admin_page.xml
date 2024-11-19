@@ -60,6 +60,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lihat Pesanan" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabUploadMakanan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload Makanan" />
+
 </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout
