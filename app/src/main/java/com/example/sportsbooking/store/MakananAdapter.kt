@@ -27,10 +27,12 @@ class MakananAdapter(
 
     class MakananViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvName: TextView = itemView.findViewById(R.id.tvName)
+        private val tvPrice: TextView = itemView.findViewById(R.id.tvPrice)
         private val btnAddToCart: Button = itemView.findViewById(R.id.btnAddToCart)
 
         fun bind(makanan: Makanan, onAddToCartClick: (Makanan) -> Unit) {
             tvName.text = makanan.nama
+            tvPrice.text = "Price: \$${makanan.harga}"
             btnAddToCart.setOnClickListener {
                 onAddToCartClick(makanan)
             }

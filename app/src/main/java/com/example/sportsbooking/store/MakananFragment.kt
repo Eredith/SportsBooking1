@@ -1,51 +1,38 @@
+// MakananFragment.kt
 package com.example.sportsbooking.store
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportsbooking.R
-import com.google.firebase.firestore.FirebaseFirestore
 
 class MakananFragment : Fragment() {
 
-    private lateinit var recyclerViewMakanan: RecyclerView
     private lateinit var makananAdapter: MakananAdapter
-    private val makananList = mutableListOf<Makanan>()
-    private val firestore = FirebaseFirestore.getInstance()
+    private val makananList = listOf(
+        Makanan(1, "Nasi Goreng", 5.0),
+        Makanan(2, "Mie Goreng", 4.0)
+        // Add more items as needed
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_makanan, container, false)
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewMakanan)
+        recyclerView.layoutManager = LinearLayoutManager(context)
 
-        recyclerViewMakanan = view.findViewById(R.id.recyclerViewMakanan)
-        recyclerViewMakanan.layoutManager = LinearLayoutManager(requireContext())
-        makananAdapter = MakananAdapter(makananList)
-        recyclerViewMakanan.adapter = makananAdapter
-
-        loadMakananData()
+        makananAdapter = MakananAdapter(makananList) { makanan ->
+            // Handle add to cart click
+            ShoppingCart.addItem(makanan)
+        }
+        recyclerView.adapter = makananAdapter
 
         return view
-    }
-
-    private fun loadMakananData() {
-        firestore.collection("makanan").get()
-            .addOnSuccessListener { result ->
-                makananList.clear()
-                for (document in result) {
-                    val makanan = document.toObject(Makanan::class.java)
-                    makananList.add(makanan)
-                }
-                makananAdapter.notifyDataSetChanged()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "Gagal mengambil data makanan: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
     }
 }

@@ -1,6 +1,8 @@
 package com.example.sportsbooking.store
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -45,9 +47,11 @@ class MakananActivity : AppCompatActivity() {
                     makananList.add(makanan)
                 }
                 makananAdapter.notifyDataSetChanged()
+                Log.d("MakananActivity", "Data loaded successfully: ${makananList.size} items")
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Gagal mengambil data makanan: ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.e("MakananActivity", "Error fetching data", e)
             }
     }
 }
