@@ -50,7 +50,7 @@ class MakananActivity : AppCompatActivity() {
                 Log.d("MakananActivity", "Data loaded successfully: ${makananList.size} items")
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Gagal mengambil data makanan: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to fetch food data: ${e.message}", Toast.LENGTH_SHORT).show()
                 Log.e("MakananActivity", "Error fetching data", e)
             }
     }
