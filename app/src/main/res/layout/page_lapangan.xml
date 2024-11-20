@@ -50,115 +50,49 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Logo Image -->
-                <ImageView
-                    android:id="@+id/logo_image"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/logo_sports"
-                    android:contentDescription="@string/logo_desc"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <!-- Venue Title -->
-                <TextView
-                    android:id="@+id/venue_title"
-                    android:layout_width="0dp"
+                <!-- Venue Title Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="B23 Arena Simprug\nBadminton"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="@id/logo_image"
-                    app:layout_constraintStart_toEndOf="@id/logo_image"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/logo_image"
-                    android:layout_marginStart="8dp" />
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
 
-                <!-- Venue Category -->
-                <TextView
-                    android:id="@+id/venue_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bulu Tangkis"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@id/venue_title"
-                    app:layout_constraintStart_toStartOf="@id/venue_title"
-                    android:layout_marginTop="8dp" />
+                    <!-- Venue Logo -->
+                    <ImageView
+                        android:id="@+id/logo_image"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/logo_sports"
+                        android:contentDescription="@string/logo_desc"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                <!-- Venue Address -->
-                <TextView
-                    android:id="@+id/venue_alamat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Jl. Simprug Garden - Jakarta Selatan"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@id/venue_category"
-                    app:layout_constraintStart_toStartOf="@id/venue_category"
-                    android:layout_marginTop="4dp" />
+                    <!-- Venue Name -->
+                    <TextView
+                        android:id="@+id/venue_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="B23 Arena Simprug\nBadminton"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                <!-- Venue Capacity -->
-                <TextView
-                    android:id="@+id/venue_capacity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Kapasitas: 10 Orang"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@id/venue_alamat"
-                    app:layout_constraintStart_toStartOf="@id/venue_alamat"
-                    android:layout_marginTop="4dp" />
-
-                <!-- Venue Status -->
-                <TextView
-                    android:id="@+id/venue_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tersedia"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@id/venue_capacity"
-                    app:layout_constraintStart_toStartOf="@id/venue_capacity"
-                    android:layout_marginTop="4dp" />
-
-                <!-- Venue Price -->
-                <TextView
-                    android:id="@+id/venue_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Harga: Rp. 1.200.000"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@id/venue_status"
-                    app:layout_constraintStart_toStartOf="@id/venue_status"
-                    android:layout_marginTop="2dp" />
-
-                <!-- Opening Hours Card -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/opening_hours_card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@android:color/holo_green_light"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-
+                    <!-- Jam Buka -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:background="@drawable/rounded_green_background"
                         android:padding="8dp">
 
-                        <!-- Opening Hours Title -->
                         <TextView
                             android:id="@+id/opening_hours_title"
                             android:layout_width="wrap_content"
@@ -166,22 +100,130 @@
                             android:text="Jam Buka"
                             android:textColor="@android:color/black"
                             android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_gravity="center_horizontal" />
+                            android:textStyle="bold" />
 
-                        <!-- Opening Hours Text -->
                         <TextView
                             android:id="@+id/opening_hours_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="08:00 - 22:00"
                             android:textColor="@android:color/black"
-                            android:textSize="14sp"
-                            android:layout_marginTop="4dp"
-                            android:layout_gravity="center_horizontal" />
+                            android:textSize="14sp" />
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                </LinearLayout>
+
+                <!-- Category Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_category"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/venue_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bulu Tangkis"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Address Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_location"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/venue_alamat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jl. Simprug Garden - Jakarta Selatan"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Capacity Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_capacity"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/venue_capacity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kapasitas: 10 Orang"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Status Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_status"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/venue_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tersedia"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Price Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_price"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/venue_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Harga: Rp. 1.200.000"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- Detail Alamat Section -->

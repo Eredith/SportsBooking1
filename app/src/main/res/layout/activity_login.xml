@@ -86,7 +86,9 @@
         android:layout_height="wrap_content"
         android:text="Ingat Saya"
         android:layout_marginTop="16dp"
-        android:buttonTint="@color/gray" />
+        android:buttonTint="@color/gray"
+        android:layout_gravity="start"/>
+
 
 
     <!-- Login Button -->
