@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#FFFFFF"> <!-- Set the background color to white -->
+    >
     <!-- Toolbar for the title and back button -->
     <!-- Image for the venue -->
 
@@ -17,152 +19,183 @@
         android:layout_height="wrap_content"
         android:titleTextColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="Detail Lapangan" />
 
-    <ImageView
-        android:id="@+id/venueImage"
-        android:layout_width="80dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="8dp"
-        android:contentDescription="venue_image"
-        android:scaleType="centerCrop"
-        android:src="@drawable/venue_image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.079" />
 
-    <TextView
-        android:id="@+id/venueTitle"
-        android:layout_width="266dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="4dp"
-        android:text="B23 Arena Simprug Badminton"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.188"
-        app:layout_constraintStart_toEndOf="@id/venueImage"
-        app:layout_constraintTop_toTopOf="@id/venueImage" />
-
-    <!-- LinearLayout for 'Tipe Pesanan' and 'Tipe Lapangan' -->
-    <TextView
-        android:id="@+id/venueAlamat"
-        android:layout_width="264dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="8dp"
-        android:text="Badminton B23 Arena Simprug"
-        android:textColor="#888888"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.184"
-        app:layout_constraintStart_toEndOf="@id/venueImage"
-        app:layout_constraintTop_toBottomOf="@id/venueTitle" />
-
-    <!-- Title for the section -->
-
-    <!-- CardView to hold the date and time info -->
-
+        <!-- Top Section: Image and Text -->
     <LinearLayout
-        android:id="@+id/orderTypeContainer"
-        android:layout_width="wrap_content"
+        android:id="@+id/venueCard"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/venueAlamat"
-        app:layout_constraintVertical_bias="0.333">
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/border"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <!-- 'Tipe Pesanan' Section -->
-
-        <!-- 'Tipe Lapangan' Section -->
+        <!-- Top Section: Image and Text -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <!-- Icon -->
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_order_type" />
+            <!-- Venue Image -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="80dp"
+                android:layout_height="65dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical">
 
-            <!-- Text for 'Tipe Pesanan' -->
-            <TextView
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/venueImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="venue_image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/venue_image"/>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Text Details -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Tipe Pesanan"
-                android:textColor="#888888"
-                android:textSize="12sp" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <!-- Value for 'Venue' -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Venue"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                <!-- Venue Title -->
+                <TextView
+                    android:id="@+id/venueTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="B23 Arena Simprug Badminton"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <!-- Venue Address -->
+                <TextView
+                    android:id="@+id/venueAlamat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Badminton B23 Arena Simprug"
+                    android:textColor="#888888"
+                    android:textSize="14sp" />
+            </LinearLayout>
         </LinearLayout>
 
+        <!-- Bottom Section: Order Type -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:background="@drawable/border"
+            android:padding="8dp">  <!-- Add the border here -->
 
-            <!-- Icon -->
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_court_type" />
-
-            <!-- Text for 'Tipe Lapangan' -->
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Tipe Pesanan -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Tipe Lapangan"
-                android:textColor="#888888"
-                android:textSize="12sp" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
 
-            <!-- Value for 'Bulu Tangkis' -->
-            <TextView
-                android:layout_width="wrap_content"
+                <!-- Icon -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_order_type" />
+
+                <!-- Text -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Tipe Pesanan"
+                    android:textColor="#888888"
+                    android:textSize="12sp" />
+
+                <!-- Value -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Venue"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="#E0E0E0" />
+
+            <!-- Tipe Lapangan -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Bulu Tangkis"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <!-- Icon -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_court_type" />
+
+                <!-- Text -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Tipe Lapangan"
+                    android:textColor="#888888"
+                    android:textSize="12sp" />
+
+                <!-- Value -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Bulu Tangkis"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+
+
 
     <TextView
         android:id="@+id/tanggal_waktu_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="244dp"
         android:text="Lapangan ini menurut players"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/venueCard"
+        android:layout_marginTop="20dp"/>
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="16dp"
         android:background="@color/white"
         app:cardCornerRadius="12dp"
@@ -173,22 +206,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="horizontal"
 
-            <!-- Row for Date -->
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp">
+
+            <!-- Left Section for Fasilitas Bagus -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:background="@drawable/border"
+                android:layout_marginEnd="4dp">
 
                 <!-- Calendar Icon -->
                 <ImageView
                     android:id="@+id/calendar_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_calendar" />
+                    android:src="@drawable/ic_calendar"
+                    app:tint="@color/orange" />
+
 
                 <!-- Date Text -->
                 <TextView
@@ -201,40 +243,40 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <!-- Divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="#E0E0E0" />
-
-            <!-- Row for Time and Price -->
+            <!-- Right Section for Tempat Bersih -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:background="@drawable/border"
+                android:layout_marginEnd="4dp">
 
                 <!-- Time Icon -->
                 <ImageView
                     android:id="@+id/time_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_time" />
+                    android:src="@drawable/ic_time"
+                    app:tint="@color/orange"/>
+
                 <!-- Time Text -->
                 <TextView
                     android:id="@+id/time_text"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:layout_weight="1"
                     android:text="Tempat Bersih"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
             </LinearLayout>
+
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
     <!-- CardView to hold the cancellation policy -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -252,49 +294,59 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
+        android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView">
 
-        <!-- Warning Icon -->
-        <ImageView
-            android:id="@+id/warning_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_warning"
-            app:tint="@color/orange" />
-
-        <!-- Text Content -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <!-- Title Text -->
-            <TextView
-                android:id="@+id/cancellation_policy_title"
-                android:layout_width="wrap_content"
+            <!-- Text Content -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pilihan Jadwal Booking"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
 
-            <!-- res/layout/activity_detail_lapangan.xml -->
-            <Spinner
-                android:id="@+id/monthSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"/>
+                <!-- Title Text -->
+                <TextView
+                    android:id="@+id/cancellation_policy_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pilihan Jadwal Booking"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+                <!-- Spinner and Icon Section -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center_vertical">
+
+                <!-- Warning Icon -->
+                <ImageView
+                    android:id="@+id/warning_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_calendar"
+                    android:layout_marginEnd="12dp" />
+
+                <!-- Spinner -->
+                <Spinner
+                    android:id="@+id/monthSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"/>
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
+
     <!-- Title for 'Detail Transaksi' -->
 
     <!-- Payment Time Limit -->
@@ -303,13 +355,11 @@
         android:id="@+id/detail_transaksi_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="488dp"
         android:text="Hari"
-        android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/cardView2" />
 
     <LinearLayout
         android:id="@+id/payment_limit_container"
@@ -354,83 +404,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:scrollbars="horizontal" />
-    </LinearLayout>
-
-    <!-- Checkbox and Terms Text -->
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!-- Checkbox -->
-
-        <!-- Text with Links -->
-
-        <!-- Links for 'Syarat dan Ketentuan' -->
-
-    </LinearLayout>
-
-    <!-- Divider -->
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="#E0E0E0"
-        app:layout_constraintTop_toBottomOf="@id/termsCheckbox"
-        tools:layout_editor_absoluteX="16dp" />
-
-    <!-- Total Harga -->
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/termsCheckbox">
-
-        <!-- Label for 'Total Harga' -->
-        <TextView
-            android:id="@+id/total_price_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Silahkan pilih jadwal "
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <!-- Total Price Value -->
-        <TextView
-            android:id="@+id/total_price_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rp100.000"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
+            android:scrollbars="horizontal"
+/>
     </LinearLayout>
 
     <!-- Pay Button -->
+
+    <!-- Divider -->
+    <View
+        android:id="@+id/divide"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#E0E0E0"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"/>
 
     <CheckBox
         android:id="@+id/termsCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:buttonTint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+        app:layout_constraintTop_toBottomOf="@+id/divide"
+         />
 
     <TextView
         android:id="@+id/terms_text"
@@ -440,11 +438,12 @@
         android:text="Saya setuju dengan"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/view"
+        android:layout_marginTop="16dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/termsCheckbox"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintTop_toBottomOf="@+id/divide"
         app:layout_constraintVertical_bias="0.195" />
 
     <TextView
@@ -456,12 +455,13 @@
         android:text="Syarat dan Ketentuan milik Gelora,"
         android:textColor="@android:color/holo_orange_dark"
         android:textSize="14sp"
+        android:layout_marginTop="16dp"
+
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/insurance_link"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/terms_text"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintTop_toBottomOf="@+id/divide"
         app:layout_constraintVertical_bias="0.533" />
 
     <TextView
@@ -481,18 +481,52 @@
         app:layout_constraintTop_toBottomOf="@+id/terms_text"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/payButton"
+
+
+    <!-- Divider -->
+    <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@drawable/rounded_gray_background"
-        android:backgroundTint="@color/orange"
-        android:text="Book Lapangan ini"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#E0E0E0"
+        app:layout_constraintTop_toBottomOf="@id/termsCheckbox"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <!-- Total Harga -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:ignore="MissingConstraints,NotSibling" />
+        app:layout_constraintTop_toBottomOf="@id/view">
+
+        <!-- Label for 'Total Harga' -->
+        <TextView
+            android:id="@+id/total_price_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Silahkan pilih jadwal"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Button for booking -->
+        <Button
+            android:id="@+id/payButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_gray_background"
+            app:backgroundTint="@color/orange"
+            android:text="Book Lapangan ini"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

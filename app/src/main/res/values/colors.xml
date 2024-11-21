@@ -14,4 +14,6 @@
     <color name="not_available">#F44336</color> <!-- Red -->
     <color name="default_background">#FFFFFF</color>
     <color name="default_text">#000000</color>
+    <color name="lite_orange">#FFF4E0</color>
+
 </resources>

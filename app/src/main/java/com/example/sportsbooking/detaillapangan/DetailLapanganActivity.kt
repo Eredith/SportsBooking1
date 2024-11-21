@@ -47,7 +47,7 @@ class DetailLapanganActivity : AppCompatActivity() {
         // Populate UI dengan data
         binding.venueTitle.text = "$venueName\n$venueCategory"
         binding.venueAlamat.text = "Alamat: $venueLocation"
-        binding.totalPriceValue.text = "Rp${venuePrice}"
+//        binding.totalPriceValue.text = "Rp${venuePrice}"
 
         // Load gambar venue menggunakan Glide
         Glide.with(this)
