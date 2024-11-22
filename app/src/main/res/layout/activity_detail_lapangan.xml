@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#FFFFFF"> <!-- Set the background color to white -->
     <!-- Toolbar for the title and back button -->
     <!-- Image for the venue -->
 
@@ -17,181 +18,212 @@
         android:layout_height="wrap_content"
         android:titleTextColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="Detail Lapangan" />
 
-    <ImageView
-        android:id="@+id/venueImage"
-        android:layout_width="80dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="8dp"
-        android:contentDescription="venue_image"
-        android:scaleType="centerCrop"
-        android:src="@drawable/venue_image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.121" />
-
-    <TextView
-        android:id="@+id/venueTitle"
-        android:layout_width="266dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="4dp"
-        android:text="B23 Arena Simprug Badminton"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.188"
-        app:layout_constraintStart_toEndOf="@id/venueImage"
-        app:layout_constraintTop_toTopOf="@id/venueImage" />
-
-    <!-- LinearLayout for 'Tipe Pesanan' and 'Tipe Lapangan' -->
-    <TextView
-        android:id="@+id/venueAlamat"
-        android:layout_width="264dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="8dp"
-        android:text="Badminton B23 Arena Simprug"
-        android:textColor="#888888"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.184"
-        app:layout_constraintStart_toEndOf="@id/venueImage"
-        app:layout_constraintTop_toBottomOf="@id/venueTitle" />
-
-    <!-- Title for the section -->
-
-    <!-- CardView to hold the date and time info -->
-
+    <!-- Top Section: Image and Text -->
     <LinearLayout
-        android:id="@+id/orderTypeContainer"
-        android:layout_width="wrap_content"
+        android:id="@+id/venueCard"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/venueAlamat">
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/border"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <!-- 'Tipe Pesanan' Section -->
-
-        <!-- 'Tipe Lapangan' Section -->
+        <!-- Top Section: Image and Text -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <!-- Icon -->
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_order_type" />
+            <!-- Venue Image -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="80dp"
+                android:layout_height="65dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical">
 
-            <!-- Text for 'Tipe Pesanan' -->
-            <TextView
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/venueImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="venue_image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/venue_image"/>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Text Details -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Tipe Pesanan"
-                android:textColor="#888888"
-                android:textSize="12sp" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <!-- Value for 'Venue' -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Venue"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                <!-- Venue Title -->
+                <TextView
+                    android:id="@+id/venueTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="B23 Arena Simprug Badminton"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <!-- Venue Address -->
+                <TextView
+                    android:id="@+id/venueAlamat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Badminton B23 Arena Simprug"
+                    android:textColor="#888888"
+                    android:textSize="14sp" />
+            </LinearLayout>
         </LinearLayout>
 
+        <!-- Bottom Section: Order Type -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:background="@drawable/border"
+            android:padding="8dp">  <!-- Add the border here -->
 
-            <!-- Icon -->
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_court_type" />
-
-            <!-- Text for 'Tipe Lapangan' -->
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Tipe Pesanan -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Tipe Lapangan"
-                android:textColor="#888888"
-                android:textSize="12sp" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
 
-            <!-- Value for 'Bulu Tangkis' -->
-            <TextView
-                android:layout_width="wrap_content"
+                <!-- Icon -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_order_type" />
+
+                <!-- Text -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Tipe Pesanan"
+                    android:textColor="#888888"
+                    android:textSize="12sp" />
+
+                <!-- Value -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Venue"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="#E0E0E0" />
+
+            <!-- Tipe Lapangan -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Bulu Tangkis"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <!-- Icon -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_court_type" />
+
+                <!-- Text -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Tipe Lapangan"
+                    android:textColor="#888888"
+                    android:textSize="12sp" />
+
+                <!-- Value -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Bulu Tangkis"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-    <!-- CardView to hold the cancellation policy -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/light_yellow"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.cardview.widget.CardView>
+    <!-- CardView to hold the cancellation policy -->
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:backgroundTint="@color/light_yellow"-->
+<!--        app:cardCornerRadius="12dp"-->
+<!--        app:cardElevation="4dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/toolbar"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--&gt;-->
+
+<!--    </androidx.cardview.widget.CardView>-->
 
     <!-- Title for 'Detail Transaksi' -->
 
     <!-- Payment Time Limit -->
 
-    <LinearLayout
-        android:id="@+id/payment_limit_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/payment_limit_container"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
-        <!-- Text 'Batas Pembayaran' -->
+<!--        &lt;!&ndash; Text 'Batas Pembayaran' &ndash;&gt;-->
 
-        <!-- Time Limit with Rounded Background -->
-    </LinearLayout>
+<!--        &lt;!&ndash; Time Limit with Rounded Background &ndash;&gt;-->
+<!--    </LinearLayout>-->
 
-    <!-- CardView to hold transaction details -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="558dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="157dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<!--    &lt;!&ndash; CardView to hold transaction details &ndash;&gt;-->
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/cardView2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="558dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginBottom="157dp"-->
+<!--        app:cardCornerRadius="12dp"-->
+<!--        app:cardElevation="4dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
-    </androidx.cardview.widget.CardView>
+<!--    </androidx.cardview.widget.CardView>-->
 
     <!-- Checkbox and Terms Text -->
 
@@ -199,17 +231,10 @@
         android:id="@+id/linearLayout4"
         android:layout_width="379dp"
         android:layout_height="335dp"
-
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="222dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="160dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/venueCard"
+        android:layout_marginTop="20dp"
         app:layout_constraintVertical_bias="0.888" >
 
         <TextView
@@ -353,7 +378,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/rounded_gray_background"
-        android:backgroundTint="@color/orange"
+        app:backgroundTint="@color/orange"
         android:text="Book Lapangan ini"
         android:textColor="@android:color/white"
         android:textSize="16sp"

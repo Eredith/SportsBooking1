@@ -16,7 +16,7 @@ class CategoryAdapter(
     private var selectedPosition = RecyclerView.NO_POSITION
 
     inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val categoryName: TextView = itemView.findViewById(R.id.category_name)
+//        val categoryName: TextView = itemView.findViewById(R.id.category_name)
         val categoryIcon: ImageView = itemView.findViewById(R.id.category_icon)
 
         init {
@@ -37,18 +37,23 @@ class CategoryAdapter(
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = categories[position]
-        holder.categoryName.text = category.name
+//        holder.categoryName.text = category.name
         holder.categoryIcon.setImageResource(category.iconResId)
 
-        // Highlight selected item
-        if (selectedPosition == position) {
-            holder.itemView.setBackgroundColor(holder.itemView.context.getColor(R.color.orange))
-            holder.categoryName.setTextColor(holder.itemView.context.getColor(R.color.white))
+        val isSelected = selectedPosition == position
+        holder.itemView.isSelected = isSelected
+
+        // Update icon and text colors
+        if (isSelected) {
+            holder.categoryIcon.setColorFilter(holder.itemView.context.getColor(R.color.orange))
+//            holder.categoryName.setTextColor(holder.itemView.context.getColor(R.color.orange))
         } else {
-            holder.itemView.setBackgroundColor(holder.itemView.context.getColor(R.color.default_background))
-            holder.categoryName.setTextColor(holder.itemView.context.getColor(R.color.default_text))
+            holder.categoryIcon.setColorFilter(holder.itemView.context.getColor(R.color.gray))
+//            holder.categoryName.setTextColor(holder.itemView.context.getColor(R.color.gray))
         }
     }
+
+
 
     override fun getItemCount(): Int = categories.size
 

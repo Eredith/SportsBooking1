@@ -74,7 +74,7 @@ class VenueListActivity : AppCompatActivity() {
         recyclerCategory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         categoryList = getCategoryData()
         categoryAdapter = CategoryAdapter(categoryList) { category ->
-            Toast.makeText(this, "Selected: ${category.name}", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Selected: ${category.name}", Toast.LENGTH_SHORT).show()
             filterVenuesByCategory(category.name)
         }
         recyclerCategory.adapter = categoryAdapter
@@ -92,6 +92,7 @@ class VenueListActivity : AppCompatActivity() {
         // Set onClickListeners for time selection
         textStartTime.setOnClickListener { showTimePicker(isStartTime = true) }
         textEndTime.setOnClickListener { showTimePicker(isStartTime = false) }
+
 
         // Initialize Reset Filter
         val resetFilter: TextView = findViewById(R.id.reset_filter)
@@ -241,6 +242,7 @@ class VenueListActivity : AppCompatActivity() {
         venueAdapter.updateData(filteredVenueList)
     }
 
+
     private fun showTimePicker(isStartTime: Boolean) {
         val calendar = Calendar.getInstance()
         val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -258,14 +260,19 @@ class VenueListActivity : AppCompatActivity() {
 
                 if (isStartTime) {
                     selectedStartTime = selectedTime
-                    textStartTime.text = "Start: ${timeFormatter.format(selectedTime.time)}"
+                    // Update the start time immediately after selection
+                    textStartTime.text = timeFormatter.format(selectedStartTime!!.time)
+                    textEndTime.visibility = View.VISIBLE // Show end time TextView
                 } else {
                     selectedEndTime = selectedTime
-                    textEndTime.text = "End: ${timeFormatter.format(selectedTime.time)}"
-                }
+                    // When both start and end times are selected, update the display with both times
+                    val startTimeString = timeFormatter.format(selectedStartTime!!.time)
+                    val endTimeString = timeFormatter.format(selectedEndTime!!.time)
+                    val timeRangeString = "$startTimeString - $endTimeString"
 
-                if (selectedStartTime != null && selectedEndTime != null) {
-                    filterVenueByTime()
+                    // Set the time range in the start time TextView
+                    textStartTime.text = timeRangeString
+                    textEndTime.visibility = View.GONE // Hide the end time TextView once both times are selected
                 }
             },
             currentHour,
@@ -274,6 +281,9 @@ class VenueListActivity : AppCompatActivity() {
         )
         picker.show()
     }
+
+
+
 
     private fun resetFilters() {
         selectedStartTime = null

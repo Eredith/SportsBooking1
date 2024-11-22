@@ -4,26 +4,33 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/white"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:gravity="center"> <!-- Align content to the center -->
 
     <TextView
         android:id="@+id/day_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Day Name"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/gray"/> <!-- Make text bold -->
 
     <TextView
         android:id="@+id/day_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Day Number"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/gray"/> <!-- Make text bold -->
 
     <TextView
         android:id="@+id/month_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Month Name"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/gray"/> <!-- Make text bold -->
 </LinearLayout>

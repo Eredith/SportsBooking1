@@ -43,15 +43,13 @@ class DaysAdapter(private var daysList: List<Day>, private val onDateClick: (Day
         holder.monthName.text = day.month
 
         if (selectedPosition == position) {
-            holder.dayName.setTextColor(Color.WHITE)
-            holder.dayNumber.setTextColor(Color.WHITE)
-            holder.monthName.setTextColor(Color.WHITE)
-            holder.itemView.setBackgroundColor(Color.parseColor("#FFA500")) // Orange color
+            holder.dayName.setTextColor(Color.parseColor("#FFA500")) // Orange color
+            holder.dayNumber.setTextColor(Color.parseColor("#FFA500")) // Orange color
+            holder.monthName.setTextColor(Color.parseColor("#FFA500")) // Orange color
         } else {
             holder.dayName.setTextColor(Color.BLACK)
             holder.dayNumber.setTextColor(Color.BLACK)
             holder.monthName.setTextColor(Color.BLACK)
-            holder.itemView.setBackgroundColor(Color.TRANSPARENT)
         }
     }
 
