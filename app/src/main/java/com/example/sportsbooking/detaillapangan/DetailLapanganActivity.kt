@@ -47,7 +47,7 @@ class DetailLapanganActivity : AppCompatActivity() {
         // Populate UI dengan data
         binding.venueTitle.text = "$venueName\n$venueCategory"
         binding.venueAlamat.text = "Alamat: $venueLocation"
-//        binding.totalPriceValue.text = "Rp${venuePrice}"
+//    binding.totalPriceValue.text = "Rp${venuePrice}"
 
         // Load gambar venue menggunakan Glide
         Glide.with(this)
@@ -88,8 +88,10 @@ class DetailLapanganActivity : AppCompatActivity() {
         binding.insuranceLink.setOnClickListener {
             openWebPage("https://www.example.com/insurance-terms")
         }
+
         val monthSpinner: Spinner = findViewById(R.id.monthSpinner)
-        val months = resources.getStringArray(R.array.months)
+        val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
+        val months = resources.getStringArray(R.array.months).sliceArray(currentMonth..11)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, months)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         monthSpinner.adapter = adapter
@@ -97,7 +99,7 @@ class DetailLapanganActivity : AppCompatActivity() {
         // Set listener for month selection
         monthSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                selectedMonth = position // Update selectedMonth based on user selection
+                selectedMonth = currentMonth + position // Update selectedMonth based on user selection
                 setupDaysRecyclerView() // Refresh days based on new month
             }
 
@@ -121,12 +123,19 @@ class DetailLapanganActivity : AppCompatActivity() {
 
     private fun getDaysData(selectedMonth: Int, selectedYear: Int): List<Day> {
         val calendar = Calendar.getInstance()
+        val currentMonth = calendar.get(Calendar.MONTH)
+        val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+        val currentYear = calendar.get(Calendar.YEAR)
+
         calendar.set(Calendar.MONTH, selectedMonth)
         calendar.set(Calendar.YEAR, selectedYear)
         val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
 
         val daysList = mutableListOf<Day>()
         for (day in 1..daysInMonth) {
+            if (selectedYear == currentYear && (selectedMonth < currentMonth || (selectedMonth == currentMonth && day < currentDay))) {
+                continue
+            }
             calendar.set(Calendar.DAY_OF_MONTH, day)
             val dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault())
             val monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
