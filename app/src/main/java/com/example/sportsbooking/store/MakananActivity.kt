@@ -3,7 +3,9 @@ package com.example.sportsbooking.store
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +24,12 @@ class MakananActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_makanan)
 
+        // Set up the back button functionality
+        val ivBack = findViewById<ImageView>(R.id.ivBack)
+        ivBack.setOnClickListener {
+            onBackPressed()
+        }
+
         recyclerViewMakanan = findViewById(R.id.recyclerViewMakanan)
         recyclerViewMakanan.layoutManager = LinearLayoutManager(this)
         makananAdapter = MakananAdapter(makananList) { makanan ->
@@ -34,6 +42,12 @@ class MakananActivity : AppCompatActivity() {
 
         val btnViewCart = findViewById<Button>(R.id.btnViewCart)
         btnViewCart.setOnClickListener {
+            startActivity(Intent(this, ShoppingCartActivity::class.java))
+        }
+
+        // Set up the shopping cart button functionality
+        val btnShoppingCart = findViewById<Button>(R.id.btnShoppingCart)
+        btnShoppingCart.setOnClickListener {
             startActivity(Intent(this, ShoppingCartActivity::class.java))
         }
     }
@@ -53,5 +67,16 @@ class MakananActivity : AppCompatActivity() {
                 Toast.makeText(this, "Failed to fetch food data: ${e.message}", Toast.LENGTH_SHORT).show()
                 Log.e("MakananActivity", "Error fetching data", e)
             }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                // Handle the back button press
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

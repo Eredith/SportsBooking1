@@ -1,7 +1,7 @@
 package com.example.sportsbooking.store
 
 import android.os.Bundle
-import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,10 +18,22 @@ class ShoppingCartActivity : AppCompatActivity() {
 
         recyclerViewCart = findViewById(R.id.recyclerViewCart)
         recyclerViewCart.layoutManager = LinearLayoutManager(this)
+
         cartAdapter = CartAdapter(ShoppingCart.getItems())
         recyclerViewCart.adapter = cartAdapter
 
-        val tvTotalItems = findViewById<TextView>(R.id.tvTotalItems)
-        tvTotalItems.text = "Total Items: ${ShoppingCart.getItems().size}"
+        loadCartData()
+    }
+
+    private fun loadCartData() {
+        ShoppingCart.loadCartData(
+            onSuccess = {
+                cartAdapter.notifyDataSetChanged()
+                Toast.makeText(this, "Cart data loaded successfully", Toast.LENGTH_SHORT).show()
+            },
+            onFailure = { e ->
+                Toast.makeText(this, "Failed to load cart data: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        )
     }
 }
