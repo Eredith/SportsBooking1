@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import java.util.Calendar
+import java.text.SimpleDateFormat
 import com.example.sportsbooking.R
 import com.example.sportsbooking.databinding.DetailLapanganBinding
 import com.example.sportsbooking.days.Day
@@ -144,9 +145,19 @@ class DetailLapanganActivity : AppCompatActivity() {
         return daysList
     }
 
+    // Panggil fungsi ini saat tanggal dipilih
     private fun onDateSelected(day: Day) {
         selectedDay = day
-        Toast.makeText(this, "Selected date: ${day.name}, ${day.date} ${day.month}", Toast.LENGTH_SHORT).show()
+        val formattedDate = formatDate(day.date, selectedMonth, selectedYear)
+        Toast.makeText(this, "Selected date: $formattedDate", Toast.LENGTH_SHORT).show()
+    }
+
+    // Fungsi untuk memformat tanggal
+    private fun formatDate(day: Int, month: Int, year: Int): String {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, day)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(calendar.time)
     }
 
     private fun handleBookNow(
@@ -167,6 +178,7 @@ class DetailLapanganActivity : AppCompatActivity() {
             }
 
             try {
+                val formattedDate = formatDate(selectedDay!!.date, selectedMonth, selectedYear)
                 val intent = Intent(this, DetailLapanganJam::class.java).apply {
                     putExtra("venue_name", venueName)
                     putExtra("venue_price", venuePrice)
@@ -177,7 +189,7 @@ class DetailLapanganActivity : AppCompatActivity() {
                     putExtra("venue_imageUrl", venueImageUrl)
                     putExtra("venue_availableStartTime", venueStartTime)
                     putExtra("venue_availableEndTime", venueEndTime)
-                    putExtra("selected_date", "${selectedDay?.name}, ${selectedDay?.date} ${selectedDay?.month}")
+                    putExtra("selected_date", formattedDate)
                 }
                 startActivity(intent)
             } catch (e: Exception) {

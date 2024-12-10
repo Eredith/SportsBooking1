@@ -16,6 +16,9 @@ import com.example.sportsbooking.booking.BookingAdapterJam
 import com.example.sportsbooking.booking.BookingSlot
 import com.example.sportsbooking.detailpembayaran.DetailPembayaranActivity
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class DetailLapanganJam : AppCompatActivity() {
 
@@ -34,6 +37,9 @@ class DetailLapanganJam : AppCompatActivity() {
     private var venueAvailableStartTime: String? = null
     private var venueAvailableEndTime: String? = null
     private var selectedDate: String? = null
+    private var selectedYear: Int = 0
+    private var selectedMonth: Int = 0
+    private var selectedDay: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +70,16 @@ class DetailLapanganJam : AppCompatActivity() {
             venueAvailableStartTime = it.getStringExtra("venue_availableStartTime")
             venueAvailableEndTime = it.getStringExtra("venue_availableEndTime")
             selectedDate = it.getStringExtra("selected_date")
+
+            // Initialize selected date components
+            selectedDate?.let { date ->
+                val parts = date.split("-")
+                if (parts.size == 3) {
+                    selectedYear = parts[0].toInt()
+                    selectedMonth = parts[1].toInt() - 1 // Month is 0-based in Calendar
+                    selectedDay = parts[2].toInt()
+                }
+            }
         }
 
         // Set data to views
@@ -110,7 +126,6 @@ class DetailLapanganJam : AppCompatActivity() {
             }
         }
     }
-
     private fun loadPredefinedSlots(): List<BookingSlot> {
         val slots = mutableListOf<BookingSlot>()
         val startHour = 8
@@ -128,12 +143,17 @@ class DetailLapanganJam : AppCompatActivity() {
     }
 
     private fun fetchBookedSlots(predefinedSlots: List<BookingSlot>) {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val formattedDate = selectedDate ?: dateFormat.format(Calendar.getInstance().apply {
+            set(selectedYear, selectedMonth, selectedDay)
+        }.time)
+
         db.collection("sports_center")
             .document(venueCategory ?: "unknown_category")
             .collection("courts")
             .document(venueName ?: "default_court_id")
             .collection("bookings")
-            .document(selectedDate ?: "default_date")
+            .document(formattedDate)
             .get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
@@ -155,7 +175,6 @@ class DetailLapanganJam : AppCompatActivity() {
                 adapter.submitList(predefinedSlots)
             }
     }
-
     private fun onSlotSelected(slot: BookingSlot) {
         if (!slot.isBooked) {
             selectedSlot = slot.time

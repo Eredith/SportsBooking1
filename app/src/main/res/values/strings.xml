@@ -32,11 +32,10 @@
     <string name="back_button_desc">Back</string>
     <string name="error_booking">Error: Unable to proceed with booking.</string>
     <string name="venue_image" />
+    <string name="pick_date_desc">Pick a date for filtering</string>
+    <string name="select_date">Select Date</string>
 
-
-        <string name="pick_date_desc">Pick a date for filtering</string>
-        <string name="select_date">Select Date</string>
-
+    <string name="google_maps_api_key">AIzaSyC6f9nipRs9vC_ewnZ7_pBkPRBW-nVAgmY</string>
 
     <!-- res/values/strings.xml -->
     <string-array name="months">

@@ -2,6 +2,7 @@ package com.example.sportsbooking.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.sportsbooking.MainActivity
 import com.example.sportsbooking.R
 import com.example.sportsbooking.booking.BookingActivity
+import com.example.sportsbooking.login.LoginActivity
 import com.example.sportsbooking.venue.VenueListActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,6 +37,11 @@ class ProfileActivity : AppCompatActivity() {
 
         // Load user data from Firebase Authentication and Firestore
         loadUserData()
+
+        // Logout button
+        findViewById<Button>(R.id.btnLogout).setOnClickListener {
+            logout()
+        }
     }
 
     private fun loadUserData() {
@@ -74,7 +81,12 @@ class ProfileActivity : AppCompatActivity() {
                 }
         }
     }
-
+    private fun logout() {
+        FirebaseAuth.getInstance().signOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     private fun setupBottomNavigation() {
         findViewById<LinearLayout>(R.id.nav_home).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
