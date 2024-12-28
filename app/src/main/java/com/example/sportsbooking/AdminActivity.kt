@@ -1,6 +1,8 @@
 package com.example.sportsbooking
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayout
 import androidx.fragment.app.Fragment
@@ -22,6 +24,10 @@ class AdminActivity : AppCompatActivity() {
             .replace(fragmentContainer, BuatPesananFragment())
             .commit()
 
+        findViewById<Button>(R.id.btnBackToMain).setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         // Tampilkan BuatPesananFragment sebagai default saat pertama kali dibuka
         replaceFragment(BuatPesananFragment())

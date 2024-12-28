@@ -30,35 +30,51 @@
             android:paddingStart="16dp">
 
             <TextView
-                android:id="@+id/fieldName"
+                android:id="@+id/sportsCenter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nama Lapangan"
+                android:text="Sports Center"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/fieldLocation"
+                android:id="@+id/court"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Alamat Lapangan"
+                android:text="Court"
                 android:textSize="14sp"
                 android:textColor="@android:color/darker_gray" />
 
             <TextView
-                android:id="@+id/fieldType"
+                android:id="@+id/bookingDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jenis Lapangan"
+                android:text="Booking Date"
                 android:textSize="14sp"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/darker_gray" />
 
             <TextView
-                android:id="@+id/fieldStatus"
+                android:id="@+id/timeSlot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Status Lapangan"
+                android:text="Time Slot"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/bookedBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Booked By"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
                 android:textSize="14sp"
                 android:textColor="@android:color/holo_orange_dark" />
         </LinearLayout>

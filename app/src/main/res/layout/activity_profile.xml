@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-     android:gravity="center">
+    android:gravity="center">
 
     <!-- Profile Image -->
     <ImageView
@@ -11,37 +12,37 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/default_profile"
         android:contentDescription="Profile Image"
-        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/default_profile"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Username Text -->
     <TextView
         android:id="@+id/usernameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Username"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintTop_toBottomOf="@id/profileImageView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/profileImageView" />
 
     <!-- Name Text -->
     <TextView
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Name"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintTop_toBottomOf="@id/usernameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/usernameTextView" />
 
     <!-- Email Text -->
     <TextView
@@ -50,47 +51,58 @@
         android:layout_height="wrap_content"
         android:text="Email"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/nameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/nameTextView" />
 
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout"
-        android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@id/nameTextView"
+        android:layout_marginTop="20dp"
+        android:text="Logout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-    <!-- Bottom Navigation -->
+        app:layout_constraintTop_toBottomOf="@id/emailTextView" />
+
+    <!-- Back to Admin Button -->
+    <Button
+        android:id="@+id/btnBackToAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Back to Admin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnLogout" />
+
     <LinearLayout
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="@android:color/white"
-        android:padding="8dp"
         android:elevation="8dp"
+        android:orientation="horizontal"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:id="@+id/nav_home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/icon_home"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_home"
-                app:tint="@android:color/darker_gray"/>
+                app:tint="@android:color/darker_gray" />
 
             <TextView
                 android:id="@+id/text_home"
@@ -106,15 +118,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/icon_venue"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_venue"
-                app:tint="@android:color/darker_gray"/>
+                app:tint="@android:color/darker_gray" />
 
             <TextView
                 android:id="@+id/text_venue"
@@ -130,8 +142,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/icon_makanan"
@@ -139,7 +151,6 @@
                 android:layout_height="30dp"
                 android:src="@drawable/ic_food"
                 app:tint="@android:color/darker_gray" />
-
 
             <TextView
                 android:id="@+id/text_makanan"
@@ -154,15 +165,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/icon_history"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_bottom_nav_bar_history"
-                app:tint="@android:color/darker_gray"/>
+                app:tint="@android:color/darker_gray" />
 
             <TextView
                 android:id="@+id/text_history"
@@ -177,25 +188,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/icon_profile"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-
                 android:src="@drawable/ic_bottom_nav_bar_profile"
-                app:tint="@android:color/holo_orange_dark"/>
+                app:tint="@android:color/holo_orange_dark" />
 
             <TextView
                 android:id="@+id/text_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Akun"
-                android:textStyle="bold"
                 android:textColor="@color/orange"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

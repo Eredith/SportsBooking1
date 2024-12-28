@@ -136,71 +136,84 @@ class BookingActivity : AppCompatActivity() {
     }
 
     private fun fetchUserBookings(userId: String, categories: List<String>) {
-        // Hapus variabel bookings di sini
+        getUsername(userId) { username ->
+            for (category in categories) {
+                val courtsRef = db.collection("sports_center")
+                    .document(category)
+                    .collection("courts")
 
-        for (category in categories) {
-            val courtsRef = db.collection("sports_center")
-                .document(category)
-                .collection("courts")
+                courtsRef.get()
+                    .addOnSuccessListener { courtDocuments ->
+                        if (courtDocuments.isEmpty) {
+                            Log.d("BookingActivity", "No courts found for category $category")
+                        } else {
+                            for (courtDocument in courtDocuments) {
+                                val court = courtDocument.id
+                                val bookingsRef = db.collection("sports_center")
+                                    .document(category)
+                                    .collection("courts")
+                                    .document(court)
+                                    .collection("bookings")
 
-            courtsRef.get()
-                .addOnSuccessListener { courtDocuments ->
-                    if (courtDocuments.isEmpty) {
-                        Log.d("BookingActivity", "No courts found for category $category")
-                    } else {
-                        for (courtDocument in courtDocuments) {
-                            val court = courtDocument.id
-                            val bookingsRef = db.collection("sports_center")
-                                .document(category)
-                                .collection("courts")
-                                .document(court)
-                                .collection("bookings")
+                                bookingsRef.get()
+                                    .addOnSuccessListener { bookingDocuments ->
+                                        if (bookingDocuments.isEmpty) {
+                                            Log.d("BookingActivity", "No bookings found for $category - $court")
+                                        } else {
+                                            for (bookingDocument in bookingDocuments) {
+                                                val bookingDate = bookingDocument.id
+                                                val bookingData = bookingDocument.data
 
-                            bookingsRef.get()
-                                .addOnSuccessListener { bookingDocuments ->
-                                    if (bookingDocuments.isEmpty) {
-                                        Log.d("BookingActivity", "No bookings found for $category - $court")
-                                    } else {
-                                        for (bookingDocument in bookingDocuments) {
-                                            val bookingDate = bookingDocument.id
-                                            val bookingData = bookingDocument.data
-
-                                            bookingData.forEach { (timeSlot, details) ->
-                                                if (details is Map<*, *>) {
-                                                    val bookedBy = details["booked_by"] as? String
-                                                    val status = details["status"] as? String
-                                                    if (bookedBy == userId && status == "booked") {
-                                                        // Tambahkan booking ke allBookings
-                                                        allBookings.add(
-                                                            Booking(
-                                                                category,
-                                                                court,
-                                                                bookingDate,
-                                                                timeSlot,
-                                                                bookedBy,
-                                                                status
+                                                bookingData.forEach { (timeSlot, details) ->
+                                                    if (details is Map<*, *>) {
+                                                        val bookedBy = details["booked_by"] as? String
+                                                        val status = details["status"] as? String
+                                                        if (bookedBy == userId && status == "booked") {
+                                                            allBookings.add(
+                                                                Booking(
+                                                                    category,
+                                                                    court,
+                                                                    bookingDate,
+                                                                    timeSlot,
+                                                                    username,
+                                                                    status
+                                                                )
                                                             )
-                                                        )
-                                                        Log.d("BookingActivity", "Found booking at $timeSlot on $bookingDate for $category - $court")
+                                                            Log.d("BookingActivity", "Found booking at $timeSlot on $bookingDate for $category - $court")
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
+                                        if (categories.indexOf(category) == categories.size - 1 && courtDocument == courtDocuments.last()) {
+                                            displayUserBookings(allBookings)
+                                        }
                                     }
-                                    // Cek apakah ini iterasi terakhir dari kedua kategori
-                                    if (categories.indexOf(category) == categories.size -1 && courtDocument == courtDocuments.last() ) {
-                                        displayUserBookings(allBookings)
+                                    .addOnFailureListener { e ->
+                                        Log.e("BookingActivity", "Failed to fetch bookings for $category - $court", e)
                                     }
-                                }
-                                .addOnFailureListener { e ->
-                                    Log.e("BookingActivity", "Failed to fetch bookings for $category - $court", e)
-                                }
+                            }
                         }
                     }
-                }
-                .addOnFailureListener { e ->
-                    Log.e("BookingActivity", "Failed to fetch courts for category $category", e)
-                }
+                    .addOnFailureListener { e ->
+                        Log.e("BookingActivity", "Failed to fetch courts for category $category", e)
+                    }
+            }
         }
+    }
+    private fun getUsername(userId: String, callback: (String) -> Unit) {
+        db.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val username = document.getString("username") ?: userId
+                    callback(username)
+                } else {
+                    callback(userId)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("BookingActivity", "Failed to fetch username for userId: $userId", e)
+                callback(userId)
+            }
     }
 }

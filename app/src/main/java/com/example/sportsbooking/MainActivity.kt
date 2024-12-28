@@ -49,11 +49,6 @@ class MainActivity : AppCompatActivity() {
         // Fetch venue data
         fetchVenueData()
 
-        // Logout button
-        findViewById<Button>(R.id.btnLogout).setOnClickListener {
-            logout()
-        }
-
         // Bottom Navigation
         setupBottomNavigation()
     }
@@ -94,13 +89,6 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun logout() {
-        auth.signOut()  // Logout pengguna
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()  // Tutup MainActivity setelah logout
-    }
-
     private fun setupBottomNavigation() {
         findViewById<LinearLayout>(R.id.nav_home).setOnClickListener {
             // Already in MainActivity, no action needed
@@ -118,11 +106,6 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<LinearLayout>(R.id.nav_profile).setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
-            startActivity(intent)
-        }
-
-        findViewById<LinearLayout>(R.id.nav_makanan).setOnClickListener {
-            val intent = Intent(this, MakananActivity::class.java)
             startActivity(intent)
         }
     }

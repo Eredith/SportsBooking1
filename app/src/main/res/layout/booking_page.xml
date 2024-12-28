@@ -199,12 +199,13 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_bottom_nav_bar_history"
-                app:tint="@android:color/darker_gray"/>
+                app:tint="@android:color/holo_orange_dark"/>
 
             <TextView
                 android:id="@+id/text_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/orange"
                 android:text="Pesanan"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -223,7 +224,7 @@
                 android:layout_height="30dp"
 
                 android:src="@drawable/ic_bottom_nav_bar_profile"
-                app:tint="@android:color/holo_orange_dark"/>
+                app:tint="@android:color/darker_gray"/>
 
             <TextView
                 android:id="@+id/text_profile"
@@ -231,7 +232,6 @@
                 android:layout_height="wrap_content"
                 android:text="Akun"
                 android:textStyle="bold"
-                android:textColor="@color/orange"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>

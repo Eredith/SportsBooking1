@@ -90,6 +90,7 @@ class DetailLapanganActivity : AppCompatActivity() {
             openWebPage("https://www.example.com/insurance-terms")
         }
 
+        // Month Spinner
         val monthSpinner: Spinner = findViewById(R.id.monthSpinner)
         val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
         val months = resources.getStringArray(R.array.months).sliceArray(currentMonth..11)

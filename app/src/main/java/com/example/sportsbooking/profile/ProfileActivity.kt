@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.sportsbooking.AdminActivity
 import com.example.sportsbooking.MainActivity
 import com.example.sportsbooking.R
 import com.example.sportsbooking.booking.BookingActivity
@@ -41,6 +42,10 @@ class ProfileActivity : AppCompatActivity() {
         // Logout button
         findViewById<Button>(R.id.btnLogout).setOnClickListener {
             logout()
+        }
+        findViewById<Button>(R.id.btnBackToAdmin).setOnClickListener {
+            val intent = Intent(this, AdminActivity::class.java)
+            startActivity(intent)
         }
     }
 
