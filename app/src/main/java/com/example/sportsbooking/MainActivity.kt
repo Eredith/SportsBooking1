@@ -99,6 +99,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        findViewById<LinearLayout>(R.id.nav_makanan).setOnClickListener {
+            val intent = Intent(this, MakananActivity::class.java)
+            startActivity(intent)
+        }
+
         findViewById<LinearLayout>(R.id.nav_history).setOnClickListener {
             val intent = Intent(this, BookingActivity::class.java)
             startActivity(intent)
