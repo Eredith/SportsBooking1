@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="80dp"
-            android:text="Back to Main" />
+            android:text="Home" />
     </LinearLayout>
 
     <!-- TabLayout for switching between 'Buat Pesanan' and 'Lihat Pesanan' -->

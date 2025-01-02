@@ -132,8 +132,10 @@ class BuatPesananFragment : Fragment() {
                 result.data?.data?.let {
                     imageUri = it
                     imgLapangan.setImageURI(it)
-                    imageUriMakanan = it
-                    imgMakanan.setImageURI(it)
+                    if (::imgMakanan.isInitialized) {
+                        imageUriMakanan = it
+                        imgMakanan.setImageURI(it)
+                    }
                 }
             }
         }

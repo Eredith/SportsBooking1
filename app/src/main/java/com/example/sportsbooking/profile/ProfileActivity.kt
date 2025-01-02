@@ -2,6 +2,7 @@ package com.example.sportsbooking.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -43,10 +44,6 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnLogout).setOnClickListener {
             logout()
         }
-        findViewById<Button>(R.id.btnBackToAdmin).setOnClickListener {
-            val intent = Intent(this, AdminActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     private fun loadUserData() {
@@ -71,12 +68,19 @@ class ProfileActivity : AppCompatActivity() {
                 profileImageView.setImageResource(R.drawable.default_profile)
             }
 
-            // Retrieve username from Firestore
+            // Retrieve username and role from Firestore
             db.collection("users").document(user.uid).get()
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
                         val username = document.getString("username")
                         usernameTextView.text = username ?: "N/A"
+
+                        val isAdmin = document.getBoolean("isAdmin") ?: false
+                        if (isAdmin) {
+                            findViewById<Button>(R.id.btnBackToAdmin).visibility = View.VISIBLE
+                        } else {
+                            findViewById<Button>(R.id.btnBackToAdmin).visibility = View.GONE
+                        }
                     } else {
                         usernameTextView.text = "N/A"
                     }

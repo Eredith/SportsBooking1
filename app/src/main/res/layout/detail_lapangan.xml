@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:padding="16dp"
     android:background="#FFFFFF"> <!-- Set the background color to white -->
-    >
     <!-- Toolbar for the title and back button -->
     <!-- Image for the venue -->
 
@@ -15,8 +14,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="355dp"
+        android:layout_height="41dp"
         android:titleTextColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -88,7 +87,9 @@
                     android:layout_height="wrap_content"
                     android:text="Badminton B23 Arena Simprug"
                     android:textColor="#888888"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:maxLines="2"
+                    android:ellipsize="end" />
             </LinearLayout>
         </LinearLayout>
 
@@ -296,7 +297,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="2dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -520,12 +521,12 @@
         <Button
             android:id="@+id/payButton"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/rounded_gray_background"
             app:backgroundTint="@color/orange"
             android:text="Book Lapangan ini"
             android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
     </LinearLayout>
 
 
