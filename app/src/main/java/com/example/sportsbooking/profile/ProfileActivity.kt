@@ -107,7 +107,8 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(Intent(this, BookingActivity::class.java))
         }
         findViewById<LinearLayout>(R.id.nav_profile).setOnClickListener {
-            // Current Activity
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
         }
     }
 }
