@@ -14,6 +14,7 @@ import com.example.sportsbooking.MainActivity
 import com.example.sportsbooking.R
 import com.example.sportsbooking.booking.BookingActivity
 import com.example.sportsbooking.login.LoginActivity
+import com.example.sportsbooking.store.MakananActivity
 import com.example.sportsbooking.venue.VenueListActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -102,6 +103,10 @@ class ProfileActivity : AppCompatActivity() {
         }
         findViewById<LinearLayout>(R.id.nav_venue).setOnClickListener {
             startActivity(Intent(this, VenueListActivity::class.java))
+        }
+        findViewById<LinearLayout>(R.id.nav_makanan).setOnClickListener {
+            val intent = Intent(this, MakananActivity::class.java)
+            startActivity(intent)
         }
         findViewById<LinearLayout>(R.id.nav_history).setOnClickListener {
             startActivity(Intent(this, BookingActivity::class.java))

@@ -19,6 +19,7 @@ import com.example.sportsbooking.booking.BookingActivity
 import com.example.sportsbooking.days.Day
 import com.example.sportsbooking.days.DaysAdapter
 import com.example.sportsbooking.profile.ProfileActivity
+import com.example.sportsbooking.store.MakananActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -308,6 +309,10 @@ class VenueListActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.nav_venue).setOnClickListener {
         }
 
+        findViewById<LinearLayout>(R.id.nav_makanan).setOnClickListener {
+            val intent = Intent(this, MakananActivity::class.java)
+            startActivity(intent)
+        }
         findViewById<LinearLayout>(R.id.nav_history).setOnClickListener {
             val intent = Intent(this, BookingActivity::class.java)
             startActivity(intent)
