@@ -11,6 +11,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -79,6 +80,44 @@ class PdfPreviewActivity : AppCompatActivity() {
         // Setup Tombol Download
         findViewById<Button>(R.id.button_download_pdf).setOnClickListener {
             checkStoragePermission()
+        }
+
+        // Di dalam onCreate() setelah getIntentData()
+        initPreviewUI()
+    }
+
+    private fun initPreviewUI() {
+        val tvBookingId = findViewById<TextView>(R.id.pdf_booking_id)
+        val tvCategory = findViewById<TextView>(R.id.pdf_category)
+        val tvCourt = findViewById<TextView>(R.id.pdf_court_name)
+        val tvDate = findViewById<TextView>(R.id.pdf_date)
+        val tvTime = findViewById<TextView>(R.id.pdf_time)
+        val tvUsername = findViewById<TextView>(R.id.pdf_username)
+        val tvStatus = findViewById<TextView>(R.id.pdf_status)
+        val tvRating = findViewById<TextView>(R.id.pdf_rating)
+        val tvFeedback = findViewById<TextView>(R.id.pdf_feedback)
+
+        tvBookingId.text = "Invoice ID: $bookingId"
+        tvCategory.text = "Kategori: $category"
+        tvCourt.text = "Lapangan: $court"
+        tvDate.text = "Tanggal Booking: ${formatDate(bookingDate)}"
+        tvTime.text = "Waktu: $timeSlot"
+        tvUsername.text = "Nama Pengguna: $username"
+        tvStatus.text = "Status Pembayaran: $status"
+        tvRating.text = "Rating: ${convertRatingToStars()}"
+        tvFeedback.text = "Feedback:\n$feedback"
+    }
+
+    private fun formatDate(dateString: String): String {
+        return try {
+            // Sesuaikan format input dengan format asli dari data bookingDate
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+            val date = inputFormat.parse(dateString)
+            outputFormat.format(date)
+        } catch (e: Exception) {
+            // Fallback ke tampilkan tanggal asli jika error
+            dateString
         }
     }
 

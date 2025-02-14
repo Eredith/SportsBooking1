@@ -25,40 +25,73 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:divider="@drawable/divider"
+            android:showDividers="middle">
 
+            <!-- Header -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SPORTS BOOKING CENTER"
+                android:textSize="18sp"
+                android:textColor="@color/primary_color"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Informasi Invoice -->
             <TextView
                 android:id="@+id/pdf_booking_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Detail Booking -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Detail Booking"
+                android:textStyle="bold"
                 android:textSize="16sp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"/>
 
             <TextView
                 android:id="@+id/pdf_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"/>
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:id="@+id/pdf_court_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"/>
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:id="@+id/pdf_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"/>
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:id="@+id/pdf_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Informasi Pengguna -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Informasi Pengguna"
+                android:textStyle="bold"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -66,28 +99,38 @@
                 android:id="@+id/pdf_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"/>
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:id="@+id/pdf_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"/>
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
+
             <TextView
                 android:id="@+id/pdf_rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Feedback -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kritik &amp; Saran"
+                android:textStyle="bold"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
+
             <TextView
                 android:id="@+id/pdf_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"/>
-            <!-- Add more TextViews as needed -->
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp"/>
 
         </LinearLayout>
     </ScrollView>
