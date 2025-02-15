@@ -8,107 +8,136 @@
     tools:context=".profile.ProfileActivity">
 
     <!-- ScrollView untuk membuat tampilan dapat digulir -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
+
+    <!-- Bottom Navigation -->
+
+    <!-- Logout Button -->
+
+    <!-- Back to Admin Button -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="ExtraText">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <!-- Bagian Profil -->
 
-            <!-- Bagian Profil -->
-            <LinearLayout
-                android:id="@+id/profileSection"
-                android:layout_width="0dp"
-                android:layout_height="182dp"
-                android:background="#FF9D23"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <!-- Card untuk Progress Total -->
 
-                <!-- Frame untuk Gambar Profil dan Ikon Edit -->
-                <FrameLayout
+        <LinearLayout
+            android:id="@+id/profileSection"
+            android:layout_width="411dp"
+            android:layout_height="200dp"
+            android:background="#FF9D23
+"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Frame untuk Gambar Profil dan Ikon Edit -->
+
+            <FrameLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center">
+
+                <!-- Gambar Profil -->
+
+                <ImageView
+                    android:id="@+id/profileImageView"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_gravity="center">
+                    android:background="@drawable/circle_background"
+                    android:contentDescription="Profile Image"
+                    android:src="@drawable/ic_profile_placeholder" />
 
-                    <!-- Gambar Profil -->
-                    <ImageView
-                        android:id="@+id/profileImageView"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:background="@drawable/circle_background"
-                        android:contentDescription="Profile Image"
-                        android:src="@drawable/ic_profile_placeholder" />
+                <ImageView
+                    android:id="@+id/editProfileImageIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Edit Profile Picture"
+                    android:src="@drawable/ic_edit"
+                    app:tint="#FFFF" />
 
-                    <ImageView
-                        android:id="@+id/editProfileImageIcon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="bottom|end"
-                        android:layout_margin="4dp"
-                        android:contentDescription="Edit Profile Picture"
-                        android:src="@drawable/ic_edit"
-                        app:tint="#FFFF" />
-                </FrameLayout>
+                <!-- Ikon Pensil -->
+            </FrameLayout>
 
-                <!-- Nama Profil -->
-                <TextView
-                    android:id="@+id/nameTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="Name"
-                    android:textColor="#FFFF"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+            <!-- Nama Profil -->
 
-                <TextView
-                    android:id="@+id/usernameTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="Username"
-                    android:textColor="#FFFF"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <!-- Email Text -->
-                <TextView
-                    android:id="@+id/emailTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Email"
-                    android:textColor="#FFFF"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <!-- Menu Utama -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/menuCard"
-                android:layout_width="0dp"
-                android:layout_height="140dp"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp"
+            <!-- Name Text -->
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Name"
+                android:textColor="#FFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileSection">
+                app:layout_constraintTop_toBottomOf="@id/usernameTextView" />
+
+            <TextView
+                android:id="@+id/usernameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Username"
+                android:textColor="#FFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Email Text -->
+            <TextView
+                android:id="@+id/emailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textColor="#FFFF"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nameTextView" />
+
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="398dp"
+            android:layout_height="162dp"
+            android:layout_margin="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profileSection">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/menuCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="#FFFF"
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Menu Pengaturan -->
+                    <!-- Settings -->
                     <LinearLayout
                         android:id="@+id/settingsMenu"
                         android:layout_width="match_parent"
@@ -133,7 +162,7 @@
                             android:textSize="16sp" />
                     </LinearLayout>
 
-                    <!-- Menu Tentang Kami -->
+                    <!-- History Transaction -->
                     <LinearLayout
                         android:id="@+id/aboutUsMenu"
                         android:layout_width="match_parent"
@@ -157,34 +186,103 @@
                             android:textColor="@color/black"
                             android:textSize="16sp" />
                     </LinearLayout>
+
+                    <!-- Help and Support -->
+                    <LinearLayout
+                        android:id="@+id/profileMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="8dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:contentDescription="Help Support Icon" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingStart="10dp"
+                            android:text="Help and Support"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <!-- FAQ -->
+                    <LinearLayout
+                        android:id="@+id/notificationsMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="8dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:contentDescription="FAQ Icon" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingStart="10dp"
+                            android:text="FAQ"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+        </ScrollView>
+
+
+        <!-- Logout Button -->
+        <!-- Fixed Buttons -->
+        <LinearLayout
+            android:id="@+id/buttonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent">
 
             <!-- Logout Button -->
             <Button
                 android:id="@+id/btnLogout"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="4dp"
                 android:text="Logout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/menuCard" />
+                app:layout_constraintTop_toBottomOf="@id/profileSection" />
 
-            <!-- Back to Admin Button -->
+            <!-- Back To Admin Button -->
             <Button
                 android:id="@+id/btnBackToAdmin"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
                 android:text="Back to Admin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnLogout" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        </LinearLayout>
 
-    <!-- Bottom Navigation -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
@@ -316,4 +414,5 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
