@@ -103,6 +103,9 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<View>(R.id.settingsMenu).setOnClickListener {
             navigateToActivity(SettingsActivity::class.java)
         }
+        findViewById<View>(R.id.faqMenu).setOnClickListener {
+            navigateToActivity(FAQActivity::class.java)
+        }
     }
 
     private fun navigateToActivity(targetActivity: Class<*>) {
