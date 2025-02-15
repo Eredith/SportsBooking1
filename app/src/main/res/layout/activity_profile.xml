@@ -68,7 +68,6 @@
                     android:layout_gravity="bottom|end"
                     android:layout_margin="4dp"
                     android:contentDescription="Edit Profile Picture"
-                    android:src="@drawable/ic_edit"
                     app:tint="#FFFF" />
 
                 <!-- Ikon Pensil -->
@@ -175,7 +174,7 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:contentDescription="About Us Icon"
-                            android:src="@drawable/ic_history_transaction" />
+                            android:src="@drawable/ic_transaction" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -199,7 +198,8 @@
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:contentDescription="Help Support Icon" />
+                            android:contentDescription="Help Support Icon"
+                            android:src="@drawable/ic_help"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -223,7 +223,8 @@
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:contentDescription="FAQ Icon" />
+                            android:contentDescription="FAQ Icon"
+                            android:src="@drawable/ic_faq"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -255,19 +256,9 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <!-- Logout Button -->
-            <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="4dp"
-                android:text="Logout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileSection" />
 
             <!-- Back To Admin Button -->
+
             <Button
                 android:id="@+id/btnBackToAdmin"
                 android:layout_width="wrap_content"

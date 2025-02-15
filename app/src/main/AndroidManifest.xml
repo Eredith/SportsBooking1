@@ -40,6 +40,7 @@
         </activity>
         <activity android:name=".login.LoginActivity"/>
         <activity android:name=".MainActivity" />
+        <activity android:name=".profile.SettingsActivity" />
         <activity android:name=".login.SignUpActivity" />
         <activity android:name=".venue.VenueListActivity" />
         <activity android:name=".AdminActivity"/>

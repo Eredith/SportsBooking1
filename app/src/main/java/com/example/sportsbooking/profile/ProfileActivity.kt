@@ -24,27 +24,29 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var profileImageView: ImageView
     private lateinit var nameTextView: TextView
     private lateinit var emailTextView: TextView
-    private lateinit var usernameTextView: TextView // Ensure this matches the XML id
-    private val db = FirebaseFirestore.getInstance() // Firestore instance
+    private lateinit var usernameTextView: TextView
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        // Initialize the views
+        // Initialize views
         profileImageView = findViewById(R.id.profileImageView)
         nameTextView = findViewById(R.id.nameTextView)
         emailTextView = findViewById(R.id.emailTextView)
-        usernameTextView = findViewById(R.id.usernameTextView) // Ensure this matches the XML id
+        usernameTextView = findViewById(R.id.usernameTextView)
+
         setupBottomNavigation()
+        loadUserData() // Load user data initially
 
-        // Load user data from Firebase Authentication and Firestore
+        setupMenuClickListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Reload user data every time the activity resumes
         loadUserData()
-
-        // Logout button
-        findViewById<Button>(R.id.btnLogout).setOnClickListener {
-            logout()
-        }
     }
 
     private fun loadUserData() {
@@ -58,45 +60,59 @@ class ProfileActivity : AppCompatActivity() {
             val email = user.email
             emailTextView.text = email ?: "N/A"
 
-            // Profile Picture
-            val photoUrl = user.photoUrl
-            if (photoUrl != null) {
-                Glide.with(this)
-                    .load(photoUrl)
-                    .placeholder(R.drawable.default_profile)
-                    .into(profileImageView)
-            } else {
-                profileImageView.setImageResource(R.drawable.default_profile)
-            }
-
-            // Retrieve username and role from Firestore
+            // Retrieve username, role, and profile image URL from Firestore
             db.collection("users").document(user.uid).get()
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
+                        // Username
                         val username = document.getString("username")
                         usernameTextView.text = username ?: "N/A"
 
+                        // Role (Admin or not)
                         val isAdmin = document.getBoolean("isAdmin") ?: false
                         if (isAdmin) {
                             findViewById<Button>(R.id.btnBackToAdmin).visibility = View.VISIBLE
                         } else {
                             findViewById<Button>(R.id.btnBackToAdmin).visibility = View.GONE
                         }
+
+                        // Profile Picture
+                        val profileImageUrl = document.getString("profileImageUrl")
+                        if (!profileImageUrl.isNullOrEmpty()) {
+                            Glide.with(this)
+                                .load(profileImageUrl)
+                                .circleCrop() // Ensure the image is cropped to a circle
+                                .placeholder(R.drawable.default_profile)
+                                .into(profileImageView)
+                        } else {
+                            profileImageView.setImageResource(R.drawable.default_profile)
+                        }
                     } else {
                         usernameTextView.text = "N/A"
+                        profileImageView.setImageResource(R.drawable.default_profile)
                     }
                 }
                 .addOnFailureListener {
                     usernameTextView.text = "Error loading username"
+                    profileImageView.setImageResource(R.drawable.default_profile)
                 }
         }
     }
-    private fun logout() {
-        FirebaseAuth.getInstance().signOut()
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
+
+    private fun setupMenuClickListeners() {
+        findViewById<View>(R.id.settingsMenu).setOnClickListener {
+            navigateToActivity(SettingsActivity::class.java)
+        }
     }
+
+    private fun navigateToActivity(targetActivity: Class<*>) {
+        startActivity(
+            Intent(this, targetActivity).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+        )
+    }
+
     private fun setupBottomNavigation() {
         findViewById<LinearLayout>(R.id.nav_home).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
