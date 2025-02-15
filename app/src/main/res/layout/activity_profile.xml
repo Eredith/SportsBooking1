@@ -33,8 +33,8 @@
 
         <LinearLayout
             android:id="@+id/profileSection"
-            android:layout_width="411dp"
-            android:layout_height="200dp"
+            android:layout_width="398dp"
+            android:layout_height="198dp"
             android:background="#FF9D23
 "
             android:gravity="center_horizontal"
@@ -115,10 +115,13 @@
 
         </LinearLayout>
 
-        <ScrollView
-            android:layout_width="398dp"
-            android:layout_height="162dp"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profileSection">
@@ -213,12 +216,15 @@
 
                     <!-- FAQ -->
                     <LinearLayout
-                        android:id="@+id/notificationsMenu"
+                        android:id="@+id/faqMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingVertical="8dp">
+                        android:paddingVertical="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground">
 
                         <ImageView
                             android:layout_width="40dp"
@@ -237,7 +243,7 @@
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-        </ScrollView>
+        </LinearLayout>
 
 
         <!-- Logout Button -->

@@ -52,6 +52,7 @@
         <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".booking.BookingActivity"/>
         <activity android:name=".store.MakananActivity"/>
+        <activity android:name=".profile.FAQActivity" />
         <activity android:name=".store.ShoppingCartActivity"
             android:exported="true">
             <intent-filter>
@@ -59,6 +60,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <provider
             android:name="androidx.core.content.FileProvider"

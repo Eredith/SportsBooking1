@@ -9,7 +9,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.sportsbooking.AdminActivity
 import com.example.sportsbooking.MainActivity
 import com.example.sportsbooking.R
 import com.example.sportsbooking.booking.BookingActivity
@@ -39,11 +38,27 @@ class ProfileActivity : AppCompatActivity() {
 
         // Load user data from Firebase Authentication and Firestore
         loadUserData()
+        setupMenuClickListeners()
 
         // Logout button
         findViewById<Button>(R.id.btnLogout).setOnClickListener {
             logout()
         }
+    }
+
+    private fun setupMenuClickListeners() {
+        findViewById<View>(R.id.faqMenu).setOnClickListener {
+            navigateToActivity(FAQActivity::class.java)
+        }
+    }
+
+
+    private fun navigateToActivity(targetActivity: Class<*>) {
+            startActivity(
+                Intent(this, targetActivity).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
+            )
     }
 
     private fun loadUserData() {
