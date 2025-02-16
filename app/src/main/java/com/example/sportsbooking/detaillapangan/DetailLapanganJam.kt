@@ -70,16 +70,6 @@ class DetailLapanganJam : AppCompatActivity() {
             venueAvailableStartTime = it.getStringExtra("venue_availableStartTime")
             venueAvailableEndTime = it.getStringExtra("venue_availableEndTime")
             selectedDate = it.getStringExtra("selected_date")
-
-            // Initialize selected date components
-            selectedDate?.let { date ->
-                val parts = date.split("-")
-                if (parts.size == 3) {
-                    selectedYear = parts[0].toInt()
-                    selectedMonth = parts[1].toInt() - 1 // Month is 0-based in Calendar
-                    selectedDay = parts[2].toInt()
-                }
-            }
         }
 
         // Set data to views
@@ -87,7 +77,15 @@ class DetailLapanganJam : AppCompatActivity() {
         venueTitle.text = venueName
         venueAlamat.text = venueLocation
         priceTextView.text = "Rp${venuePrice}"
-        selectedDateTextView.text = "Selected Date: $selectedDate"
+        selectedDate?.let {
+            val inputFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val outputFormatter = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("id", "ID"))
+
+            val parsedDate = inputFormatter.parse(it)
+            parsedDate?.let { date ->
+                selectedDateTextView.text = outputFormatter.format(date)
+            }
+        }
         Glide.with(this).load(venueImageUrl).into(venueImage)
 
         // Set up RecyclerView with GridLayoutManager

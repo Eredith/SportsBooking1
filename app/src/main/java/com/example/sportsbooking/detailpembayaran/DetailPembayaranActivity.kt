@@ -10,6 +10,8 @@ import com.example.sportsbooking.booking.BookingActivity
 import com.example.sportsbooking.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class DetailPembayaranActivity : AppCompatActivity() {
 
@@ -87,7 +89,7 @@ class DetailPembayaranActivity : AppCompatActivity() {
         // Populate UI with data
         venueTitle.text = "$venueName\n$venueCategory"
         venueSubtitle.text = venueCategory
-        dateText.text = bookingDate ?: "Tanggal belum dipilih"
+        dateText.text = formatTanggal(bookingDate) ?: "Tanggal belum dipilih"
         timeText.text = bookingTime ?: "Waktu belum dipilih"
         priceText.text = venuePrice ?: "Rp0"
         totalPriceValue.text = venuePrice ?: "Rp0"
@@ -182,6 +184,21 @@ class DetailPembayaranActivity : AppCompatActivity() {
         }
         startActivity(intent)
     }
+
+
+    private fun formatTanggal(inputDate: String?): String {
+        if (inputDate.isNullOrEmpty()) return "Tanggal belum dipilih"
+
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+            val date = inputFormat.parse(inputDate)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            "Format tanggal tidak valid"
+        }
+    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
