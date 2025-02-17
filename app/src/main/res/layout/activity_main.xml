@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="fitXY"
-        android:src="@drawable/BackgroundWave"
+        android:src="@drawable/background_wave"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -48,7 +48,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginStart="-10dp"
-                    android:src="@drawable/WhiteLogo" />
+                    android:src="@drawable/white_logo" />
 
                 <TextView
                     android:id="@+id/username"
