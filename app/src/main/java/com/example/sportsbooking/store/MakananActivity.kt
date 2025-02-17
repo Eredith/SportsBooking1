@@ -24,12 +24,6 @@ class MakananActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_makanan)
 
-        // Set up the back button functionality
-        val ivBack = findViewById<ImageView>(R.id.ivBack)
-        ivBack.setOnClickListener {
-            onBackPressed()
-        }
-
         recyclerViewMakanan = findViewById(R.id.recyclerViewMakanan)
         recyclerViewMakanan.layoutManager = LinearLayoutManager(this)
         makananAdapter = MakananAdapter(makananList) { makanan ->
@@ -40,16 +34,16 @@ class MakananActivity : AppCompatActivity() {
 
         loadMakananData()
 
-        val btnViewCart = findViewById<Button>(R.id.btnViewCart)
-        btnViewCart.setOnClickListener {
-            startActivity(Intent(this, ShoppingCartActivity::class.java))
-        }
+//        val btnViewCart = findViewById<Button>(R.id.btnViewCart)
+//        btnViewCart.setOnClickListener {
+//            startActivity(Intent(this, ShoppingCartActivity::class.java))
+//        }
 
         // Set up the shopping cart button functionality
-        val btnShoppingCart = findViewById<Button>(R.id.btnShoppingCart)
-        btnShoppingCart.setOnClickListener {
-            startActivity(Intent(this, ShoppingCartActivity::class.java))
-        }
+//        val btnShoppingCart = findViewById<Button>(R.id.btnShoppingCart)
+//        btnShoppingCart.setOnClickListener {
+//            startActivity(Intent(this, ShoppingCartActivity::class.java))
+//        }
     }
 
     private fun loadMakananData() {
