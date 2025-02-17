@@ -427,6 +427,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:buttonTint="@color/black"
+        android:button="@drawable/custom_checkbox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divide"
          />

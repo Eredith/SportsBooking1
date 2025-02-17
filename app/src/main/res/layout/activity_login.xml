@@ -87,6 +87,8 @@
         android:text="Ingat Saya"
         android:layout_marginTop="16dp"
         android:buttonTint="@color/gray"
+        android:button="@drawable/custom_checkbox"
+
         android:layout_gravity="start"/>
 
 
