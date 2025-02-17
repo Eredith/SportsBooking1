@@ -18,6 +18,7 @@ import com.example.sportsbooking.detailpembayaran.DetailPembayaranActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class DetailLapanganJam : AppCompatActivity() {
@@ -72,14 +73,7 @@ class DetailLapanganJam : AppCompatActivity() {
             selectedDate = it.getStringExtra("selected_date")
 
             // Initialize selected date components
-            selectedDate?.let { date ->
-                val parts = date.split("-")
-                if (parts.size == 3) {
-                    selectedYear = parts[0].toInt()
-                    selectedMonth = parts[1].toInt() - 1 // Month is 0-based in Calendar
-                    selectedDay = parts[2].toInt()
-                }
-            }
+            // Format the selected dat
         }
 
         // Set data to views
@@ -89,7 +83,10 @@ class DetailLapanganJam : AppCompatActivity() {
 // Format venue price dengan pemisah ribuan
         val formattedPrice = String.format(Locale.US, "%,.0f", venuePrice?.toDoubleOrNull() ?: 0.0)
         priceTextView.text = "Rp. $formattedPrice"
-        selectedDateTextView.text = "Selected Date: $selectedDate"
+        selectedDate?.let {
+            val formattedDate = formatDate(it)
+            selectedDateTextView.text = "$formattedDate"
+        }
         Glide.with(this).load(venueImageUrl).into(venueImage)
 
         // Set up RecyclerView with GridLayoutManager
@@ -178,6 +175,18 @@ class DetailLapanganJam : AppCompatActivity() {
                 adapter.submitList(predefinedSlots)
             }
     }
+
+    private fun formatDate(dateString: String): String {
+        return try {
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())  // Format input (yyyy-MM-dd)
+            val date = sdf.parse(dateString)  // Parse string to Date object
+            val outputFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("id", "ID"))  // Desired format (e.g., "Rabu, 25 September 2025")
+            outputFormat.format(date ?: Date())  // Return formatted date
+        } catch (e: Exception) {
+            "Tanggal tidak valid"
+        }
+    }
+
     private fun onSlotSelected(slot: BookingSlot) {
         if (!slot.isBooked) {
             selectedSlot = slot.time

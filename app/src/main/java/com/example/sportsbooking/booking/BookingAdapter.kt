@@ -11,6 +11,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportsbooking.R
 import com.example.sportsbooking.detailtransaksi.DetailTransaksiActivity
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class BookingAdapter(private val bookings: List<Booking>) : RecyclerView.Adapter<BookingAdapter.BookingViewHolder>() {
 
@@ -38,7 +41,7 @@ class BookingAdapter(private val bookings: List<Booking>) : RecyclerView.Adapter
         holder.sportsCenter.text = booking.sportsCenter
         holder.court.text = booking.court
         holder.tvBookingTime.text = booking.timeSlot
-        holder.tvBookingDate.text = booking.bookingDate
+        holder.tvBookingDate.text = formatBookingDate(booking.bookingDate)
         holder.bookedBy.text = booking.bookedBy
         holder.status.text = booking.status
 
@@ -67,4 +70,16 @@ class BookingAdapter(private val bookings: List<Booking>) : RecyclerView.Adapter
     }
 
     override fun getItemCount() = bookings.size
+
+    // Fungsi untuk memformat bookingDate menjadi format yang diinginkan
+    private fun formatBookingDate(dateString: String): String {
+        return try {
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())  // Format input (yyyy-MM-dd)
+            val date = sdf.parse(dateString)  // Parse string ke objek Date
+            val outputFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("id", "ID"))  // Format yang diinginkan (e.g., "Rabu, 25 September 2025")
+            outputFormat.format(date ?: Date())  // Mengembalikan tanggal yang sudah diformat
+        } catch (e: Exception) {
+            "Tanggal tidak valid"
+        }
+    }
 }

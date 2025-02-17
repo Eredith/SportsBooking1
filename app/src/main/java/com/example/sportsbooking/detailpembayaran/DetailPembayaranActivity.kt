@@ -212,6 +212,21 @@ class DetailPembayaranActivity : AppCompatActivity() {
     }
 
 
+
+    private fun formatTanggal(inputDate: String?): String {
+        if (inputDate.isNullOrEmpty()) return "Tanggal belum dipilih"
+
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+            val date = inputFormat.parse(inputDate)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            "Format tanggal tidak valid"
+        }
+    }
+
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
