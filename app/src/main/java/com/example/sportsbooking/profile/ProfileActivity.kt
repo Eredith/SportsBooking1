@@ -22,9 +22,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var profileImageView: ImageView
-    private lateinit var nameTextView: TextView
+    //*private lateinit var nameTextView: TextView
     private lateinit var emailTextView: TextView
     private lateinit var usernameTextView: TextView
+    private lateinit var profileImageNavbar: ImageView
     private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +34,11 @@ class ProfileActivity : AppCompatActivity() {
 
         // Initialize views
         profileImageView = findViewById(R.id.profileImageView)
-        nameTextView = findViewById(R.id.nameTextView)
+        //*nameTextView = findViewById(R.id.nameTextView)
         emailTextView = findViewById(R.id.emailTextView)
         usernameTextView = findViewById(R.id.usernameTextView)
+        profileImageNavbar = findViewById(R.id.profileImageNavbar)
+
 
         setupBottomNavigation()
         loadUserData() // Load user data initially
@@ -53,8 +56,8 @@ class ProfileActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let {
             // Display Name
-            val name = user.displayName
-            nameTextView.text = name ?: "N/A"
+            //* val name = user.displayName
+            //* nameTextView.text = name ?: "N/A"
 
             // Email
             val email = user.email
@@ -81,11 +84,19 @@ class ProfileActivity : AppCompatActivity() {
                         if (!profileImageUrl.isNullOrEmpty()) {
                             Glide.with(this)
                                 .load(profileImageUrl)
-                                .circleCrop() // Ensure the image is cropped to a circle
+                                .circleCrop()
                                 .placeholder(R.drawable.default_profile)
                                 .into(profileImageView)
+
+                            // Set the same image for the navbar
+                            Glide.with(this)
+                                .load(profileImageUrl)
+                                .circleCrop()
+                                .placeholder(R.drawable.default_profile)
+                                .into(profileImageNavbar)
                         } else {
                             profileImageView.setImageResource(R.drawable.default_profile)
+                            profileImageNavbar.setImageResource(R.drawable.default_profile)
                         }
                     } else {
                         usernameTextView.text = "N/A"
@@ -95,6 +106,7 @@ class ProfileActivity : AppCompatActivity() {
                 .addOnFailureListener {
                     usernameTextView.text = "Error loading username"
                     profileImageView.setImageResource(R.drawable.default_profile)
+                    profileImageNavbar.setImageResource(R.drawable.default_profile)
                 }
         }
     }

@@ -44,6 +44,8 @@ class BookingActivity : AppCompatActivity() {
 
         db = FirebaseFirestore.getInstance()
 
+        loadUserData()
+
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
             val userId = currentUser.uid
@@ -77,6 +79,30 @@ class BookingActivity : AppCompatActivity() {
         // Example: searchBooking.setText(venueName)
         // Bottom Navigation
         setupBottomNavigation()
+    }
+
+    private fun loadUserData() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val profileImageView = findViewById<ImageView>(R.id.profileImageNavbar)
+
+        user?.let {
+            db.collection("users").document(user.uid).get()
+                .addOnSuccessListener { document ->
+                    val profileImageUrl = document.getString("profileImageUrl")
+                    if (!profileImageUrl.isNullOrEmpty()) {
+                        Glide.with(this)
+                            .load(profileImageUrl)
+                            .circleCrop()
+                            .placeholder(R.drawable.default_profile)
+                            .into(profileImageView)
+                    } else {
+                        profileImageView.setImageResource(R.drawable.default_profile)
+                    }
+                }
+                .addOnFailureListener {
+                    profileImageView.setImageResource(R.drawable.default_profile)
+                }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
