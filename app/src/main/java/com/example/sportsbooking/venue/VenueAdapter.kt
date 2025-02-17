@@ -76,6 +76,7 @@ class VenueAdapter(private var venues: List<Venue> = listOf(), private val conte
                 )
             }
             context.startActivity(intent)
+
         }
     }
 

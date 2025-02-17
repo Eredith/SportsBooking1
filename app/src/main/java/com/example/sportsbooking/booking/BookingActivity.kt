@@ -114,11 +114,15 @@ class BookingActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.nav_home).setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         }
 
         findViewById<LinearLayout>(R.id.nav_venue).setOnClickListener {
             val intent = Intent(this, VenueListActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         }
 
         findViewById<LinearLayout>(R.id.nav_history).setOnClickListener {
@@ -128,11 +132,15 @@ class BookingActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.nav_profile).setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
         }
 
         findViewById<LinearLayout>(R.id.nav_makanan).setOnClickListener {
             val intent = Intent(this, MakananActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         }
     }
 

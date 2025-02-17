@@ -6,11 +6,16 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sportsbooking.MainActivity
 import com.example.sportsbooking.R
+import com.example.sportsbooking.booking.BookingActivity
+import com.example.sportsbooking.profile.ProfileActivity
+import com.example.sportsbooking.venue.VenueListActivity
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MakananActivity : AppCompatActivity() {
@@ -34,16 +39,8 @@ class MakananActivity : AppCompatActivity() {
 
         loadMakananData()
 
-//        val btnViewCart = findViewById<Button>(R.id.btnViewCart)
-//        btnViewCart.setOnClickListener {
-//            startActivity(Intent(this, ShoppingCartActivity::class.java))
-//        }
+        setupBottomNavigation()
 
-        // Set up the shopping cart button functionality
-//        val btnShoppingCart = findViewById<Button>(R.id.btnShoppingCart)
-//        btnShoppingCart.setOnClickListener {
-//            startActivity(Intent(this, ShoppingCartActivity::class.java))
-//        }
     }
 
     private fun loadMakananData() {
@@ -72,5 +69,43 @@ class MakananActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun navigateToActivity(targetActivity: Class<*>) {
+        startActivity(
+            Intent(this, targetActivity).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+        )
+    }
+
+    private fun setupBottomNavigation() {
+        findViewById<LinearLayout>(R.id.nav_home).setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
+        }
+        findViewById<LinearLayout>(R.id.nav_venue).setOnClickListener {
+            startActivity(Intent(this, VenueListActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
+        }
+        findViewById<LinearLayout>(R.id.nav_makanan).setOnClickListener {
+
+        }
+        findViewById<LinearLayout>(R.id.nav_history).setOnClickListener {
+            val intent = Intent(this, BookingActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+        }
+
+        findViewById<LinearLayout>(R.id.nav_profile).setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+        }
+
     }
 }

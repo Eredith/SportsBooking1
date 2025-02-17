@@ -131,20 +131,27 @@ class ProfileActivity : AppCompatActivity() {
     private fun setupBottomNavigation() {
         findViewById<LinearLayout>(R.id.nav_home).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         }
         findViewById<LinearLayout>(R.id.nav_venue).setOnClickListener {
             startActivity(Intent(this, VenueListActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         }
         findViewById<LinearLayout>(R.id.nav_makanan).setOnClickListener {
             val intent = Intent(this, MakananActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         }
         findViewById<LinearLayout>(R.id.nav_history).setOnClickListener {
-            startActivity(Intent(this, BookingActivity::class.java))
+            val intent = Intent(this, BookingActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         }
         findViewById<LinearLayout>(R.id.nav_profile).setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
-            startActivity(intent)
         }
     }
 }
