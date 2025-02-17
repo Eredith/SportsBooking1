@@ -86,7 +86,9 @@ class DetailLapanganJam : AppCompatActivity() {
         toolbar.title = "Detail Lapangan"
         venueTitle.text = venueName
         venueAlamat.text = venueLocation
-        priceTextView.text = "Rp${venuePrice}"
+// Format venue price dengan pemisah ribuan
+        val formattedPrice = String.format(Locale.US, "%,.0f", venuePrice?.toDoubleOrNull() ?: 0.0)
+        priceTextView.text = "Rp. $formattedPrice"
         selectedDateTextView.text = "Selected Date: $selectedDate"
         Glide.with(this).load(venueImageUrl).into(venueImage)
 
@@ -130,14 +132,15 @@ class DetailLapanganJam : AppCompatActivity() {
         val slots = mutableListOf<BookingSlot>()
         val startHour = 8
         val endHour = 20
-        val price = "100000"
+        val formattedPrice = String.format(Locale.US, "%,.0f", venuePrice?.toDoubleOrNull() ?: 0.0)
 
         for (hour in startHour until endHour) {
             val startTime = String.format("%02d:00", hour)
             val endTime = String.format("%02d:00", hour + 1)
             val timeSlot = "$startTime - $endTime"
-            slots.add(BookingSlot(timeSlot, price, false))
+            slots.add(BookingSlot(timeSlot, formattedPrice, false))
         }
+
 
         return slots
     }
