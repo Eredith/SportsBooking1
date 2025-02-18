@@ -31,12 +31,21 @@
 
         <!-- Card untuk Progress Total -->
 
+        <ImageView
+            android:id="@+id/top_background"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_profile"
+            android:alpha="0.8"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <LinearLayout
             android:id="@+id/profileSection"
             android:layout_width="match_parent"
             android:layout_height="197dp"
-            android:background="#FF9D23
-"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -126,12 +135,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profileSection">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/menuCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp">
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/menuCard"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:cardCornerRadius="16dp"-->
+<!--                app:cardElevation="8dp">-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -244,7 +253,7 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+<!--            </androidx.cardview.widget.CardView>-->
         </LinearLayout>
 
 
