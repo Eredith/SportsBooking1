@@ -44,6 +44,8 @@ class BookingActivity : AppCompatActivity() {
 
         db = FirebaseFirestore.getInstance()
 
+        loadUserData()
+
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
             val userId = currentUser.uid
@@ -79,6 +81,30 @@ class BookingActivity : AppCompatActivity() {
         setupBottomNavigation()
     }
 
+    private fun loadUserData() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val profileImageView = findViewById<ImageView>(R.id.profileImageNavbar)
+
+        user?.let {
+            db.collection("users").document(user.uid).get()
+                .addOnSuccessListener { document ->
+                    val profileImageUrl = document.getString("profileImageUrl")
+                    if (!profileImageUrl.isNullOrEmpty()) {
+                        Glide.with(this)
+                            .load(profileImageUrl)
+                            .circleCrop()
+                            .placeholder(R.drawable.default_profile)
+                            .into(profileImageView)
+                    } else {
+                        profileImageView.setImageResource(R.drawable.default_profile)
+                    }
+                }
+                .addOnFailureListener {
+                    profileImageView.setImageResource(R.drawable.default_profile)
+                }
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -88,11 +114,15 @@ class BookingActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.nav_home).setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         }
 
         findViewById<LinearLayout>(R.id.nav_venue).setOnClickListener {
             val intent = Intent(this, VenueListActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         }
 
         findViewById<LinearLayout>(R.id.nav_history).setOnClickListener {
@@ -102,11 +132,15 @@ class BookingActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.nav_profile).setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
         }
 
         findViewById<LinearLayout>(R.id.nav_makanan).setOnClickListener {
             val intent = Intent(this, MakananActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         }
     }
 

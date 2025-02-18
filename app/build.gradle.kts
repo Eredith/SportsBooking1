@@ -43,7 +43,7 @@ android {
 }
 
 dependencies {
-
+    implementation("com.itextpdf:itext7-core:7.2.5")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -68,5 +68,5 @@ dependencies {
     implementation ("com.google.firebase:firebase-auth:21.0.1")
     implementation ("com.google.android.gms:play-services-maps:18.1.0") // Cek versi terbaru
     implementation ("com.google.android.gms:play-services-location:21.0.1") // Jika butuh lokasi
-
+    implementation("androidx.core:core-ktx:1.9.0")
 }
