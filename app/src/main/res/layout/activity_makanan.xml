@@ -305,9 +305,7 @@
                 android:id="@+id/profileImageNavbar"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_bottom_nav_bar_profile"
-                app:tint="@android:color/darker_gray"/>
-            />
+                android:src="@drawable/ic_bottom_nav_bar_profile"/>
 
             <TextView
                 android:id="@+id/text_profile"
