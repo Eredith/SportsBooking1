@@ -256,7 +256,8 @@
                 android:text="Back to Admin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnLogout" />
+                app:layout_constraintTop_toBottomOf="@id/btnLogout"
+                app:backgroundTint="#C17155"/>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

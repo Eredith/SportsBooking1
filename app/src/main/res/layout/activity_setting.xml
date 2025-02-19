@@ -175,7 +175,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Log Out"
-            android:background="@drawable/rounded_button"
+            app:backgroundTint="#C17155"
             android:textColor="#FFFFFF"
             android:layout_marginBottom="12dp" />
 
@@ -184,7 +184,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete Account"
-            android:background="@drawable/rounded_button_black"
+            app:backgroundTint="#C17155"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
