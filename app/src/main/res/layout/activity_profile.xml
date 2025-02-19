@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:scaleType="fitXY"
-            android:src="@drawable/bg_profile"
+            android:src="@drawable/bg_profile1"
             android:alpha="0.8"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -121,141 +121,107 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nameTextView" />
 
-
         </LinearLayout>
 
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <!-- CardView untuk Settings, History Transaction, dan FAQ -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/menuCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:orientation="vertical"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profileSection">
 
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:id="@+id/menuCard"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:cardCornerRadius="16dp"-->
-<!--                app:cardElevation="8dp">-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFF"
+                android:orientation="vertical"
+                android:padding="16dp">
 
+                <!-- Settings -->
                 <LinearLayout
+                    android:id="@+id/settingsMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFF"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingVertical="8dp">
 
-                    <!-- Settings -->
-                    <LinearLayout
-                        android:id="@+id/settingsMenu"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:contentDescription="Settings Icon"
+                        android:src="@drawable/ic_settings" />
+
+                    <TextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingVertical="8dp">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:contentDescription="Settings Icon"
-                            android:src="@drawable/ic_settings" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingStart="10dp"
-                            android:text="Settings"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                    <!-- History Transaction -->
-                    <LinearLayout
-                        android:id="@+id/aboutUsMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingVertical="8dp">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:contentDescription="About Us Icon"
-                            android:src="@drawable/ic_transaction" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingStart="10dp"
-                            android:text="History Transaction"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                    <!-- Help and Support -->
-                    <!--<LinearLayout
-                        android:id="@+id/profileMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingVertical="8dp">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:contentDescription="Help Support Icon"
-                            android:src="@drawable/ic_help"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingStart="10dp"
-                            android:text="Help and Support"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </LinearLayout> -->
-
-                    <!-- FAQ -->
-                    <LinearLayout
-                        android:id="@+id/faqMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingVertical="8dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:contentDescription="FAQ Icon"
-                            android:src="@drawable/ic_faq"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingStart="10dp"
-                            android:text="FAQ"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
+                        android:layout_weight="1"
+                        android:paddingStart="10dp"
+                        android:text="Settings"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </LinearLayout>
-<!--            </androidx.cardview.widget.CardView>-->
-        </LinearLayout>
 
+                <!-- History Transaction -->
+                <LinearLayout
+                    android:id="@+id/aboutUsMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingVertical="8dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:contentDescription="About Us Icon"
+                        android:src="@drawable/ic_transaction" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="10dp"
+                        android:text="History Transaction"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <!-- FAQ -->
+                <LinearLayout
+                    android:id="@+id/faqMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingVertical="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:contentDescription="FAQ Icon"
+                        android:src="@drawable/ic_faq"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="10dp"
+                        android:text="FAQ"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- Logout Button -->
         <!-- Fixed Buttons -->
@@ -287,9 +253,9 @@
                 app:layout_constraintTop_toBottomOf="@id/btnLogout" />
         </LinearLayout>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- Bottom Navigation -->
     <LinearLayout
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
@@ -408,8 +374,7 @@
                 android:id="@+id/profileImageNavbar"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_bottom_nav_bar_profile"
-                />
+                android:src="@drawable/ic_bottom_nav_bar_profile" />
 
             <TextView
                 android:id="@+id/text_profile"
