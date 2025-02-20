@@ -2,9 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:background="#FFFFFF"> <!-- Set the background color to white -->
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="16dp"> <!-- Set the background color to white -->
     <!-- Toolbar for the title and back button -->
     <!-- Image for the venue -->
 
@@ -14,28 +14,27 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="355dp"
+        android:layout_width="match_parent"
         android:layout_height="41dp"
         android:titleTextColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="Detail Lapangan" />
 
 
-        <!-- Top Section: Image and Text -->
+    <!-- Top Section: Image and Text -->
     <LinearLayout
         android:id="@+id/venueCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@drawable/border"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:orientation="vertical"
         android:padding="16dp"
-        android:background="@drawable/border"
-        android:clipToPadding="false"
-        android:clipChildren="false"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <!-- Top Section: Image and Text -->
@@ -48,10 +47,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="80dp"
                 android:layout_height="65dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="0dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginEnd="16dp"
-                android:layout_gravity="center_vertical">
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp">
 
                 <ImageView
                     android:id="@+id/venueImage"
@@ -59,7 +58,7 @@
                     android:layout_height="match_parent"
                     android:contentDescription="venue_image"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/venue_image"/>
+                    android:src="@drawable/venue_image" />
             </androidx.cardview.widget.CardView>
 
 
@@ -75,21 +74,21 @@
                     android:id="@+id/venueTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
                     android:text="B23 Arena Simprug Badminton"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="4dp" />
+                    android:textStyle="bold" />
 
                 <!-- Venue Address -->
                 <TextView
                     android:id="@+id/venueAlamat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
                     android:text="Badminton B23 Arena Simprug"
                     android:textColor="#888888"
-                    android:textSize="14sp"
-                    android:maxLines="2"
-                    android:ellipsize="end" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -98,8 +97,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:orientation="horizontal"
             android:background="@drawable/border"
+            android:orientation="horizontal"
             android:padding="8dp">  <!-- Add the border here -->
 
             <!-- Tipe Pesanan -->
@@ -107,8 +106,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <!-- Icon -->
                 <ImageView
@@ -148,8 +147,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <!-- Icon -->
                 <ImageView
@@ -179,18 +178,16 @@
     </LinearLayout>
 
 
-
-
     <TextView
         android:id="@+id/tanggal_waktu_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="Lapangan ini menurut players"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/venueCard"
-        android:layout_marginTop="20dp"/>
+        app:layout_constraintTop_toBottomOf="@id/venueCard" />
 
     <LinearLayout
         android:id="@+id/cardView"
@@ -207,22 +204,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp">
+
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
             <!-- Left Section for Fasilitas Bagus -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:layout_weight="1"
+                android:background="@drawable/border"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:background="@drawable/border"
-                android:layout_marginEnd="4dp">
+                android:paddingVertical="4dp">
 
                 <!-- Calendar Icon -->
                 <ImageView
@@ -248,13 +245,13 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:layout_weight="1"
+                android:background="@drawable/border"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:background="@drawable/border"
-                android:layout_marginEnd="4dp">
+                android:paddingVertical="4dp">
 
                 <!-- Time Icon -->
                 <ImageView
@@ -262,7 +259,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_time"
-                    app:tint="@color/orange"/>
+                    app:tint="@color/orange" />
 
                 <!-- Time Text -->
                 <TextView
@@ -296,45 +293,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-            android:orientation="vertical"
-            android:padding="2dp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView">
+        android:orientation="vertical"
+        android:padding="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView">
 
-            <!-- Text Content -->
-            <LinearLayout
-                android:layout_width="match_parent"
+        <!-- Text Content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <!-- Title Text -->
+            <TextView
+                android:id="@+id/cancellation_policy_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:text="Pilihan Jadwal Booking"
+                android:textSize="14sp"
+                android:textStyle="normal" />
 
-                <!-- Title Text -->
-                <TextView
-                    android:id="@+id/cancellation_policy_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pilihan Jadwal Booking"
-                    android:textSize="14sp"
-                    android:textStyle="normal" />
-
-                <!-- Spinner and Icon Section -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:gravity="center_vertical">
+            <!-- Spinner and Icon Section -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <!-- Warning Icon -->
                 <ImageView
                     android:id="@+id/warning_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_calendar"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_calendar" />
 
                 <!-- Spinner -->
                 <Spinner
@@ -342,7 +339,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"/>
+                    android:layout_marginBottom="16dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -405,8 +402,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:scrollbars="horizontal"
-/>
+            android:scrollbars="horizontal" />
     </LinearLayout>
 
     <!-- Pay Button -->
@@ -419,93 +415,102 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="#E0E0E0"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"/>
-
-    <CheckBox
-        android:id="@+id/termsCheckbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:buttonTint="@color/black"
-        android:button="@drawable/custom_checkbox"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divide"
-         />
-
-    <TextView
-        android:id="@+id/terms_text"
-        android:layout_width="122dp"
-        android:layout_height="23dp"
-        android:layout_weight="1"
-        android:text="Saya setuju dengan"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/termsCheckbox"
-        app:layout_constraintTop_toBottomOf="@+id/divide"
-        app:layout_constraintVertical_bias="0.195" />
-
-    <TextView
-        android:id="@+id/terms_link"
-        android:layout_width="142dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="4dp"
-        android:autoLink="web"
-        android:text="Syarat dan Ketentuan milik Gelora,"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/terms_text"
-        app:layout_constraintTop_toBottomOf="@+id/divide"
-        app:layout_constraintVertical_bias="0.533" />
-
-    <TextView
-        android:id="@+id/insurance_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:autoLink="web"
-        android:text="serta Syarat dan Ketentuan Asuransi"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/termsCheckbox"
-        app:layout_constraintTop_toBottomOf="@+id/terms_text"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
 
     <!-- Divider -->
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="#E0E0E0"
-        app:layout_constraintTop_toBottomOf="@id/termsCheckbox"
-        tools:layout_editor_absoluteX="16dp" />
 
     <!-- Total Harga -->
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/termsCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:button="@drawable/custom_checkbox"
+                android:buttonTint="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/terms_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saya setuju dengan"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/termsCheckbox"
+                app:layout_constraintStart_toEndOf="@+id/termsCheckbox"
+                app:layout_constraintTop_toTopOf="@+id/termsCheckbox"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/terms_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:autoLink="web"
+                android:text="Syarat dan Ketentuan"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/terms_text"
+                app:layout_constraintStart_toEndOf="@+id/terms_text"
+                app:layout_constraintTop_toTopOf="@+id/terms_text" />
+
+            <TextView
+                android:id="@+id/insurance_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:autoLink="web"
+                android:text="serta Syarat dan Ketentuan Asuransi"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/terms_text"
+                app:layout_constraintTop_toBottomOf="@+id/terms_text" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#E0E0E0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/insurance_link" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view">
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
 
         <!-- Label for 'Total Harga' -->
         <TextView
@@ -524,10 +529,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_gray_background"
-            app:backgroundTint="@color/orange"
             android:text="Book Lapangan ini"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            app:backgroundTint="@color/orange" />
     </LinearLayout>
 
 

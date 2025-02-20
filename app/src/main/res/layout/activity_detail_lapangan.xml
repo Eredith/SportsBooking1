@@ -295,7 +295,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#E0E0E0"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+            app:layout_constraintBottom_toTopOf="@+id/cardView4"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
             tools:layout_editor_absoluteX="16dp" />
 
@@ -334,17 +334,6 @@
 
         </LinearLayout>
 
-        <!-- Divider -->
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="353dp"
-            android:background="#E0E0E0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/linearLayout4" />
-
         <!-- Total Harga -->
 
         <!-- Pay Button -->
@@ -355,11 +344,11 @@
             android:layout_height="41dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/LinearLayoutBottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/view2"
             app:layout_constraintVertical_bias="0.048">
 
             <!-- Label for 'Total Harga' -->
@@ -386,69 +375,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-            app:layout_constraintVertical_bias="0.037">
-
-            <CheckBox
-                android:id="@+id/termsCheckbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:buttonTint="@color/black" />
-
-            <TextView
-                android:id="@+id/terms_text"
-                android:layout_width="wrap_content"
-                android:layout_height="23dp"
-                android:text="Saya setuju dengan"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/terms_link"
-                android:layout_width="142dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="4dp"
-                android:autoLink="web"
-                android:text="Syarat dan Ketentuan milik Gelora,"
-                android:textColor="@android:color/holo_orange_dark"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
-            app:layout_constraintVertical_bias="0.0">
-
-            <TextView
-                android:id="@+id/insurance_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:autoLink="web"
-                android:text="serta Syarat dan Ketentuan Asuransi"
-                android:textColor="@android:color/holo_orange_dark"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                tools:layout_editor_absoluteX="45dp"
-                tools:layout_editor_absoluteY="639dp" />
-        </LinearLayout>
-
-        <LinearLayout
+            android:id="@+id/LinearLayoutBottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
