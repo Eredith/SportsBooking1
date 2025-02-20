@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/top_background"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="220dp"
         android:scaleType="fitXY"
         android:src="@drawable/background_wave"
         app:layout_constraintTop_toTopOf="parent"
@@ -56,34 +56,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="Halo, Aero"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="22sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <ImageView
-                android:id="@+id/notification"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_notification" />
-
-            <ImageView
-                android:id="@+id/settings"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_settings" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -96,13 +74,13 @@
         app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="5dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rekomendasi"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -116,8 +94,7 @@
     </LinearLayout>
 
     <TextView
-        android:paddingLeft="16dp"
-
+        android:paddingStart="16dp"
         android:id="@+id/recommendation_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
