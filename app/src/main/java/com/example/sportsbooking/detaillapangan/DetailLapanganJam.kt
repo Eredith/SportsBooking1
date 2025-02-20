@@ -18,6 +18,7 @@ import com.example.sportsbooking.detailpembayaran.DetailPembayaranActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class DetailLapanganJam : AppCompatActivity() {
@@ -50,6 +51,7 @@ class DetailLapanganJam : AppCompatActivity() {
 
         // Initialize views
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
         val venueImage: ImageView = findViewById(R.id.venueImage)
         val venueTitle: TextView = findViewById(R.id.venueTitle)
         val venueAlamat: TextView = findViewById(R.id.venueAlamat)
@@ -70,21 +72,29 @@ class DetailLapanganJam : AppCompatActivity() {
             venueAvailableStartTime = it.getStringExtra("venue_availableStartTime")
             venueAvailableEndTime = it.getStringExtra("venue_availableEndTime")
             selectedDate = it.getStringExtra("selected_date")
+
+            // Initialize selected date components
+            // Format the selected dat
+        }
+
+        // Set the back arrow icon
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+
+        // Set the back arrow click listener
+        toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
 
         // Set data to views
         toolbar.title = "Detail Lapangan"
         venueTitle.text = venueName
         venueAlamat.text = venueLocation
-        priceTextView.text = "Rp${venuePrice}"
+// Format venue price dengan pemisah ribuan
+        val formattedPrice = String.format(Locale.US, "%,.0f", venuePrice?.toDoubleOrNull() ?: 0.0)
+        priceTextView.text = "Rp. $formattedPrice"
         selectedDate?.let {
-            val inputFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val outputFormatter = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("id", "ID"))
-
-            val parsedDate = inputFormatter.parse(it)
-            parsedDate?.let { date ->
-                selectedDateTextView.text = outputFormatter.format(date)
-            }
+            val formattedDate = formatDate(it)
+            selectedDateTextView.text = "$formattedDate"
         }
         Glide.with(this).load(venueImageUrl).into(venueImage)
 
@@ -128,14 +138,15 @@ class DetailLapanganJam : AppCompatActivity() {
         val slots = mutableListOf<BookingSlot>()
         val startHour = 8
         val endHour = 20
-        val price = "100000"
+        val formattedPrice = String.format(Locale.US, "%,.0f", venuePrice?.toDoubleOrNull() ?: 0.0)
 
         for (hour in startHour until endHour) {
             val startTime = String.format("%02d:00", hour)
             val endTime = String.format("%02d:00", hour + 1)
             val timeSlot = "$startTime - $endTime"
-            slots.add(BookingSlot(timeSlot, price, false))
+            slots.add(BookingSlot(timeSlot, formattedPrice, false))
         }
+
 
         return slots
     }
@@ -173,6 +184,18 @@ class DetailLapanganJam : AppCompatActivity() {
                 adapter.submitList(predefinedSlots)
             }
     }
+
+    private fun formatDate(dateString: String): String {
+        return try {
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())  // Format input (yyyy-MM-dd)
+            val date = sdf.parse(dateString)  // Parse string to Date object
+            val outputFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("id", "ID"))  // Desired format (e.g., "Rabu, 25 September 2025")
+            outputFormat.format(date ?: Date())  // Return formatted date
+        } catch (e: Exception) {
+            "Tanggal tidak valid"
+        }
+    }
+
     private fun onSlotSelected(slot: BookingSlot) {
         if (!slot.isBooked) {
             selectedSlot = slot.time

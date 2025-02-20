@@ -59,7 +59,9 @@ class PageLapanganActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.venueTitle.text = "$venueName\n$venueCategory"
         binding.venueCategory.text = venueCategory
         binding.venueAlamat.text = "Alamat: $venueLocation"
-        binding.venuePrice.text = "Harga: Rp${venuePrice}"
+// Format venue price dengan pemisah ribuan
+        val formattedPrice = String.format(Locale.US, "%,.0f", venuePrice)
+        binding.venuePrice.text = "Rp. $formattedPrice"
         binding.openingHoursTitle.text = getString(R.string.jam_buka)
         binding.openingHoursText.text = "$venueStartTime - $venueEndTime"
         binding.venueLocationText.text = venueLocation

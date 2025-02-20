@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.sportsbooking.R
 import com.google.firebase.auth.FirebaseAuth
 
+
 class ProfileFragment : Fragment() {
 
     private lateinit var profileImageView: ImageView

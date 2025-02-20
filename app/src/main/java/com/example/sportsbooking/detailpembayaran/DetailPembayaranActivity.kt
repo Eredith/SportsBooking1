@@ -10,7 +10,10 @@ import com.example.sportsbooking.booking.BookingActivity
 import com.example.sportsbooking.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class DetailPembayaranActivity : AppCompatActivity() {
@@ -58,7 +61,7 @@ class DetailPembayaranActivity : AppCompatActivity() {
         timeText = findViewById(R.id.time_text)
         priceText = findViewById(R.id.price_text)
         totalPriceValue = findViewById(R.id.total_price_value)
-        termsCheckbox = findViewById(R.id.terms_checkbox)
+        termsCheckbox = findViewById(R.id.termsCheckbox)
         payButton = findViewById(R.id.pay_button)
 
         // Setup Toolbar
@@ -89,10 +92,10 @@ class DetailPembayaranActivity : AppCompatActivity() {
         // Populate UI with data
         venueTitle.text = "$venueName\n$venueCategory"
         venueSubtitle.text = venueCategory
-        dateText.text = formatTanggal(bookingDate) ?: "Tanggal belum dipilih"
+        dateText.text = formatDate(bookingDate ?: "") // Format tanggal
         timeText.text = bookingTime ?: "Waktu belum dipilih"
-        priceText.text = venuePrice ?: "Rp0"
-        totalPriceValue.text = venuePrice ?: "Rp0"
+        priceText.text = formatPrice(venuePrice ?: "0")
+        totalPriceValue.text = formatPrice(venuePrice ?: "0")
 
         // Load venue image using Glide
         Glide.with(this)
@@ -184,6 +187,30 @@ class DetailPembayaranActivity : AppCompatActivity() {
         }
         startActivity(intent)
     }
+
+    // Fungsi untuk format tanggal
+    private fun formatDate(dateString: String): String {
+        return try {
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale("id", "ID"))  // Format input (misalnya "2025-01-25")
+            val date = sdf.parse(dateString)  // Parse string ke objek Date
+            val outputFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("id", "ID"))  // Format output yang diinginkan
+            outputFormat.format(date ?: Date())  // Kembalikan dalam format yang diinginkan
+        } catch (e: Exception) {
+            "Tanggal tidak valid"
+        }
+    }
+
+    // Fungsi format untuk harga
+    private fun formatPrice(price: String): String {
+        return try {
+            val priceValue = price.toDoubleOrNull() ?: 0.0
+            val format = DecimalFormat("Rp #,###")  // Format untuk menghilangkan desimal
+            format.format(priceValue)
+        } catch (e: Exception) {
+            "Rp 0"
+        }
+    }
+
 
 
     private fun formatTanggal(inputDate: String?): String {

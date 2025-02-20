@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SportsBooking</string>
     <string name="find_various_venues">Temukan Beragam Venue!</string>
+    <string name="find_various_food">Temukan Beragam Makanan!</string>
     <string name="search_hint">Cari Venue</string>
     <string name="reset_filter">Reset Filter</string>
     <string name="reset_filter_desc">Reset all filters</string>

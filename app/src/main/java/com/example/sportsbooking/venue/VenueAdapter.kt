@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sportsbooking.pagelapangan.PageLapanganActivity
 import com.example.sportsbooking.R
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,7 +37,16 @@ class VenueAdapter(private var venues: List<Venue> = listOf(), private val conte
         val venue = venues[position]
 
         holder.nameTextView.text = venue.nama ?: "N/A"
-        holder.priceTextView.text = "Harga: ${venue.pricePerHour ?: "N/A"}"
+
+        val formattedPrice = venue.pricePerHour?.let {
+            val formatter = NumberFormat.getCurrencyInstance(Locale("id", "ID")) as DecimalFormat
+            formatter.applyPattern("Rp #,###")
+            formatter.format(it.toDouble())
+        } ?: "N/A"
+
+        holder.priceTextView.text = "$formattedPrice"
+
+
         holder.locationTextView.text = "Lokasi: ${venue.alamat ?: "N/A"}"
         holder.categoryTextView.text = venue.category ?: "N/A"
 
@@ -65,6 +76,7 @@ class VenueAdapter(private var venues: List<Venue> = listOf(), private val conte
                 )
             }
             context.startActivity(intent)
+
         }
     }
 

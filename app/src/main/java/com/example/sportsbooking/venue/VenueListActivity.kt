@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
@@ -13,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sportsbooking.MainActivity
 import com.example.sportsbooking.R
 import com.example.sportsbooking.booking.BookingActivity
@@ -23,6 +25,7 @@ import com.example.sportsbooking.store.MakananActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -30,6 +33,9 @@ import java.util.Date
 import java.util.Locale
 
 class VenueListActivity : AppCompatActivity() {
+
+    private lateinit var profileImageNavbar: ImageView
+    private val db = FirebaseFirestore.getInstance()
 
     private lateinit var recyclerDays: RecyclerView
     private lateinit var daysAdapter: DaysAdapter
@@ -58,6 +64,12 @@ class VenueListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_venue_list)
+
+        // Initialize profile navbar image
+        profileImageNavbar = findViewById(R.id.profileImageNavbar)
+
+        loadUserData() // Load user data for the navbar
+        setupBottomNavigation()
 
         // Initialize Spinner
         spinnerMonth = findViewById(R.id.spinner_month)
@@ -103,6 +115,33 @@ class VenueListActivity : AppCompatActivity() {
         fetchVenuesFromFirestore()
 
         setupBottomNavigation()
+    }
+
+    private fun loadUserData() {
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.let {
+            db.collection("users").document(user.uid).get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        // Profile Picture
+                        val profileImageUrl = document.getString("profileImageUrl")
+                        if (!profileImageUrl.isNullOrEmpty()) {
+                            Glide.with(this)
+                                .load(profileImageUrl)
+                                .circleCrop()
+                                .placeholder(R.drawable.default_profile)
+                                .into(profileImageNavbar)
+                        } else {
+                            profileImageNavbar.setImageResource(R.drawable.default_profile)
+                        }
+                    } else {
+                        profileImageNavbar.setImageResource(R.drawable.default_profile)
+                    }
+                }
+                .addOnFailureListener {
+                    profileImageNavbar.setImageResource(R.drawable.default_profile)
+                }
+        }
     }
 
     private fun filterVenuesByCategory(categoryName: String) {
@@ -304,6 +343,8 @@ class VenueListActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.nav_home).setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         }
 
         findViewById<LinearLayout>(R.id.nav_venue).setOnClickListener {
@@ -312,15 +353,21 @@ class VenueListActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.nav_makanan).setOnClickListener {
             val intent = Intent(this, MakananActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
         }
         findViewById<LinearLayout>(R.id.nav_history).setOnClickListener {
             val intent = Intent(this, BookingActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
         }
 
         findViewById<LinearLayout>(R.id.nav_profile).setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
         }
     }
 }
