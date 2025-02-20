@@ -81,15 +81,6 @@ class DetailLapanganActivity : AppCompatActivity() {
             )
         }
 
-        // Listener untuk links (Opsional)
-        binding.termsLink.setOnClickListener {
-            openWebPage("https://www.example.com/terms")
-        }
-
-        binding.insuranceLink.setOnClickListener {
-            openWebPage("https://www.example.com/insurance-terms")
-        }
-
         // Month Spinner
         val monthSpinner: Spinner = findViewById(R.id.monthSpinner)
         val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
@@ -172,7 +163,6 @@ class DetailLapanganActivity : AppCompatActivity() {
         venueStartTime: String,
         venueEndTime: String
     ) {
-        if (binding.termsCheckbox.isChecked) {
             if (selectedDay == null) {
                 Toast.makeText(this, "Please select a date", Toast.LENGTH_SHORT).show()
                 return
@@ -197,9 +187,6 @@ class DetailLapanganActivity : AppCompatActivity() {
                 e.printStackTrace()
                 Toast.makeText(this, getString(R.string.error_booking), Toast.LENGTH_SHORT).show()
             }
-        } else {
-            Toast.makeText(this, "Anda harus menyetujui syarat dan ketentuan terlebih dahulu.", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun openWebPage(url: String) {

@@ -61,7 +61,7 @@ class DetailPembayaranActivity : AppCompatActivity() {
         timeText = findViewById(R.id.time_text)
         priceText = findViewById(R.id.price_text)
         totalPriceValue = findViewById(R.id.total_price_value)
-        termsCheckbox = findViewById(R.id.terms_checkbox)
+        termsCheckbox = findViewById(R.id.termsCheckbox)
         payButton = findViewById(R.id.pay_button)
 
         // Setup Toolbar

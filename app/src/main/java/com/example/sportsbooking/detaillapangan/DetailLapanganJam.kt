@@ -51,6 +51,7 @@ class DetailLapanganJam : AppCompatActivity() {
 
         // Initialize views
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
         val venueImage: ImageView = findViewById(R.id.venueImage)
         val venueTitle: TextView = findViewById(R.id.venueTitle)
         val venueAlamat: TextView = findViewById(R.id.venueAlamat)
@@ -74,6 +75,14 @@ class DetailLapanganJam : AppCompatActivity() {
 
             // Initialize selected date components
             // Format the selected dat
+        }
+
+        // Set the back arrow icon
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+
+        // Set the back arrow click listener
+        toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
 
         // Set data to views
