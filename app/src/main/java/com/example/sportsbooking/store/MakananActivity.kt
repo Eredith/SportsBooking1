@@ -12,11 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sportsbooking.MainActivity
 import com.example.sportsbooking.R
 import com.example.sportsbooking.booking.BookingActivity
 import com.example.sportsbooking.profile.ProfileActivity
 import com.example.sportsbooking.venue.VenueListActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MakananActivity : AppCompatActivity() {
@@ -25,6 +27,7 @@ class MakananActivity : AppCompatActivity() {
     private lateinit var makananAdapter: MakananAdapter
     private val makananList = mutableListOf<Makanan>()
     private val firestore = FirebaseFirestore.getInstance()
+    private lateinit var profileImageNavbar: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +41,12 @@ class MakananActivity : AppCompatActivity() {
             Toast.makeText(this, "${makanan.nama} added to cart", Toast.LENGTH_SHORT).show()
         }
         recyclerViewMakanan.adapter = makananAdapter
+
+        // Inisialisasi ImageView untuk foto profil
+        profileImageNavbar = findViewById(R.id.profileImageNavbar)
+
+        // Load foto profil pengguna
+        loadUserProfileImage()
 
         loadMakananData()
 
@@ -61,6 +70,31 @@ class MakananActivity : AppCompatActivity() {
                 Log.e("MakananActivity", "Error fetching data", e)
             }
     }
+
+    private fun loadUserProfileImage() {
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.let {
+            firestore.collection("users").document(user.uid).get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val profileImageUrl = document.getString("profileImageUrl")
+                        if (!profileImageUrl.isNullOrEmpty()) {
+                            Glide.with(this)
+                                .load(profileImageUrl)
+                                .circleCrop()
+                                .placeholder(R.drawable.default_profile) // Gambar default jika gagal load
+                                .into(profileImageNavbar)
+                        } else {
+                            profileImageNavbar.setImageResource(R.drawable.default_profile)
+                        }
+                    }
+                }
+                .addOnFailureListener {
+                    profileImageNavbar.setImageResource(R.drawable.default_profile)
+                }
+        }
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
