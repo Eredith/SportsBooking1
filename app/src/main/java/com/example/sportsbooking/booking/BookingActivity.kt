@@ -24,6 +24,10 @@ import com.example.sportsbooking.venue.VenueListActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 
 class BookingActivity : AppCompatActivity() {
@@ -37,27 +41,14 @@ class BookingActivity : AppCompatActivity() {
     private lateinit var filterIcon: ImageView
     private lateinit var recyclerViewBooking: RecyclerView
     private val allBookings = mutableListOf<Booking>()
+    private val activeBookings = mutableListOf<Booking>()
+    private val historyBookings = mutableListOf<Booking>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.booking_page)
 
-        db = FirebaseFirestore.getInstance()
-
-        loadUserData()
-
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        if (currentUser != null) {
-            val userId = currentUser.uid
-            // Ambil data booking badminton dan driving range secara bersamaan
-            fetchUserBookingsBadminton(userId)
-            fetchUserBookingsDriving(userId)
-        } else {
-            // Handle the case where the user is not logged in
-            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
-        }
-
-        // Initialize UI elements
+        // Initialize UI elements first
         toolbar = findViewById(R.id.toolbar_booking)
         tabLayout = findViewById(R.id.tab_layout)
         searchCard = findViewById(R.id.search_card)
@@ -65,21 +56,41 @@ class BookingActivity : AppCompatActivity() {
         filterIcon = findViewById(R.id.filter_icon)
         recyclerViewBooking = findViewById(R.id.recyclerViewBookings)
 
-        // Setup Toolbar
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbar.setNavigationOnClickListener {
-            onBackPressed()
+        db = FirebaseFirestore.getInstance()
+
+        // Now that tabLayout is initialized, add the listener
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> displayBookings(activeBookings)
+                    1 -> displayBookings(historyBookings)
+                }
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+
+        // Load user data and bookings after initializing UI
+        loadUserData()
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            val userId = currentUser.uid
+            fetchUserBookingsBadminton(userId)
+            fetchUserBookingsDriving(userId)
+        } else {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
         }
 
-        // Setup RecyclerView
+        // Setup Toolbar and Bottom Navigation
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener { onBackPressed() }
         recyclerViewBooking.layoutManager = LinearLayoutManager(this)
-        recyclerViewBooking.adapter = BookingAdapter(emptyList()) // Set an empty adapter initially
-
-        // Example: searchBooking.setText(venueName)
-        // Bottom Navigation
+        recyclerViewBooking.adapter = BookingAdapter(emptyList())
         setupBottomNavigation()
     }
+
 
     private fun loadUserData() {
         val user = FirebaseAuth.getInstance().currentUser
@@ -171,6 +182,8 @@ class BookingActivity : AppCompatActivity() {
 
     private fun fetchUserBookings(userId: String, categories: List<String>) {
         getUsername(userId) { username ->
+            val currentTime = Calendar.getInstance().time
+
             for (category in categories) {
                 val courtsRef = db.collection("sports_center")
                     .document(category)
@@ -178,55 +191,60 @@ class BookingActivity : AppCompatActivity() {
 
                 courtsRef.get()
                     .addOnSuccessListener { courtDocuments ->
-                        if (courtDocuments.isEmpty) {
-                            Log.d("BookingActivity", "No courts found for category $category")
-                        } else {
-                            for (courtDocument in courtDocuments) {
-                                val court = courtDocument.id
-                                val bookingsRef = db.collection("sports_center")
-                                    .document(category)
-                                    .collection("courts")
-                                    .document(court)
-                                    .collection("bookings")
+                        for (courtDocument in courtDocuments) {
+                            val court = courtDocument.id
+                            val bookingsRef = db.collection("sports_center")
+                                .document(category)
+                                .collection("courts")
+                                .document(court)
+                                .collection("bookings")
 
-                                bookingsRef.get()
-                                    .addOnSuccessListener { bookingDocuments ->
-                                        if (bookingDocuments.isEmpty) {
-                                            Log.d("BookingActivity", "No bookings found for $category - $court")
-                                        } else {
-                                            for (bookingDocument in bookingDocuments) {
-                                                val bookingDate = bookingDocument.id
-                                                val bookingData = bookingDocument.data
+                            bookingsRef.get()
+                                .addOnSuccessListener { bookingDocuments ->
+                                    for (bookingDocument in bookingDocuments) {
+                                        val bookingDate = bookingDocument.id
+                                        val bookingData = bookingDocument.data
 
-                                                bookingData.forEach { (timeSlot, details) ->
-                                                    if (details is Map<*, *>) {
-                                                        val bookedBy = details["booked_by"] as? String
-                                                        val status = details["status"] as? String
-                                                        if (bookedBy == userId && status == "booked") {
-                                                            allBookings.add(
-                                                                Booking(
-                                                                    category,
-                                                                    court,
-                                                                    bookingDate,
-                                                                    timeSlot,
-                                                                    username,
-                                                                    status
-                                                                )
+                                        bookingData.forEach { (timeSlot, details) ->
+                                            if (details is Map<*, *>) {
+                                                val bookedBy = details["booked_by"] as? String
+                                                val status = details["status"] as? String
+
+                                                if (bookedBy == userId && status == "booked") {
+                                                    // Parse the booking time (assumed booking lasts one hour)
+                                                    val bookingDateTimeString = "$bookingDate $timeSlot"
+                                                    val bookingTime: Date? = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).parse(bookingDateTimeString)
+
+                                                    if (bookingTime != null) {
+                                                        // For moving after one hour past booking time
+                                                        val calendar = Calendar.getInstance().apply {
+                                                            time = bookingTime
+                                                            add(Calendar.HOUR_OF_DAY, 1)
+                                                        }
+                                                        val bookingTimePlusOneHour = calendar.time
+
+                                                        if (bookingTimePlusOneHour.before(currentTime)) {
+                                                            // If more than one hour has passed: add to history list
+                                                            historyBookings.add(
+                                                                Booking(category, court, bookingDate, timeSlot, username, status)
                                                             )
-                                                            Log.d("BookingActivity", "Found booking at $timeSlot on $bookingDate for $category - $court")
+                                                        } else {
+                                                            // Otherwise, add to active bookings
+                                                            activeBookings.add(
+                                                                Booking(category, court, bookingDate, timeSlot, username, status)
+                                                            )
                                                         }
                                                     }
                                                 }
                                             }
                                         }
-                                        if (categories.indexOf(category) == categories.size - 1 && courtDocument == courtDocuments.last()) {
-                                            displayUserBookings(allBookings)
-                                        }
                                     }
-                                    .addOnFailureListener { e ->
-                                        Log.e("BookingActivity", "Failed to fetch bookings for $category - $court", e)
-                                    }
-                            }
+                                    // Default to showing active bookings when data is loaded
+                                    displayBookings(activeBookings)
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.e("BookingActivity", "Failed to fetch bookings for $category - $court", e)
+                                }
                         }
                     }
                     .addOnFailureListener { e ->
@@ -235,6 +253,50 @@ class BookingActivity : AppCompatActivity() {
             }
         }
     }
+
+
+    private fun displayBookings(bookings: List<Booking>) {
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerViewBookings)
+        val emptyView: TextView = findViewById(R.id.empty_view)
+
+        if (bookings.isEmpty()) {
+            recyclerView.visibility = View.GONE
+            emptyView.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            emptyView.visibility = View.GONE
+            recyclerView.layoutManager = LinearLayoutManager(this)
+            recyclerView.adapter = BookingAdapter(bookings)
+        }
+    }
+
+    private fun moveBookingToHistory(category: String, court: String, bookingDate: String, timeSlot: String, userId: String) {
+        val bookingRef = db.collection("sports_center")
+            .document(category)
+            .collection("courts")
+            .document(court)
+            .collection("bookings")
+            .document(bookingDate)
+
+        val historyRef = db.collection("users")
+            .document(userId)
+            .collection("history")
+            .document("$bookingDate-$timeSlot")
+
+        db.runTransaction { transaction ->
+            val bookingData = transaction.get(bookingRef).get(timeSlot) as? Map<String, Any>
+            if (bookingData != null) {
+                transaction.set(historyRef, bookingData) // Move data to history
+                transaction.update(bookingRef, timeSlot, null) // Remove from active bookings
+            }
+        }.addOnSuccessListener {
+            Log.d("BookingActivity", "Booking moved to history: $bookingDate $timeSlot")
+        }.addOnFailureListener { e ->
+            Log.e("BookingActivity", "Failed to move booking to history", e)
+        }
+    }
+
+
     private fun getUsername(userId: String, callback: (String) -> Unit) {
         db.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
