@@ -42,7 +42,10 @@
                 android:text="Back"
                 android:textColor="#FFFFFF"
                 android:layout_weight="1"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -61,7 +64,10 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:layout_weight="1"
-                android:gravity="end" />
+                android:gravity="end"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"/>
         </LinearLayout>
 
         <!-- Profile Picture -->
@@ -177,7 +183,8 @@
             android:text="Log Out"
             app:backgroundTint="#C17155"
             android:textColor="#FFFFFF"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp"
+            />
 
         <Button
             android:id="@+id/deleteAccountButton"
